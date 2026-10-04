@@ -48,10 +48,13 @@ Agent：`AgentRunner → OpenAICompatProvider → model tool_calls → execute_t
 详见 [第三方归属](THIRD_PARTY_NOTICES.md)。
 
 ## Installation
+项目要求 Python **>=3.11**；V0.1 实际验证环境为 **Python 3.12.14**。以下 `py -3.12` 是推荐的已验证复现版本，不意味着 3.11 不受支持；使用 3.11 时可相应调整 Python 启动命令。
+
 以下以 Windows PowerShell 为例，在一个通用工作目录操作。先安装 Python ≥3.11、Git；nanobot source install 还需要 [Bun 官方安装](https://bun.sh/docs/installation)。[Ollama 官方 Windows 安装](https://ollama.com/download/windows) 后启动 Ollama，验证 `ollama --version`。不要将模型文件放入本项目。
 
 ```powershell
-# 将本项目 clone 或解压到 knowledge-base-agent/；旁边放固定 nanobot checkout
+# 从空工作目录开始；两个仓库保持相邻，nanobot 固定到验证过的 commit
+ git clone https://github.com/tyh545259216-source/rag-enhanced-knowledge-base-agent.git knowledge-base-agent
  git clone https://github.com/HKUDS/nanobot.git nanobot
  git -C nanobot checkout 66f5f2df15455b34fc22e656bdc1ef3d4f32e328
  py -3.12 -m venv nanobot/.venv
@@ -73,9 +76,21 @@ cd knowledge-base-agent
 默认配置只指向 `data/`、`store/` 和本地 Ollama。三个索引文件可重建，不上传二进制。现有9份TXT资料均虚构；不要把公司或个人私有文件加入公开仓库。
 
 ## Run Agent
+在 `knowledge-base-agent/` 目录执行：
 ```powershell
+./scripts/start_agent.ps1
+```
+脚本按自身位置定位项目，默认使用相邻 `nanobot/.venv/Scripts/python.exe`。不安装依赖、不重建索引、不修改 Provider 配置；启动期间设置知识库配置路径，结束后恢复调用 shell 的环境和工作目录。
+```powershell
+# 非默认目录：任选覆盖方式，相对参数以调用时目录为基准
+./scripts/start_agent.ps1 -NanobotPath ../nanobot
+./scripts/start_agent.ps1 -PythonExecutable ../nanobot/.venv/Scripts/python.exe
+# 仅验证环境、entry point和索引文件存在，不启动服务
+./scripts/start_agent.ps1 -CheckOnly
+# 手动备用命令（在本项目目录运行）
 & ../nanobot/.venv/Scripts/python.exe -m nanobot webui
 ```
+若执行策略阻止脚本，请遵循组织规则或使用手动命令，无需修改全局执行策略。
 在 WebUI 手动创建显示名 `qwen` 的模型预设：Provider `ollama`，实际 model `qwen3:1.7b`，API base `http://localhost:11434/v1`。无需 OpenAI OAuth，勿更改其他 Provider。首次本地 UI 密码按 nanobot 启动日志获取，不提交任何用户配置。
 
 插件安装后必须启动新 nanobot 进程。下列脚本验证 discovery/schema/direct call，并只开放知识库工具执行固定烟雾题，不启动另一套 Agent loop：
@@ -86,11 +101,32 @@ cd knowledge-base-agent
 输出到忽略的 `artifacts/`，不会覆盖历史 baseline。烟雾脚本使用 `qwen` 预设和固定通用 instruction；前三题自主路由，第四题明确调用工具以验证 structured transport。WebUI 的默认完整上下文和其他内置工具与此受控评估不同，不能直接声称同样指标。
 
 ## Evaluation
+### Frozen historical metrics
+以下数字来自已冻结的 V0.1 历史评估，不由新的本地运行自动替换。
 - Retrieval：20道有答案（15单块、5多块）+10道无答案；HitRate@3 **100%**、Recall@3 **97.5%**、MRR@3 **0.925**。无答案不计入这三个指标。
 - Routing：24题、每类6题；Accuracy **87.50%**、Precision **100%**、Recall **83.33%**、F1 **90.91%**。
 - Answer：18道私有问题；核心正确 **88.89%**、严格 groundedness **83.33%**；6道无答案拒答 **100%**，但只有4道先检索再拒答。
 - 单次Agent工具调用E2E均值58.53秒，无工具25.82秒；不是吞吐量或生产SLA。
 人工标注、按资料编题、小样本且非独立留出集，不能外推到大语料、多工具或生产可靠性。[完整评估](docs/EVALUATION.md)、[脱敏证据](docs/evidence/README.md)。
+
+### 如何重新运行评测（new local run outputs）
+先完成模型安装与索引构建，在本项目目录运行现有正式脚本：
+```powershell
+# Retrieval：30题，每题默认3次；只输出新本地结果
+& ../nanobot/.venv/Scripts/python.exe -B scripts/evaluate_retrieval.py --config config.yaml --repeats 3
+# 插件 discovery、schema、直接调用及错误处理
+& ../nanobot/.venv/Scripts/python.exe -B scripts/verify_plugin.py
+# Agent smoke / demo：3题自主路由 + 1题forced structured transport
+& ../nanobot/.venv/Scripts/python.exe -B scripts/agent_smoke.py
+```
+新产物分别为 `artifacts/retrieval_recheck.json`、`artifacts/plugin_*.json`、`artifacts/v1_smoke/`，均被 Git 忽略；重复运行可能覆盖这些**本地新产物**，需要留档时先复制到另一个本地目录。不会覆盖 `docs/evidence/` 的 frozen historical metrics 或 Phase 1–3 原始记录。
+
+Retrieval 脚本检查索引指纹与 golden 一致性；不一致时停止，不要编辑 golden 或旧 baseline 绕过。插件验证也核对固定来源与分数；模型 tag、依赖或数据变化可能影响重建一致性。
+
+完整24题 Agent benchmark 成本高于 smoke，安装时不必每次重跑。Phase 3B 完整 trace 和过程脚本保留在 `docs/evidence/phase3b/`，属于历史证据，不是跨机器直接运行的正式入口；当前快速验证入口是上述 smoke。新 smoke 不替代或重算完整 benchmark 指标。
+
+历史 audit 与 phase records 保留生成时的仓库状态；“tag 尚未创建”等表述是历史快照，不代表当前仓库状态。
+Historical audit and phase records preserve the repository state at the time they were generated; statements such as “tag not yet created” are historical snapshots and do not describe the current repository state.
 
 ## Demo
 三个代表性题目及**实际**调用 trace 见 [DEMO](docs/DEMO.md)。Aurora 题历史上曾误读负责人；演示不隐藏失败、不保证每次生成相同。

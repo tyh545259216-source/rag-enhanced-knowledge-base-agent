@@ -23,3 +23,8 @@ models/
 /phase3b/
 eval/retrieval_baseline.json
 eval/search_results.json
+
+# 本机 nanobot / Provider 凭证，不忽略一般 JSON/YAML 配置
+.nanobot/
+/provider-config.json
+/provider-credentials.json
