@@ -2,7 +2,7 @@
 
 一个用于学习与面试讲解的本地 Agentic RAG 项目：将有来源记录的 RAG 组件改编为 Retriever，通过 nanobot 外部只读工具接入 Qwen，并分层评估检索、工具路由与最终回答。
 
-V1 标识：`v0.1-agentic-rag-baseline`。**9 个虚构资料块、30 道检索题、24 道路由题的小规模自建 baseline；不是生产级系统，也不是大规模性能结论。** 未上传 GitHub，本仓库不包含个人 Provider 配置或密钥。
+V1 标识：`v0.1-agentic-rag-baseline`。**9 个虚构资料块、30 道检索题、24 道路由题的小规模自建 baseline；不是生产级系统，也不是大规模性能结论。** 本仓库不包含个人 Provider 配置、密钥或本地二进制索引。
 
 ## Project Overview
 普通问题可以直接回答；依赖私有资料的问题由模型自主决定是否调用 `search_knowledge_base`。工具只返回证据，最终回答由 Qwen 生成。FAISS 总会返回近邻，Top-K 或高 score 不代表有答案。
