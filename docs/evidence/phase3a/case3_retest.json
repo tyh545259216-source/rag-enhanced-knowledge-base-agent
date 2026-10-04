@@ -1,0 +1,218 @@
+{
+  "timestamp": "2026-10-03T17:17:38.417659+08:00",
+  "registered": [
+    "search_knowledge_base"
+  ],
+  "provider_class": "OpenAICompatProvider",
+  "cases": [
+    {
+      "case": 3,
+      "question": "ORBIT-3 会议室最多容纳多少人？",
+      "requests": [
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "ORBIT-3 会议室最多容纳多少人？"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [
+            {
+              "id": "call_7jq7fh91",
+              "index": 0,
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "arguments": "{\"query\":\"ORBIT-3 会议室 最多容纳多少人\",\"top_k\":3}"
+              }
+            }
+          ],
+          "http_status": 200,
+          "headers_latency_ms": 564.8521000002802,
+          "wire_finish_reason": "tool_calls",
+          "latency_ms": 37205.0976999999
+        },
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "ORBIT-3 会议室最多容纳多少人？"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_7jq7fh91",
+                  "type": "function",
+                  "function": {
+                    "name": "search_knowledge_base",
+                    "arguments": "{\"query\": \"ORBIT-3 会议室 最多容纳多少人\", \"top_k\": 3}"
+                  }
+                }
+              ],
+              "reasoning_content": "好的，用户问的是ORBIT-3会议室最多能容纳多少人。首先我需要调用搜索知识库的功能，用用户的问题作为查询词，top_k设为3。然后根据返回的证据来回答，同时要区分项目负责人和验收负责人，如果证据中没有提到相关事实，就回答无法确定。\n\n首先，我需要确保正确调用搜索函数。用户的问题是关于会议室容量的，所以查询词应该是“ORBIT-3 会议室 最多容纳多少人”。然后设置top_k为3。接下来，等待搜索结果返回。\n\n假设搜索结果返回了三个证据条目，每个条目可能包含关于ORBIT-3会议室容量的信息。比如，可能有一个证据指出容量是100人，另一个可能提到不同情况下的容量，比如会议期间或不同时间段。需要仔细检查这些证据，看是否有明确的数字。\n\n如果三个证据中有一个明确的数字，比如100人，那么答案就是100人。如果有多个证据提到不同的数字，比如有的说100人，有的说150人，这时候需要看哪个更准确，或者是否有其他信息。但根据题目要求，如果证据中没有明确的事实，就回答无法确定。\n\n另外，需要区分项目负责人和验收负责人。如果证据中涉及到项目负责人的话，可能是指项目的容量限制，而验收负责人可能涉及验收时的容量标准。但用户的问题是关于会议室的容量，所以可能需要看是否有相关条目。\n\n假设搜索结果中有一个证据明确说明ORBIT-3会议室最多容纳100人，另一个可能提到不同情况下的容量，比如会议期间或不同时间段。但用户的问题没有指定时间，所以可能需要取一般情况下的数值。如果证据中没有明确的数字，就无法确定。\n\n现在，根据搜索结果，如果返回的证据中有明确的数字，比如100人，那么答案就是100人。如果没有，就回答无法确定。需要仔细检查返回的证据内容。"
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_7jq7fh91",
+              "name": "search_knowledge_base",
+              "content": "{\"results\": [{\"rank\": 1, \"text\": \"会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。\", \"source\": \"note_09.txt\", \"chunk_id\": \"note_09.txt:ptxt:000\", \"score\": 0.8953061103820801, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.6029368042945862, \"page\": null}, {\"rank\": 3, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.6015932559967041, \"page\": null}]}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [],
+          "http_status": 200,
+          "headers_latency_ms": 578.2349999990402,
+          "wire_finish_reason": "stop",
+          "latency_ms": 15787.883099999817
+        }
+      ],
+      "expected_top3": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.8676720857620239,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6072039604187012,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6053593158721924,
+          "page": null
+        }
+      ],
+      "parsed_tool_calls": [
+        {
+          "id": "call_7jq7fh91",
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "ORBIT-3 会议室 最多容纳多少人",
+            "top_k": 3
+          }
+        }
+      ],
+      "registry_tool_type": "_LegacyErrorPrefixTool",
+      "executed_arguments": {
+        "query": "ORBIT-3 会议室 最多容纳多少人",
+        "top_k": 3
+      },
+      "retrieval_latency_ms": 140.88619999893126,
+      "tool_result": {
+        "is_error": false,
+        "content": "{\"results\": [{\"rank\": 1, \"text\": \"会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。\", \"source\": \"note_09.txt\", \"chunk_id\": \"note_09.txt:ptxt:000\", \"score\": 0.8953061103820801, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.6029368042945862, \"page\": null}, {\"rank\": 3, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.6015932559967041, \"page\": null}]}"
+      },
+      "retriever_latency": {
+        "embedding_ms": 135.6591000003391,
+        "faiss_ms": 0.38359999962267466,
+        "total_ms": 136.06249999975262
+      },
+      "parsed_responses": [
+        {
+          "iteration": 0,
+          "finish_reason": "tool_calls",
+          "content": null
+        },
+        {
+          "iteration": 1,
+          "finish_reason": "stop",
+          "content": "根据当前资料无法确定ORBIT-3会议室的容纳人数。查询结果中未提及相关容量信息。"
+        }
+      ],
+      "final_answer": "根据当前资料无法确定ORBIT-3会议室的容纳人数。查询结果中未提及相关容量信息。",
+      "stop_reason": "completed",
+      "e2e_latency_ms": 54140.2663000008,
+      "second_roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "transport_correct": true,
+      "baseline_matches": false,
+      "integration_success": true
+    }
+  ],
+  "frozen_files_unchanged": true
+}

@@ -1,0 +1,7 @@
+data_dir: data
+store_dir: store
+embedding_model: nomic-embed-text
+base_url: http://localhost:11434
+chunk_size: 160
+overlap: 24
+timeout: 120

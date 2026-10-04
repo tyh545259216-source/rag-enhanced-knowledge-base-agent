@@ -1,0 +1,2862 @@
+{
+  "timestamp": "2026-10-03T16:49:18.065462+08:00",
+  "embedding_models": [
+    {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 274302450
+    }
+  ],
+  "dataset_version": "1.0",
+  "answerable_count": 20,
+  "no_answer_count": 10,
+  "repeats": 3,
+  "summary": {
+    "1": {
+      "hit_rate": 0.85,
+      "recall": 0.75,
+      "mrr": 0.85
+    },
+    "3": {
+      "hit_rate": 1.0,
+      "recall": 0.975,
+      "mrr": 0.925
+    },
+    "5": {
+      "hit_rate": 1.0,
+      "recall": 1.0,
+      "mrr": 0.925
+    }
+  },
+  "latency_ms": {
+    "embedding_ms": {
+      "n": 90,
+      "min": 101.02040000128909,
+      "max": 308.9354000003368,
+      "mean": 151.6503522221683,
+      "p50": 138.64449999982753,
+      "p95": 251.72672500075345
+    },
+    "faiss_ms": {
+      "n": 90,
+      "min": 0.1680999994277954,
+      "max": 0.6388000001606997,
+      "mean": 0.2807111110895575,
+      "p50": 0.24725000002945308,
+      "p95": 0.4926749996229771
+    },
+    "total_ms": {
+      "n": 90,
+      "min": 101.22000000046683,
+      "max": 309.37900000026275,
+      "mean": 151.94971888880295,
+      "p50": 138.88644999951794,
+      "p95": 252.1486399999048
+    },
+    "wall_ms": {
+      "n": 90,
+      "min": 101.22830000000249,
+      "max": 309.3920999999682,
+      "mean": 151.96032777771,
+      "p50": 138.89575000030163,
+      "p95": 252.1604199998364
+    }
+  },
+  "first_request_ms": {
+    "embedding_ms": 1021.8141000004834,
+    "faiss_ms": 0.44330000127956737,
+    "total_ms": 1022.2814000007929,
+    "wall_ms": 1022.291999999652
+  },
+  "score_distributions": {
+    "answerable_top1": {
+      "n": 20,
+      "min": 0.7728708982467651,
+      "max": 0.8922663927078247,
+      "mean": 0.8191294819116592,
+      "p50": 0.8137213587760925,
+      "p95": 0.8645640313625336
+    },
+    "no_answer_top1": {
+      "n": 10,
+      "min": 0.6016347408294678,
+      "max": 0.8676720857620239,
+      "mean": 0.7525326013565063,
+      "p50": 0.7923517525196075,
+      "p95": 0.8537318408489227
+    },
+    "no_answer_top5_all": {
+      "n": 50,
+      "min": 0.5313844680786133,
+      "max": 0.8676720857620239,
+      "mean": 0.6489169359207153,
+      "p50": 0.605316698551178,
+      "p95": 0.8148094832897186
+    }
+  },
+  "bad_cases": [
+    {
+      "id": "q01",
+      "query": "项目 Aurora 的负责人是谁？",
+      "kind": "top1_wrong",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.8631060123443604,
+        "page": null
+      }
+    },
+    {
+      "id": "q05",
+      "query": "Aurora 的预算金额和预算审批人是谁？",
+      "kind": "top1_wrong",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.8144516348838806,
+        "page": null
+      }
+    },
+    {
+      "id": "q19",
+      "query": "Aurora 和 Borealis 的负责人分别是谁？",
+      "kind": "top1_wrong",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.7914062142372131,
+        "page": null
+      }
+    },
+    {
+      "id": "q20",
+      "query": "Aurora 的预算是多少，日志保留几天？",
+      "kind": "partial_recall_at_3",
+      "missing_at_3": [
+        "note_03.txt:ptxt:000"
+      ],
+      "top1": {
+        "rank": 1,
+        "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+        "source": "note_06.txt",
+        "chunk_id": "note_06.txt:ptxt:000",
+        "score": 0.8109001517295837,
+        "page": null
+      }
+    },
+    {
+      "id": "q21",
+      "query": "火星殖民地的量子传送门密码是什么？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+        "source": "note_09.txt",
+        "chunk_id": "note_09.txt:ptxt:000",
+        "score": 0.6016347408294678,
+        "page": null
+      }
+    },
+    {
+      "id": "q22",
+      "query": "项目 Zephyr 的负责人是谁？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.6610639095306396,
+        "page": null
+      }
+    },
+    {
+      "id": "q23",
+      "query": "项目 Aurora 的负责人手机号码是多少？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.8366937637329102,
+        "page": null
+      }
+    },
+    {
+      "id": "q24",
+      "query": "Aurora 的预算审批日期是哪一天？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+        "source": "note_02.txt",
+        "chunk_id": "note_02.txt:ptxt:000",
+        "score": 0.7803177833557129,
+        "page": null
+      }
+    },
+    {
+      "id": "q25",
+      "query": "机器人 RB-204 的电池容量是多少？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+        "source": "note_05.txt",
+        "chunk_id": "note_05.txt:ptxt:000",
+        "score": 0.8184308409690857,
+        "page": null
+      }
+    },
+    {
+      "id": "q26",
+      "query": "服务器 SABLE-17 的管理员密码是什么？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+        "source": "note_06.txt",
+        "chunk_id": "note_06.txt:ptxt:000",
+        "score": 0.8043857216835022,
+        "page": null
+      }
+    },
+    {
+      "id": "q27",
+      "query": "NORTH-6 仓库的街道地址是什么？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+        "source": "note_08.txt",
+        "chunk_id": "note_08.txt:ptxt:000",
+        "score": 0.7358073592185974,
+        "page": null
+      }
+    },
+    {
+      "id": "q28",
+      "query": "ORBIT-3 会议室最多容纳多少人？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+        "source": "note_09.txt",
+        "chunk_id": "note_09.txt:ptxt:000",
+        "score": 0.8676720857620239,
+        "page": null
+      }
+    },
+    {
+      "id": "q29",
+      "query": "Cedar 的发布负责人邮箱是什么？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+        "source": "note_07.txt",
+        "chunk_id": "note_07.txt:ptxt:000",
+        "score": 0.8103833794593811,
+        "page": null
+      }
+    },
+    {
+      "id": "q30",
+      "query": "海王星空间站的咖啡配送频率是多少？",
+      "kind": "no_answer_returns_neighbors",
+      "missing_at_3": [],
+      "top1": {
+        "rank": 1,
+        "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+        "source": "note_09.txt",
+        "chunk_id": "note_09.txt:ptxt:000",
+        "score": 0.6089364290237427,
+        "page": null
+      }
+    }
+  ],
+  "queries": [
+    {
+      "id": "q01",
+      "query": "项目 Aurora 的负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8631060123443604,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.8168849349021912,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7932708263397217,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7865843772888184,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7424042224884033,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 143.2901000007405,
+          "faiss_ms": 0.3562000001693377,
+          "total_ms": 143.6680000006163,
+          "wall_ms": 143.6846999986301
+        },
+        {
+          "embedding_ms": 185.94819999998435,
+          "faiss_ms": 0.3352999992785044,
+          "total_ms": 186.30660000053467,
+          "wall_ms": 186.321000001044
+        },
+        {
+          "embedding_ms": 154.9163999989105,
+          "faiss_ms": 0.36330000148154795,
+          "total_ms": 155.30179999950633,
+          "wall_ms": 155.3135000012844
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "query": "Aurora 的内部代号和首次发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.8194644451141357,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7721889019012451,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7525798082351685,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7150812745094299,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6781011819839478,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 174.55710000103863,
+          "faiss_ms": 0.4073999989486765,
+          "total_ms": 174.9948000015138,
+          "wall_ms": 175.0121000004583
+        },
+        {
+          "embedding_ms": 168.30499999923632,
+          "faiss_ms": 0.262999999904423,
+          "total_ms": 168.58809999939695,
+          "wall_ms": 168.60040000028675
+        },
+        {
+          "embedding_ms": 167.2777000003407,
+          "faiss_ms": 0.29290000020409934,
+          "total_ms": 167.59120000097028,
+          "wall_ms": 167.6007000005484
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "query": "Aurora 的验收负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8480862379074097,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7970973253250122,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7845237255096436,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7747725248336792,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7330870032310486,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 144.85400000012305,
+          "faiss_ms": 0.45169999975769315,
+          "total_ms": 145.32730000064475,
+          "wall_ms": 145.3412999999273
+        },
+        {
+          "embedding_ms": 175.50260000098206,
+          "faiss_ms": 0.3693999988172436,
+          "total_ms": 175.8907999992516,
+          "wall_ms": 175.90130000098725
+        },
+        {
+          "embedding_ms": 147.06140000089363,
+          "faiss_ms": 0.23519999922427814,
+          "total_ms": 147.31290000054287,
+          "wall_ms": 147.3225999998249
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "query": "Aurora 验收要求机器人连续运行多久？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8570932149887085,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7859765887260437,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.778016209602356,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7690282464027405,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.721874475479126,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 191.05069999932311,
+          "faiss_ms": 0.38210000093386043,
+          "total_ms": 191.4575999999215,
+          "wall_ms": 191.4768999995431
+        },
+        {
+          "embedding_ms": 204.7671000000264,
+          "faiss_ms": 0.39000000106170774,
+          "total_ms": 205.18149999952584,
+          "wall_ms": 205.195200000162
+        },
+        {
+          "embedding_ms": 187.7848999993148,
+          "faiss_ms": 0.3336000008857809,
+          "total_ms": 188.13979999868025,
+          "wall_ms": 188.15099999847007
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "query": "Aurora 的预算金额和预算审批人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8144516348838806,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.783630907535553,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.781590461730957,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7680253386497498,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.72141432762146,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 303.28349999945203,
+          "faiss_ms": 0.38950000089243986,
+          "total_ms": 303.6964999992051,
+          "wall_ms": 303.71130000094126
+        },
+        {
+          "embedding_ms": 308.9354000003368,
+          "faiss_ms": 0.4160999997111503,
+          "total_ms": 309.37900000026275,
+          "wall_ms": 309.3920999999682
+        },
+        {
+          "embedding_ms": 223.19570000036038,
+          "faiss_ms": 0.4208999998809304,
+          "total_ms": 223.64529999867955,
+          "wall_ms": 223.65929999978107
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "query": "Aurora 的采购金额上限是多少？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7728708982467651,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7476077079772949,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7376349568367004,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6993505954742432,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6923279762268066,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 183.21620000097028,
+          "faiss_ms": 0.4242999984853668,
+          "total_ms": 183.665700000347,
+          "wall_ms": 183.68249999912223
+        },
+        {
+          "embedding_ms": 146.13180000014836,
+          "faiss_ms": 0.37399999928311445,
+          "total_ms": 146.52899999964575,
+          "wall_ms": 146.54200000040873
+        },
+        {
+          "embedding_ms": 161.90610000012384,
+          "faiss_ms": 0.3156000002491055,
+          "total_ms": 162.23900000113645,
+          "wall_ms": 162.24880000117992
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "query": "Borealis 的项目负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.8224977254867554,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6665873527526855,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.6639596819877625,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6629440188407898,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6341372132301331,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 167.11790000044857,
+          "faiss_ms": 0.281300001006457,
+          "total_ms": 167.41770000044198,
+          "wall_ms": 167.42970000086643
+        },
+        {
+          "embedding_ms": 145.99599999928614,
+          "faiss_ms": 0.5737999999837484,
+          "total_ms": 146.5965999996115,
+          "wall_ms": 146.60879999973986
+        },
+        {
+          "embedding_ms": 126.14410000060161,
+          "faiss_ms": 0.2943999988929136,
+          "total_ms": 126.45829999928537,
+          "wall_ms": 126.47060000017518
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "query": "Borealis 的内部代号和发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.804682195186615,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6932420134544373,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6891210079193115,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.6512875556945801,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.6383147835731506,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 119.32940000042436,
+          "faiss_ms": 0.229199999012053,
+          "total_ms": 119.57550000079209,
+          "wall_ms": 119.58659999982046
+        },
+        {
+          "embedding_ms": 135.50899999972899,
+          "faiss_ms": 0.20349999977042899,
+          "total_ms": 135.7279000003473,
+          "wall_ms": 135.7358999994176
+        },
+        {
+          "embedding_ms": 129.22099999923375,
+          "faiss_ms": 0.24309999935212545,
+          "total_ms": 129.48030000006838,
+          "wall_ms": 129.48749999850406
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "query": "机器人 RB-204 的维护负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.8209391236305237,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7890670895576477,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6053934693336487,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5991635322570801,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.57053542137146,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 131.37839999944845,
+          "faiss_ms": 0.24160000066331122,
+          "total_ms": 131.63650000024063,
+          "wall_ms": 131.64669999969192
+        },
+        {
+          "embedding_ms": 123.60139999873354,
+          "faiss_ms": 0.21190000006754417,
+          "total_ms": 123.82919999981823,
+          "wall_ms": 123.83679999948072
+        },
+        {
+          "embedding_ms": 134.2075999982626,
+          "faiss_ms": 0.5361000003176741,
+          "total_ms": 134.76469999841356,
+          "wall_ms": 134.77400000010675
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "query": "RB-204 每周什么时候检查？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7879576086997986,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7307531833648682,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5892626047134399,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.5762275457382202,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.5666120052337646,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 131.89779999993334,
+          "faiss_ms": 0.30140000126266386,
+          "total_ms": 132.2190999999293,
+          "wall_ms": 132.2331999999733
+        },
+        {
+          "embedding_ms": 145.73320000090462,
+          "faiss_ms": 0.34869999944930896,
+          "total_ms": 146.1042000009911,
+          "wall_ms": 146.11449999938486
+        },
+        {
+          "embedding_ms": 138.49049999953422,
+          "faiss_ms": 0.19120000069960952,
+          "total_ms": 138.69379999960074,
+          "wall_ms": 138.70330000099784
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "query": "Aurora 验收日志存在哪台服务器，保留多少天？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7965136766433716,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7798576951026917,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7395637035369873,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7142384648323059,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7010443210601807,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 129.8045000003185,
+          "faiss_ms": 0.20739999854413327,
+          "total_ms": 130.02679999954125,
+          "wall_ms": 130.0357999989501
+        },
+        {
+          "embedding_ms": 308.41120000150113,
+          "faiss_ms": 0.3105999985564267,
+          "total_ms": 308.7442000014562,
+          "wall_ms": 308.7541000004421
+        },
+        {
+          "embedding_ms": 202.69460000054096,
+          "faiss_ms": 0.24979999943752773,
+          "total_ms": 202.95880000048783,
+          "wall_ms": 202.9684000008274
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "query": "服务器 SABLE-17 的负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.8225749135017395,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.632512092590332,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6153958439826965,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.6089474558830261,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6051473617553711,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 128.69560000035563,
+          "faiss_ms": 0.1995999991777353,
+          "total_ms": 128.90879999940807,
+          "wall_ms": 128.91800000033982
+        },
+        {
+          "embedding_ms": 166.95549999894865,
+          "faiss_ms": 0.3183999997418141,
+          "total_ms": 167.2917999985657,
+          "wall_ms": 167.29950000080862
+        },
+        {
+          "embedding_ms": 143.44709999932093,
+          "faiss_ms": 0.18230000023322646,
+          "total_ms": 143.64209999985178,
+          "wall_ms": 143.64980000027572
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "query": "Cedar 的发布负责人和发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_07.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.8129910826683044,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6540156602859497,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6352729797363281,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6169489622116089,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6081746816635132,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 130.56959999994433,
+          "faiss_ms": 0.2531000009184936,
+          "total_ms": 130.83950000145705,
+          "wall_ms": 130.84919999892008
+        },
+        {
+          "embedding_ms": 275.48659999956726,
+          "faiss_ms": 0.3920999988622498,
+          "total_ms": 275.90459999919403,
+          "wall_ms": 275.91559999927995
+        },
+        {
+          "embedding_ms": 170.06899999978486,
+          "faiss_ms": 0.21600000036414713,
+          "total_ms": 170.3068999995594,
+          "wall_ms": 170.31739999947604
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "query": "NORTH-6 仓库的管理员和盘点日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_08.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.8085468411445618,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6599255204200745,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.6501216888427734,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6499848961830139,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6267281770706177,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 128.8590000003751,
+          "faiss_ms": 0.3405999996175524,
+          "total_ms": 129.21660000029078,
+          "wall_ms": 129.22660000003816
+        },
+        {
+          "embedding_ms": 130.01310000072408,
+          "faiss_ms": 0.1922999999806052,
+          "total_ms": 130.21909999952186,
+          "wall_ms": 130.22799999998824
+        },
+        {
+          "embedding_ms": 113.02449999857345,
+          "faiss_ms": 0.2024000004894333,
+          "total_ms": 113.24169999898004,
+          "wall_ms": 113.2553999996162
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "query": "ORBIT-3 会议室由谁预约管理，几点开放？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_09.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.8922663927078247,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5832842588424683,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.5781587362289429,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5731102228164673,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.5717601776123047,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 159.07289999995555,
+          "faiss_ms": 0.3732999994099373,
+          "total_ms": 159.46970000004512,
+          "wall_ms": 159.48220000063884
+        },
+        {
+          "embedding_ms": 171.84610000003886,
+          "faiss_ms": 0.24470000062137842,
+          "total_ms": 172.1073000007891,
+          "wall_ms": 172.11800000040967
+        },
+        {
+          "embedding_ms": 179.65889999868523,
+          "faiss_ms": 0.22760000138077885,
+          "total_ms": 179.90009999994072,
+          "wall_ms": 179.90939999981492
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "query": "Aurora 的项目负责人和验收负责人分别是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000",
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "需要区分项目负责人和验收负责人。",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8477428555488586,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.8111541867256165,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7825903296470642,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7782977223396301,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7182188630104065,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 133.212699998694,
+          "faiss_ms": 0.20880000010947697,
+          "total_ms": 133.43519999943965,
+          "wall_ms": 133.4450000013021
+        },
+        {
+          "embedding_ms": 164.13090000060038,
+          "faiss_ms": 0.2268999996886123,
+          "total_ms": 164.3738000002486,
+          "wall_ms": 164.38320000088424
+        },
+        {
+          "embedding_ms": 144.23530000021856,
+          "faiss_ms": 0.281300001006457,
+          "total_ms": 144.5346000000427,
+          "wall_ms": 144.54289999957837
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "query": "Aurora 的验收要求是什么，日志存放在哪里？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8031427264213562,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.8011999726295471,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7593857645988464,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7113392353057861,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6957784295082092,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 147.44690000043192,
+          "faiss_ms": 0.19629999951575883,
+          "total_ms": 147.65780000016093,
+          "wall_ms": 147.66699999927368
+        },
+        {
+          "embedding_ms": 167.05990000082238,
+          "faiss_ms": 0.36100000033911783,
+          "total_ms": 167.44509999989532,
+          "wall_ms": 167.45429999900807
+        },
+        {
+          "embedding_ms": 135.96319999851403,
+          "faiss_ms": 0.20089999998162966,
+          "total_ms": 136.17949999934353,
+          "wall_ms": 136.18900000074063
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "query": "机器人 RB-204 由谁维护，需要连续运行多久才满足验收？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000",
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7853556871414185,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7836014032363892,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.6055623888969421,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.5762696266174316,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.5692285299301147,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 149.53040000000328,
+          "faiss_ms": 0.2162000000680564,
+          "total_ms": 149.76299999943876,
+          "wall_ms": 149.77259999977832
+        },
+        {
+          "embedding_ms": 147.61059999909776,
+          "faiss_ms": 0.2647000001161359,
+          "total_ms": 147.8941000004852,
+          "wall_ms": 147.9032000006555
+        },
+        {
+          "embedding_ms": 138.6473999991722,
+          "faiss_ms": 0.24370000028284267,
+          "total_ms": 138.90749999882246,
+          "wall_ms": 138.91619999958493
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "query": "Aurora 和 Borealis 的负责人分别是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000",
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7914062142372131,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7675668001174927,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.7468612790107727,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.732990562915802,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7296308279037476,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 0.0,
+          "recall": 0.0,
+          "mrr": 0.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 0.5
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 138.64160000048287,
+          "faiss_ms": 0.20840000070165843,
+          "total_ms": 138.8654000002134,
+          "wall_ms": 138.87530000101833
+        },
+        {
+          "embedding_ms": 116.00239999825135,
+          "faiss_ms": 0.2585000002000015,
+          "total_ms": 116.27929999849584,
+          "wall_ms": 116.28730000120413
+        },
+        {
+          "embedding_ms": 135.70509999954083,
+          "faiss_ms": 0.22630000057688449,
+          "total_ms": 135.9467999991466,
+          "wall_ms": 135.95560000067053
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "query": "Aurora 的预算是多少，日志保留几天？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.8109001517295837,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7797563672065735,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7366690635681152,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7041572332382202,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6814185380935669,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.5,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 128.8083999988885,
+          "faiss_ms": 0.1869000006990973,
+          "total_ms": 129.00769999941986,
+          "wall_ms": 129.01590000001306
+        },
+        {
+          "embedding_ms": 128.84720000147354,
+          "faiss_ms": 0.2671999991434859,
+          "total_ms": 129.13600000138103,
+          "wall_ms": 129.14459999956307
+        },
+        {
+          "embedding_ms": 116.32409999947413,
+          "faiss_ms": 0.21209999977145344,
+          "total_ms": 116.55189999873983,
+          "wall_ms": 116.55969999992521
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "query": "火星殖民地的量子传送门密码是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_far",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.6016347408294678,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5997387766838074,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.5944418907165527,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.5914493799209595,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5569865107536316,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 139.8382000006677,
+          "faiss_ms": 0.17689999913272914,
+          "total_ms": 140.0274999996327,
+          "wall_ms": 140.03539999976056
+        },
+        {
+          "embedding_ms": 142.6391999993939,
+          "faiss_ms": 0.22429999989981297,
+          "total_ms": 142.87859999967623,
+          "wall_ms": 142.8859999996348
+        },
+        {
+          "embedding_ms": 137.3872999993182,
+          "faiss_ms": 0.207500001124572,
+          "total_ms": 137.60980000006384,
+          "wall_ms": 137.61840000006487
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "query": "项目 Zephyr 的负责人是谁？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "知识库不存在该项目。",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6610639095306396,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.6459554433822632,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6377446055412292,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6317152976989746,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6159554719924927,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 107.58209999949031,
+          "faiss_ms": 0.25600000117265154,
+          "total_ms": 107.85530000066501,
+          "wall_ms": 107.86499999994703
+        },
+        {
+          "embedding_ms": 117.54459999974642,
+          "faiss_ms": 0.17730000035953708,
+          "total_ms": 117.73390000053041,
+          "wall_ms": 117.74229999900854
+        },
+        {
+          "embedding_ms": 104.09789999903296,
+          "faiss_ms": 0.21270000070217066,
+          "total_ms": 104.32799999944109,
+          "wall_ms": 104.33649999868067
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "query": "项目 Aurora 的负责人手机号码是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "存在负责人姓名，但没有手机号。",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8366937637329102,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7924433946609497,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.766834020614624,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.7566016912460327,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7168043851852417,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 115.48799999945913,
+          "faiss_ms": 0.27550000049814116,
+          "total_ms": 115.78489999919839,
+          "wall_ms": 115.79769999843847
+        },
+        {
+          "embedding_ms": 107.7648999998928,
+          "faiss_ms": 0.20179999955871608,
+          "total_ms": 107.97959999945306,
+          "wall_ms": 107.98909999903117
+        },
+        {
+          "embedding_ms": 103.79180000018096,
+          "faiss_ms": 0.2127999996446306,
+          "total_ms": 104.01829999864276,
+          "wall_ms": 104.02559999965888
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "query": "Aurora 的预算审批日期是哪一天？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "有金额和审批人，没有审批日期。",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7803177833557129,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7662389874458313,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.7440240383148193,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.717788577079773,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.6882196664810181,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 105.0450999991881,
+          "faiss_ms": 0.17020000086631626,
+          "total_ms": 105.2319999998872,
+          "wall_ms": 105.2414999994653
+        },
+        {
+          "embedding_ms": 118.90630000016245,
+          "faiss_ms": 0.1779000012902543,
+          "total_ms": 119.12520000078075,
+          "wall_ms": 119.14000000069791
+        },
+        {
+          "embedding_ms": 122.17249999957858,
+          "faiss_ms": 0.1895000004878966,
+          "total_ms": 122.3747000003641,
+          "wall_ms": 122.38350000006903
+        }
+      ]
+    },
+    {
+      "id": "q25",
+      "query": "机器人 RB-204 的电池容量是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.8184308409690857,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.7808358073234558,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5964219570159912,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.5931919813156128,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5602297782897949,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 101.02040000128909,
+          "faiss_ms": 0.18659999841474928,
+          "total_ms": 101.22000000046683,
+          "wall_ms": 101.22830000000249
+        },
+        {
+          "embedding_ms": 109.43370000131836,
+          "faiss_ms": 0.1959000001079403,
+          "total_ms": 109.64270000113174,
+          "wall_ms": 109.64969999986351
+        },
+        {
+          "embedding_ms": 125.19170000086888,
+          "faiss_ms": 0.17719999959808774,
+          "total_ms": 125.38150000000314,
+          "wall_ms": 125.38820000008855
+        }
+      ]
+    },
+    {
+      "id": "q26",
+      "query": "服务器 SABLE-17 的管理员密码是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.8043857216835022,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.5767478942871094,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "机器人 RB-204 的维护负责人是孟溪，每周三 16 点检查；它属于 Aurora 验收设备。",
+          "source": "note_05.txt",
+          "chunk_id": "note_05.txt:ptxt:000",
+          "score": 0.5766712427139282,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.5702414512634277,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5666218996047974,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 126.17179999870132,
+          "faiss_ms": 0.6388000001606997,
+          "total_ms": 126.86140000005253,
+          "wall_ms": 126.88909999997122
+        },
+        {
+          "embedding_ms": 158.19360000023153,
+          "faiss_ms": 0.2746999998635147,
+          "total_ms": 158.4822000004351,
+          "wall_ms": 158.49809999963327
+        },
+        {
+          "embedding_ms": 150.16380000088247,
+          "faiss_ms": 0.27149999914399814,
+          "total_ms": 150.45199999985925,
+          "wall_ms": 150.45999999892956
+        }
+      ]
+    },
+    {
+      "id": "q27",
+      "query": "NORTH-6 仓库的街道地址是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.7358073592185974,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5920579433441162,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.5858590602874756,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.549207866191864,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.5313844680786133,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 133.78149999880407,
+          "faiss_ms": 0.35370000114198774,
+          "total_ms": 134.15689999965252,
+          "wall_ms": 134.17159999880823
+        },
+        {
+          "embedding_ms": 126.89139999929466,
+          "faiss_ms": 0.2947000011772616,
+          "total_ms": 127.20040000021982,
+          "wall_ms": 127.21079999937501
+        },
+        {
+          "embedding_ms": 113.32130000118923,
+          "faiss_ms": 0.17349999870930333,
+          "total_ms": 113.50630000015371,
+          "wall_ms": 113.51339999964694
+        }
+      ]
+    },
+    {
+      "id": "q28",
+      "query": "ORBIT-3 会议室最多容纳多少人？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.8676720857620239,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6072039604187012,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6053593158721924,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.6052740812301636,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.6024023294448853,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 133.68679999985034,
+          "faiss_ms": 0.2227000004495494,
+          "total_ms": 133.92319999911706,
+          "wall_ms": 133.93120000000636
+        },
+        {
+          "embedding_ms": 115.97670000082871,
+          "faiss_ms": 0.1680999994277954,
+          "total_ms": 116.15720000008878,
+          "wall_ms": 116.16379999941273
+        },
+        {
+          "embedding_ms": 149.72649999981513,
+          "faiss_ms": 0.5261999995127553,
+          "total_ms": 150.28130000064266,
+          "wall_ms": 150.29230000072857
+        }
+      ]
+    },
+    {
+      "id": "q29",
+      "query": "Cedar 的发布负责人邮箱是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "项目 Cedar 的发布负责人是沈禾，计划 2027 年 4 月 12 日发布，代号 CE-808。",
+          "source": "note_07.txt",
+          "chunk_id": "note_07.txt:ptxt:000",
+          "score": 0.8103833794593811,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Borealis 的负责人是许舟，内部代号 BO-415，发布日期为 2027 年 2 月 9 日。",
+          "source": "note_04.txt",
+          "chunk_id": "note_04.txt:ptxt:000",
+          "score": 0.6196517944335938,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5828599333763123,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.5738371014595032,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.5696237683296204,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 240.24520000057237,
+          "faiss_ms": 0.2133999987563584,
+          "total_ms": 240.47500000051514,
+          "wall_ms": 240.4869999991206
+        },
+        {
+          "embedding_ms": 123.70179999925313,
+          "faiss_ms": 0.21840000044903718,
+          "total_ms": 123.93509999856178,
+          "wall_ms": 123.9439000000857
+        },
+        {
+          "embedding_ms": 126.36340000062773,
+          "faiss_ms": 0.20319999930507038,
+          "total_ms": 126.5810999993846,
+          "wall_ms": 126.58860000010463
+        }
+      ]
+    },
+    {
+      "id": "q30",
+      "query": "海王星空间站的咖啡配送频率是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_far",
+      "annotation": "",
+      "results": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.6089364290237427,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.5715331435203552,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "内部仓库 NORTH-6 的管理员是何青，盘点时间为每月 6 日，库存编号 ST-990。",
+          "source": "note_08.txt",
+          "chunk_id": "note_08.txt:ptxt:000",
+          "score": 0.5634756088256836,
+          "page": null
+        },
+        {
+          "rank": 4,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.5613189935684204,
+          "page": null
+        },
+        {
+          "rank": 5,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.5555672645568848,
+          "page": null
+        }
+      ],
+      "metrics": {
+        "1": null,
+        "3": null,
+        "5": null
+      },
+      "latency_runs": [
+        {
+          "embedding_ms": 133.12750000113738,
+          "faiss_ms": 0.1925999986269744,
+          "total_ms": 133.33400000010442,
+          "wall_ms": 133.34369999938644
+        },
+        {
+          "embedding_ms": 261.1207000009017,
+          "faiss_ms": 0.5520999984582886,
+          "total_ms": 261.6997999994055,
+          "wall_ms": 261.71140000042215
+        },
+        {
+          "embedding_ms": 166.7715000003227,
+          "faiss_ms": 0.2722000008361647,
+          "total_ms": 167.06239999984973,
+          "wall_ms": 167.0739000001049
+        }
+      ]
+    }
+  ],
+  "unchanged_fingerprints": {
+    "src\\knowledge_base_agent\\ingest.py": "0c9b9060ffec94491a1a6e8317bc8e725a3b4c773c46d96d5ae396122307cae3",
+    "src\\knowledge_base_agent\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src\\knowledge_base_agent\\rag\\adapter.py": "da85646c77cbe6d1906d37043dd0b6c13bbd6086ff0c6f64e7986f7b56a6aadd",
+    "src\\knowledge_base_agent\\rag\\config.py": "80927c4e166e1197940c280a465884e3ec2befbbcfac2e121cc4a5928abd718d",
+    "src\\knowledge_base_agent\\rag\\retriever.py": "2d740d61c78ddcc76f5de40bea39a929d2f26642dbe53ad35ffc29556ab5faab",
+    "src\\knowledge_base_agent\\rag\\schemas.py": "705b561c5df20a60d85a510d848beea2be2c5eea4ad6498ec8c1463a33264266",
+    "src\\knowledge_base_agent\\rag\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src\\knowledge_base_agent\\vendor\\ollama_embeddings.py": "6dc012f78d80b90754c1aa760301cf44cbe926c92e969d2905c3b81d81abf2e4",
+    "src\\knowledge_base_agent\\vendor\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src\\knowledge_base_agent\\vendor\\rag_core\\chunker.py": "282fe4c75c22f9d370ae9e67e1aeac18c43749bb1756f925d0cedee24d9663be",
+    "src\\knowledge_base_agent\\vendor\\rag_core\\extractor.py": "1a51554b2275afe4c425ea3d338d430b43b45e760b3b17577bc7a07c920877ec",
+    "src\\knowledge_base_agent\\vendor\\rag_core\\faiss_store.py": "e00319adcbae8890f4be2a015fd27e8755e5cae5f8237cc42fdb4dcbce617d0d",
+    "src\\knowledge_base_agent\\vendor\\rag_core\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data\\note_01.txt": "33f00dddbb1082980b3b5a0cc2d142933ed658ab595f419796e5a7690bd17511",
+    "data\\note_02.txt": "0f35634e733efd9907e95424e47828cff4885862093984bb33ecdf48483bc773",
+    "data\\note_03.txt": "642bd7758db7b1018699a46143a66f07beadde86a9c767345b5cba2e55fdaf5d",
+    "data\\note_04.txt": "d55f87badcf390602278140e1dd8d14b64b9759f2984ae1cbb2394591fccd37a",
+    "data\\note_05.txt": "f4138931d20ac8898eb24b205c2145d106e7180428242a19a36997a430c6e0d7",
+    "data\\note_06.txt": "6091abdc8ffd3d57da4fe423bcfdb1560a43a1df64140bcf1ce481c6a895e907",
+    "data\\note_07.txt": "55dd8bdd8a99768aaa22c47fe730bc341f41b6aa1e6009f6c5d970c9a63b4554",
+    "data\\note_08.txt": "b84ddd31121f22f032d94383ad82f5d0058aa62a68466e9dd25a7a89209fddb0",
+    "data\\note_09.txt": "b25e744efdeba068a265992df2be96cc5e1c0a65284ea09ac0b8f90f8783b6da",
+    "store\\index.faiss": "04ba1c866a0a533e04706bf381b68c90f879b68c11aefbe2fc78bb0b604c6a77",
+    "store\\index_info.json": "ea6994f07dffaf49c06ef78c7a9c30a00e04c45700bf4ca0cd3b875803e45f72",
+    "store\\metadata.json": "b282a5bf4cecb377dacd196fe5a58056272928db462a7849ef5a65e55c86b93a",
+    "config.yaml": "9a6429a857b71f9dd8500636e8c7d9479af2ea4aab1d8e886f553450d8e2cb08"
+  }
+}

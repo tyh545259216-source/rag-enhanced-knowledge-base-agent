@@ -1,0 +1,75 @@
+{
+  "original_regression_tests": {
+    "unit": 35,
+    "real_embedding_integration": 2,
+    "plugin_tests": 11,
+    "routing_metric_tests": 3,
+    "total": 51,
+    "passed": 51,
+    "failed": 0
+  },
+  "fresh_export_rag_tests": {
+    "passed": 37,
+    "pip_check": true,
+    "fresh_venv": true,
+    "fresh_ingest_reload_topk_equals_baseline": true,
+    "scope": "RAG installation in a clean venv; nanobot runtime/plugin and model smoke use previously installed fixed-commit runtime."
+  },
+  "structured_smoke": {
+    "forced_cases": 1,
+    "transport_success": true
+  },
+  "autonomous_smoke": {
+    "cases": 3,
+    "expected_routing_matched": 3
+  },
+  "all_smoke_requests_http_200": true,
+  "all_smoke_cases": [
+    {
+      "id": "r01",
+      "question": "你好！",
+      "expected_tool": null,
+      "actual_tools": [],
+      "request_count": 1,
+      "e2e_seconds": 16.23739929999988,
+      "final_answer": "您好！有什么可以帮助您的吗？"
+    },
+    {
+      "id": "r07",
+      "question": "项目 Aurora 的负责人是谁？",
+      "expected_tool": "search_knowledge_base",
+      "actual_tools": [
+        "search_knowledge_base"
+      ],
+      "request_count": 2,
+      "e2e_seconds": 109.48019990000013,
+      "final_answer": "根据搜索结果，项目Aurora的负责人存在不同表述：\n\n1. **林澈**（内部代号AU-731）：首次内部发布日期为2026年11月18日，明确指出其为项目负责人。\n2. **周岚**：作为验收负责人，负责机器人RB-204的连续运行及日志提交，但未明确说明其是否为项目整体负责人。\n\n由于不同资料的表述存在差异（如林澈与周岚的职责分工），需结合具体上下文判断。若问题指向项目整体负责人，最直接的表述为**林澈**；若关注验收相关职责，则为**周岚**。但根据常规项目管理逻辑，**林澈**更可能为项目整体负责人。"
+    },
+    {
+      "id": "r23",
+      "question": "ORBIT-3 会议室最多容纳多少人？",
+      "expected_tool": "search_knowledge_base",
+      "actual_tools": [
+        "search_knowledge_base"
+      ],
+      "request_count": 2,
+      "e2e_seconds": 65.72961989999999,
+      "final_answer": "无法确定ORBIT-3会议室的容纳人数。提供的知识库信息中未提及该会议室的容量数据，相关资料仅涉及其他项目（如Aurora、Borealis等）的管理信息或日志记录，未包含关于ORBIT-3容量的描述。"
+    },
+    {
+      "id": "forced-smoke",
+      "question": "请先调用 search_knowledge_base 查询知识库，然后回答：项目 Aurora 的负责人是谁？",
+      "expected_tool": "search_knowledge_base",
+      "actual_tools": [
+        "search_knowledge_base"
+      ],
+      "request_count": 2,
+      "e2e_seconds": 58.93372010000007,
+      "final_answer": "根据知识库检索结果，项目Aurora的负责人是**林澈**，其内部代号为AU-731，首次内部发布日期为2026年11月18日。该信息来源于资料片段note_01.txt（score: 0.6495131254196167）。\n\n其他相关条目中提到的验收负责人周岚、维护负责人孟溪等角色，属于项目管理中的不同职责范畴，与项目总体负责人无关。"
+    }
+  ],
+  "model_quality_notes": "Autonomous Aurora answer names Lin Che but hedges role interpretation. ORBIT-3 abstains but inaccurately describes evidence as only other projects. Integration success is separate from answer quality.",
+  "nanobot_core_git_clean": true,
+  "original_frozen_files_changed": [],
+  "test_count_note": "51 original checks +37 clean-export reruns=88 test executions; four model smoke cases reported separately, not added as unit tests."
+}

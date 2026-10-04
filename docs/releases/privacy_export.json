@@ -1,0 +1,17 @@
+{
+  "originals_preserved": true,
+  "path_redacted_files": [
+    "phase2/README.md",
+    "phase2/test_tool.py",
+    "phase3a/case3_retest.json",
+    "phase3a/REPORT.md",
+    "phase3a/trace.json",
+    "phase3b/frozen_after.json",
+    "phase3b/frozen_before.json",
+    "phase3b/run_routing.py",
+    "phase3b/trace.json"
+  ],
+  "credential_values_not_exported_from_nanobot_config": true,
+  "index_bytes": 27693,
+  "index_published": false
+}

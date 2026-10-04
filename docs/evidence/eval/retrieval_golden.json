@@ -1,0 +1,292 @@
+{
+  "version": "1.0",
+  "annotation_basis": "依据当前九段资料人工定义相关 chunk；multi 需要列出的所有证据；no-answer 相关集合为空，即使存在同实体背景块。非独立留出集。",
+  "index_info_sha256": "ea6994f07dffaf49c06ef78c7a9c30a00e04c45700bf4ca0cd3b875803e45f72",
+  "items": [
+    {
+      "id": "q01",
+      "query": "项目 Aurora 的负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q02",
+      "query": "Aurora 的内部代号和首次发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q03",
+      "query": "Aurora 的验收负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q04",
+      "query": "Aurora 验收要求机器人连续运行多久？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q05",
+      "query": "Aurora 的预算金额和预算审批人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q06",
+      "query": "Aurora 的采购金额上限是多少？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q07",
+      "query": "Borealis 的项目负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q08",
+      "query": "Borealis 的内部代号和发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q09",
+      "query": "机器人 RB-204 的维护负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q10",
+      "query": "RB-204 每周什么时候检查？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q11",
+      "query": "Aurora 验收日志存在哪台服务器，保留多少天？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q12",
+      "query": "服务器 SABLE-17 的负责人是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q13",
+      "query": "Cedar 的发布负责人和发布日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_07.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q14",
+      "query": "NORTH-6 仓库的管理员和盘点日期是什么？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_08.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q15",
+      "query": "ORBIT-3 会议室由谁预约管理，几点开放？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_09.txt:ptxt:000"
+      ],
+      "category": "single",
+      "annotation": ""
+    },
+    {
+      "id": "q16",
+      "query": "Aurora 的项目负责人和验收负责人分别是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000",
+        "note_02.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": "需要区分项目负责人和验收负责人。"
+    },
+    {
+      "id": "q17",
+      "query": "Aurora 的验收要求是什么，日志存放在哪里？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": ""
+    },
+    {
+      "id": "q18",
+      "query": "机器人 RB-204 由谁维护，需要连续运行多久才满足验收？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_02.txt:ptxt:000",
+        "note_05.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": ""
+    },
+    {
+      "id": "q19",
+      "query": "Aurora 和 Borealis 的负责人分别是谁？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_01.txt:ptxt:000",
+        "note_04.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": ""
+    },
+    {
+      "id": "q20",
+      "query": "Aurora 的预算是多少，日志保留几天？",
+      "answerable": true,
+      "relevant_chunk_ids": [
+        "note_03.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ],
+      "category": "multi",
+      "annotation": ""
+    },
+    {
+      "id": "q21",
+      "query": "火星殖民地的量子传送门密码是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_far",
+      "annotation": ""
+    },
+    {
+      "id": "q22",
+      "query": "项目 Zephyr 的负责人是谁？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "知识库不存在该项目。"
+    },
+    {
+      "id": "q23",
+      "query": "项目 Aurora 的负责人手机号码是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "存在负责人姓名，但没有手机号。"
+    },
+    {
+      "id": "q24",
+      "query": "Aurora 的预算审批日期是哪一天？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": "有金额和审批人，没有审批日期。"
+    },
+    {
+      "id": "q25",
+      "query": "机器人 RB-204 的电池容量是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": ""
+    },
+    {
+      "id": "q26",
+      "query": "服务器 SABLE-17 的管理员密码是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": ""
+    },
+    {
+      "id": "q27",
+      "query": "NORTH-6 仓库的街道地址是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": ""
+    },
+    {
+      "id": "q28",
+      "query": "ORBIT-3 会议室最多容纳多少人？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": ""
+    },
+    {
+      "id": "q29",
+      "query": "Cedar 的发布负责人邮箱是什么？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_near",
+      "annotation": ""
+    },
+    {
+      "id": "q30",
+      "query": "海王星空间站的咖啡配送频率是多少？",
+      "answerable": false,
+      "relevant_chunk_ids": [],
+      "category": "no_answer_far",
+      "annotation": ""
+    }
+  ]
+}

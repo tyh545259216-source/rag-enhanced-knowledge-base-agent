@@ -1,0 +1,6 @@
+{
+  "candidate_files": 100,
+  "findings": [],
+  "large_files_over_5MB": [],
+  "scope": "Git candidate content, no secret values printed; .venv/logs/IDE/store/raw local evidence ignored. Heuristic scan, not a secret-free guarantee."
+}

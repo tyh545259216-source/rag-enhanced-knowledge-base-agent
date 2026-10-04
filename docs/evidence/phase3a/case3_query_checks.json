@@ -1,0 +1,5 @@
+{
+  "actual_query": "ORBIT-3 会议室 最多容纳多少人",
+  "actual_query_reproduces_tool_result": true,
+  "canonical_query_matches_frozen_baseline": true
+}

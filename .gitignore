@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.idea/
+*.pyc
+*.log
+.env
+.env.*
+!.env.example
+*.key
+*.token
+*.egg-info/
+build/
+dist/
+artifacts/
+store/*
+!store/.gitkeep
+.ollama/
+models/
+# 原始本机证据保持原样；公开脱敏副本在 docs/evidence/
+/phase2/
+/phase3a/
+/phase3b/
+eval/retrieval_baseline.json
+eval/search_results.json

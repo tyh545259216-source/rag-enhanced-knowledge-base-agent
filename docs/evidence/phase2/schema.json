@@ -1,0 +1,27 @@
+{
+  "type": "function",
+  "function": {
+    "name": "search_knowledge_base",
+    "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Knowledge base search query"
+        },
+        "top_k": {
+          "type": "integer",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

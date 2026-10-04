@@ -1,0 +1,135 @@
+{
+  "version_identifier": "v0.1-agentic-rag-baseline",
+  "git_commit": null,
+  "git_tag_created": false,
+  "git_status_note": "Repository initialized; author identity pending. Content manifest is fixed independently of commit hash.",
+  "python": "3.12.14",
+  "nanobot_version": "0.3.5",
+  "nanobot_commit": "66f5f2df15455b34fc22e656bdc1ef3d4f32e328",
+  "upstreams": {
+    "rag-from-scratch": "4c4e039177ce2a7ac475339cff7a1187a6fd68bf",
+    "ollama-local-rag-demo": "2d4a5d30b4a4829a007b8132e11cea71282a83d7"
+  },
+  "ollama_version": "0.35.1",
+  "models": [
+    {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 274302450
+    },
+    {
+      "name": "qwen3:1.7b",
+      "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+      "size": 1359293444
+    }
+  ],
+  "faiss": {
+    "type": "IndexFlatIP",
+    "dimension": 768,
+    "ntotal": 9,
+    "normalized": true
+  },
+  "retrieval": {
+    "answerable_count": 20,
+    "no_answer_count": 10,
+    "summary": {
+      "1": {
+        "hit_rate": 0.85,
+        "recall": 0.75,
+        "mrr": 0.85
+      },
+      "3": {
+        "hit_rate": 1.0,
+        "recall": 0.975,
+        "mrr": 0.925
+      },
+      "5": {
+        "hit_rate": 1.0,
+        "recall": 1.0,
+        "mrr": 0.925
+      }
+    },
+    "latency_ms": {
+      "embedding_ms": {
+        "n": 90,
+        "min": 101.02040000128909,
+        "max": 308.9354000003368,
+        "mean": 151.6503522221683,
+        "p50": 138.64449999982753,
+        "p95": 251.72672500075345
+      },
+      "faiss_ms": {
+        "n": 90,
+        "min": 0.1680999994277954,
+        "max": 0.6388000001606997,
+        "mean": 0.2807111110895575,
+        "p50": 0.24725000002945308,
+        "p95": 0.4926749996229771
+      },
+      "total_ms": {
+        "n": 90,
+        "min": 101.22000000046683,
+        "max": 309.37900000026275,
+        "mean": 151.94971888880295,
+        "p50": 138.88644999951794,
+        "p95": 252.1486399999048
+      },
+      "wall_ms": {
+        "n": 90,
+        "min": 101.22830000000249,
+        "max": 309.3920999999682,
+        "mean": 151.96032777771,
+        "p50": 138.89575000030163,
+        "p95": 252.1604199998364
+      }
+    },
+    "score_distributions": {
+      "answerable_top1": {
+        "n": 20,
+        "min": 0.7728708982467651,
+        "max": 0.8922663927078247,
+        "mean": 0.8191294819116592,
+        "p50": 0.8137213587760925,
+        "p95": 0.8645640313625336
+      },
+      "no_answer_top1": {
+        "n": 10,
+        "min": 0.6016347408294678,
+        "max": 0.8676720857620239,
+        "mean": 0.7525326013565063,
+        "p50": 0.7923517525196075,
+        "p95": 0.8537318408489227
+      },
+      "no_answer_top5_all": {
+        "n": 50,
+        "min": 0.5313844680786133,
+        "max": 0.8676720857620239,
+        "mean": 0.6489169359207153,
+        "p50": 0.605316698551178,
+        "p95": 0.8148094832897186
+      }
+    }
+  },
+  "routing": {
+    "TP": 15,
+    "FP": 0,
+    "FN": 3,
+    "TN": 6,
+    "accuracy": 0.875,
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1": 0.9090909090909091
+  },
+  "answer": {
+    "private_grounded_count": 15,
+    "private_correct_count": 16,
+    "private_count": 18,
+    "no_answer_count": 6,
+    "no_answer_abstained_count": 6,
+    "no_answer_hallucination_count": 2,
+    "all_private_hallucination_count": 3
+  },
+  "original_frozen_files": 66,
+  "original_frozen_changed": [],
+  "limits": "Small synthetic/self-authored corpora and questions, not a production or held-out large-scale benchmark."
+}

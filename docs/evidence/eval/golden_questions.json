@@ -1,0 +1,20 @@
+[
+  {
+    "query": "项目 Aurora 的负责人是谁？",
+    "expected_sources": [
+      "note_01.txt"
+    ]
+  },
+  {
+    "query": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？",
+    "expected_sources": [
+      "note_02.txt",
+      "note_05.txt",
+      "note_06.txt"
+    ]
+  },
+  {
+    "query": "火星殖民地的量子传送门密码是什么？",
+    "expected_sources": []
+  }
+]

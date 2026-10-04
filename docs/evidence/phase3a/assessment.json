@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "case": 1,
+      "tool_selected_correctly": true,
+      "arguments_semantically_correct": true,
+      "query_copied_exactly": true,
+      "retriever_result_correct": true,
+      "baseline_exact_match": true,
+      "transport_correct": true,
+      "final_answer_grounded": true,
+      "requested_answer_correct": true
+    },
+    {
+      "case": 2,
+      "tool_selected_correctly": true,
+      "arguments_semantically_correct": true,
+      "query_copied_exactly": true,
+      "retriever_result_correct": true,
+      "baseline_exact_match": true,
+      "transport_correct": true,
+      "final_answer_grounded": "partial: unsupported invalidity judgment about fictional project owner data",
+      "requested_answer_correct": true
+    },
+    {
+      "case": 3,
+      "tool_selected_correctly": true,
+      "arguments_semantically_correct": true,
+      "query_copied_exactly": false,
+      "retriever_result_correct": true,
+      "baseline_exact_match": false,
+      "transport_correct": true,
+      "final_answer_grounded": true,
+      "requested_answer_correct": true
+    }
+  ],
+  "case3_diagnostics": {
+    "actual_query": "ORBIT-3 会议室 最多容纳多少人",
+    "actual_query_reproduces_tool_result": true,
+    "canonical_query_matches_frozen_baseline": true
+  },
+  "tests": {
+    "phase1_and_eval": 37,
+    "phase2": 11
+  },
+  "frozen_files_unchanged": true
+}

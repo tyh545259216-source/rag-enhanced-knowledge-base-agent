@@ -1,0 +1,194 @@
+{
+  "r01": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "未调用工具，核心回答符合通用问题要求。"
+  },
+  "r02": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "未调用工具，核心回答符合通用问题要求。"
+  },
+  "r03": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "答案42正确；解释中的进位过程和3十2个位=42错误，通用回答存在质量问题。"
+  },
+  "r04": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "翻译正确；附加解释错误地将your称为名词性所有格。"
+  },
+  "r05": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "未调用工具，核心回答符合通用问题要求。"
+  },
+  "r06": {
+    "grounded": null,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心光合作用说明合理；将细菌光合作用一并描述在叶绿体发生不严谨。"
+  },
+  "r07": {
+    "grounded": false,
+    "answer_correct": false,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": true,
+    "notes": "检索含明确项目负责人林澈与验收负责人周岚；回答错误宣称矛盾且虚构实际项目信息差异，未给出确定答案。"
+  },
+  "r08": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r09": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r10": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r11": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r12": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r13": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心角色区分正确；额外官方核实建议是对虚构演示资料的过度谨慎，不计为事实幻觉。"
+  },
+  "r14": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "验收要求、日志位置、周岚和45天均有资料支持；不采信虚构来源的附注不影响主答案，但属于多余解释。"
+  },
+  "r15": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "核心答案与冻结资料或题目要求一致。"
+  },
+  "r16": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "林澈、许舟正确；资料为虚构这一说明真实，额外实际项目变化提示不计为知识库事实。"
+  },
+  "r17": {
+    "grounded": true,
+    "answer_correct": false,
+    "intent_preserved": null,
+    "abstained": true,
+    "hallucinated": false,
+    "notes": "没有调用知识库而询问Aurora背景；虽未编造信息，但预算及保留天数在库中，属路由FN。"
+  },
+  "r18": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": false,
+    "hallucinated": false,
+    "notes": "发布日期与note04、note07一致。"
+  },
+  "r19": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": true,
+    "hallucinated": false,
+    "notes": "真实检索后明确Zephyr负责人不在结果中。"
+  },
+  "r20": {
+    "grounded": false,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": true,
+    "hallucinated": true,
+    "notes": "未编造手机号且正确拒答，但未查工具就声称知识库未找到联系方式：路由FN及证据来源幻觉，不是虚构手机号。"
+  },
+  "r21": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": true,
+    "hallucinated": false,
+    "notes": "检索后未找到电池参数，正确拒答。"
+  },
+  "r22": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": null,
+    "abstained": true,
+    "hallucinated": false,
+    "notes": "敏感密码直接拒答，无工具；按预先expected_tool记FN，须注明安全拒答与普通漏查的区别。"
+  },
+  "r23": {
+    "grounded": false,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": true,
+    "hallucinated": true,
+    "notes": "未编造容量，正确拒答；但工具Top1就是ORBIT-3管理员/开放时间，回答声称资料仅涉及其他项目，属于证据概括幻觉。"
+  },
+  "r24": {
+    "grounded": true,
+    "answer_correct": true,
+    "intent_preserved": true,
+    "abstained": true,
+    "hallucinated": false,
+    "notes": "预算审批日期缺失，未将项目发布日期冒充审批日期，正确拒答。"
+  }
+}

@@ -1,0 +1,633 @@
+{
+  "timestamp": "2026-10-03T17:13:14.650695+08:00",
+  "registered": [
+    "search_knowledge_base"
+  ],
+  "provider_class": "OpenAICompatProvider",
+  "cases": [
+    {
+      "case": 1,
+      "question": "项目 Aurora 的负责人是谁？",
+      "requests": [
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "项目 Aurora 的负责人是谁？"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [
+            {
+              "id": "call_okp7f2vp",
+              "index": 0,
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "arguments": "{\"query\":\"项目 Aurora 的负责人是谁？\",\"top_k\":3}"
+              }
+            }
+          ],
+          "http_status": 200,
+          "headers_latency_ms": 7149.638700000651,
+          "wire_finish_reason": "tool_calls",
+          "latency_ms": 23867.290800000774
+        },
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "项目 Aurora 的负责人是谁？"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_okp7f2vp",
+                  "type": "function",
+                  "function": {
+                    "name": "search_knowledge_base",
+                    "arguments": "{\"query\": \"项目 Aurora 的负责人是谁？\", \"top_k\": 3}"
+                  }
+                }
+              ],
+              "reasoning_content": "好的，用户问的是项目Aurora的负责人是谁。我需要先调用search_knowledge_base工具来查找相关信息。根据指示，查询要原样使用用户的问题，top_k=3。所以查询的参数应该是{\"query\": \"项目 Aurora 的负责人是谁？\", \"top_k\": 3}。\n\n接下来，收到返回的证据后，要区分项目负责人和验收负责人。如果证据中明确提到负责人，就直接引用；如果没有提到，就回答无法确定。现在假设搜索结果返回的证据中，有一条提到项目Aurora的负责人是张三，另一条提到验收负责人是李四。那么根据问题，应该回答张三。如果有证据同时提到负责人和验收负责人，需要分别指出。如果没有相关证据，就说明无法确定。现在需要检查返回的证据内容，确认是否有相关资料。假设返回的证据中确实有负责人信息，那么最终回答就是张三。"
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_okp7f2vp",
+              "name": "search_knowledge_base",
+              "content": "{\"results\": [{\"rank\": 1, \"text\": \"项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。\", \"source\": \"note_02.txt\", \"chunk_id\": \"note_02.txt:ptxt:000\", \"score\": 0.8631060123443604, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.8168849349021912, \"page\": null}, {\"rank\": 3, \"text\": \"项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。\", \"source\": \"note_03.txt\", \"chunk_id\": \"note_03.txt:ptxt:000\", \"score\": 0.7932708263397217, \"page\": null}]}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [],
+          "http_status": 200,
+          "headers_latency_ms": 6155.262800000855,
+          "wire_finish_reason": "stop",
+          "latency_ms": 26773.3371000013
+        }
+      ],
+      "expected_top3": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8631060123443604,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.8168849349021912,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。",
+          "source": "note_03.txt",
+          "chunk_id": "note_03.txt:ptxt:000",
+          "score": 0.7932708263397217,
+          "page": null
+        }
+      ],
+      "parsed_tool_calls": [
+        {
+          "id": "call_okp7f2vp",
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "项目 Aurora 的负责人是谁？",
+            "top_k": 3
+          }
+        }
+      ],
+      "registry_tool_type": "_LegacyErrorPrefixTool",
+      "executed_arguments": {
+        "query": "项目 Aurora 的负责人是谁？",
+        "top_k": 3
+      },
+      "retrieval_latency_ms": 1337.4270999993314,
+      "tool_result": {
+        "is_error": false,
+        "content": "{\"results\": [{\"rank\": 1, \"text\": \"项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。\", \"source\": \"note_02.txt\", \"chunk_id\": \"note_02.txt:ptxt:000\", \"score\": 0.8631060123443604, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.8168849349021912, \"page\": null}, {\"rank\": 3, \"text\": \"项目 Aurora 的预算为 128000 元。审批人是顾宁，预算编号 FIN-602；采购上限为 24000 元。\", \"source\": \"note_03.txt\", \"chunk_id\": \"note_03.txt:ptxt:000\", \"score\": 0.7932708263397217, \"page\": null}]}"
+      },
+      "retriever_latency": {
+        "embedding_ms": 1326.0307000000466,
+        "faiss_ms": 3.0096000009507407,
+        "total_ms": 1329.0696000003663
+      },
+      "parsed_responses": [
+        {
+          "iteration": 0,
+          "finish_reason": "tool_calls",
+          "content": null
+        },
+        {
+          "iteration": 1,
+          "finish_reason": "stop",
+          "content": "根据搜索结果，项目Aurora的负责人是林澈（内部代号AU-731）。该信息来源于资料note_01.txt，明确指出其为项目负责人。"
+        }
+      ],
+      "final_answer": "根据搜索结果，项目Aurora的负责人是林澈（内部代号AU-731）。该信息来源于资料note_01.txt，明确指出其为项目负责人。",
+      "stop_reason": "completed",
+      "e2e_latency_ms": 53275.930300000255,
+      "second_roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "transport_correct": true,
+      "baseline_matches": true,
+      "integration_success": true
+    },
+    {
+      "case": 2,
+      "question": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？",
+      "requests": [
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [
+            {
+              "id": "call_d9yxgw94",
+              "index": 0,
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "arguments": "{\"query\":\"Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？\",\"top_k\":3}"
+              }
+            }
+          ],
+          "http_status": 200,
+          "headers_latency_ms": 847.927200000413,
+          "wire_finish_reason": "tool_calls",
+          "latency_ms": 21513.661100001627
+        },
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_d9yxgw94",
+                  "type": "function",
+                  "function": {
+                    "name": "search_knowledge_base",
+                    "arguments": "{\"query\": \"Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？\", \"top_k\": 3}"
+                  }
+                }
+              ],
+              "reasoning_content": "好的，用户问的是Aurora项目如何验收、使用哪台机器人、验收日志存在哪里。首先我需要调用search_knowledge_base工具，用用户的问题作为查询词，top_k=3。然后根据返回的证据来回答。\n\n首先，确认用户的问题涉及三个部分：验收流程、使用的机器人型号、验收日志的位置。需要分别查找这些信息。可能的证据可能包括项目文档、验收流程说明、机器人列表和日志存储位置。\n\n接下来，检查返回的证据是否包含这些信息。假设搜索结果中有提到验收流程是通过自动化测试和手动检查结合，使用的机器人型号是Aurora-2000，验收日志存储在项目根目录的logs目录下。需要确保这些信息准确，并且没有遗漏。\n\n然后，区分项目负责人和验收负责人。如果证据中提到负责人，需要明确指出，但用户的问题没有直接询问负责人，所以可能不需要特别处理，除非证据中有相关说明。\n\n最后，确保回答符合要求，不使用Markdown，分点说明，并且根据证据回答，如果信息缺失则说明无法确定。现在需要整理这些信息，确保每个部分都有对应的证据支持。"
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_d9yxgw94",
+              "name": "search_knowledge_base",
+              "content": "{\"results\": [{\"rank\": 1, \"text\": \"项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。\", \"source\": \"note_02.txt\", \"chunk_id\": \"note_02.txt:ptxt:000\", \"score\": 0.8477524518966675, \"page\": null}, {\"rank\": 2, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.8097934722900391, \"page\": null}, {\"rank\": 3, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.7938018441200256, \"page\": null}]}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [],
+          "http_status": 200,
+          "headers_latency_ms": 4989.3633000010595,
+          "wire_finish_reason": "stop",
+          "latency_ms": 32761.752300000808
+        }
+      ],
+      "expected_top3": [
+        {
+          "rank": 1,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.8477524518966675,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。",
+          "source": "note_06.txt",
+          "chunk_id": "note_06.txt:ptxt:000",
+          "score": 0.8097934722900391,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.7938018441200256,
+          "page": null
+        }
+      ],
+      "parsed_tool_calls": [
+        {
+          "id": "call_d9yxgw94",
+          "name": "search_knowledge_base",
+          "arguments": {
+            "query": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？",
+            "top_k": 3
+          }
+        }
+      ],
+      "registry_tool_type": "_LegacyErrorPrefixTool",
+      "executed_arguments": {
+        "query": "Aurora 项目如何验收、使用哪台机器人、验收日志存在哪里？",
+        "top_k": 3
+      },
+      "retrieval_latency_ms": 150.71939999870665,
+      "tool_result": {
+        "is_error": false,
+        "content": "{\"results\": [{\"rank\": 1, \"text\": \"项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。\", \"source\": \"note_02.txt\", \"chunk_id\": \"note_02.txt:ptxt:000\", \"score\": 0.8477524518966675, \"page\": null}, {\"rank\": 2, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.8097934722900391, \"page\": null}, {\"rank\": 3, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.7938018441200256, \"page\": null}]}"
+      },
+      "retriever_latency": {
+        "embedding_ms": 149.89240000068094,
+        "faiss_ms": 0.3013000005012145,
+        "total_ms": 150.2080999998725
+      },
+      "parsed_responses": [
+        {
+          "iteration": 0,
+          "finish_reason": "tool_calls",
+          "content": null
+        },
+        {
+          "iteration": 1,
+          "finish_reason": "stop",
+          "content": "根据现有资料：  \n1. **验收负责人**为周岚，验收要求机器人RB-204连续运行72小时并提交日志报告。  \n2. **验收日志**存储在内部服务器SABLE-17，保留45天。  \n3. 项目负责人信息（林澈）及内部代号（AU-731）为虚构内容，不作为有效信息。  \n\n综上，Aurora项目验收使用RB-204机器人，日志存于SABLE-17服务器。"
+        }
+      ],
+      "final_answer": "根据现有资料：  \n1. **验收负责人**为周岚，验收要求机器人RB-204连续运行72小时并提交日志报告。  \n2. **验收日志**存储在内部服务器SABLE-17，保留45天。  \n3. 项目负责人信息（林澈）及内部代号（AU-731）为虚构内容，不作为有效信息。  \n\n综上，Aurora项目验收使用RB-204机器人，日志存于SABLE-17服务器。",
+      "stop_reason": "completed",
+      "e2e_latency_ms": 54426.80029999974,
+      "second_roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "transport_correct": true,
+      "baseline_matches": true,
+      "integration_success": true
+    },
+    {
+      "case": 3,
+      "question": "ORBIT-3 会议室最多容纳多少人？",
+      "requests": [
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "ORBIT-3 会议室最多容纳多少人？"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [
+            {
+              "id": "call_jauxl5es",
+              "index": 0,
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "arguments": "{\"top_k\":3,\"query\":\"ORBIT-3 会议室 最多容纳多少人\"}"
+              }
+            }
+          ],
+          "http_status": 200,
+          "headers_latency_ms": 740.914399999383,
+          "wire_finish_reason": "tool_calls",
+          "latency_ms": 21833.728300000075
+        },
+        {
+          "endpoint": "htt<LOCAL_PATH>",
+          "model": "qwen3:1.7b",
+          "messages": [
+            {
+              "role": "system",
+              "content": "本轮必须先调用 search_knowledge_base，query 原样使用用户的问题，top_k=3。收到结果后仅依据返回证据回答；区分项目负责人和验收负责人，缺少所问事实时回答根据当前资料无法确定。只查询一次。"
+            },
+            {
+              "role": "user",
+              "content": "ORBIT-3 会议室最多容纳多少人？"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_jauxl5es",
+                  "type": "function",
+                  "function": {
+                    "name": "search_knowledge_base",
+                    "arguments": "{\"top_k\": 3, \"query\": \"ORBIT-3 会议室 最多容纳多少人\"}"
+                  }
+                }
+              ],
+              "reasoning_content": "好的，用户问的是ORBIT-3会议室最多能容纳多少人。我需要先调用搜索知识库的功能，用用户的问题作为查询词，top_k设为3。然后根据返回的证据来回答，同时要区分项目负责人和验收负责人，如果缺少所问的事实就回答无法确定。\n\n首先，我得执行搜索操作。用户的问题是关于ORBIT-3会议室容量的，所以查询词应该是“ORBIT-3 会议室 最多容纳多少人”。然后，top_k设为3，返回三个证据。接下来，我需要检查这些证据中是否包含关于容量的信息。\n\n假设搜索结果返回的证据中，有一个提到ORBIT-3会议室的容量是20人，另一个可能提到项目负责人和验收负责人的职责，但没有具体数字。这时候，我需要确定用户的问题是否涉及这两个角色。如果证据中没有提到容量，那么就根据当前资料无法确定。但如果有明确的容量数字，则直接给出。\n\n比如，如果证据中有“ORBIT-3会议室的项目负责人是张三，验收负责人是李四，且会议室最多容纳20人”，那么回答时需要区分负责人，但用户的问题只关心容量，所以直接回答20人。如果证据中没有容量信息，就说明当前资料无法确定。"
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_jauxl5es",
+              "name": "search_knowledge_base",
+              "content": "{\"results\": [{\"rank\": 1, \"text\": \"会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。\", \"source\": \"note_09.txt\", \"chunk_id\": \"note_09.txt:ptxt:000\", \"score\": 0.8953061103820801, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.6029368042945862, \"page\": null}, {\"rank\": 3, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.6015932559967041, \"page\": null}]}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "search_knowledge_base",
+                "description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Knowledge base search query"
+                    },
+                    "top_k": {
+                      "type": "integer",
+                      "default": 3,
+                      "minimum": 1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "raw_tool_call_deltas": [],
+          "http_status": 200,
+          "headers_latency_ms": 4938.575499998478,
+          "wire_finish_reason": "stop"
+        }
+      ],
+      "expected_top3": [
+        {
+          "rank": 1,
+          "text": "会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。",
+          "source": "note_09.txt",
+          "chunk_id": "note_09.txt:ptxt:000",
+          "score": 0.8676720857620239,
+          "page": null
+        },
+        {
+          "rank": 2,
+          "text": "项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。",
+          "source": "note_01.txt",
+          "chunk_id": "note_01.txt:ptxt:000",
+          "score": 0.6072039604187012,
+          "page": null
+        },
+        {
+          "rank": 3,
+          "text": "项目 Aurora 的验收负责人是周岚。验收要求机器人 RB-204 连续运行 72 小时，并提交日志报告。",
+          "source": "note_02.txt",
+          "chunk_id": "note_02.txt:ptxt:000",
+          "score": 0.6053593158721924,
+          "page": null
+        }
+      ],
+      "parsed_tool_calls": [
+        {
+          "id": "call_jauxl5es",
+          "name": "search_knowledge_base",
+          "arguments": {
+            "top_k": 3,
+            "query": "ORBIT-3 会议室 最多容纳多少人"
+          }
+        }
+      ],
+      "registry_tool_type": "_LegacyErrorPrefixTool",
+      "executed_arguments": {
+        "top_k": 3,
+        "query": "ORBIT-3 会议室 最多容纳多少人"
+      },
+      "retrieval_latency_ms": 122.16330000046582,
+      "tool_result": {
+        "is_error": false,
+        "content": "{\"results\": [{\"rank\": 1, \"text\": \"会议室 ORBIT-3 的预约管理员是唐越，开放时间为工作日 9 点至 18 点。\", \"source\": \"note_09.txt\", \"chunk_id\": \"note_09.txt:ptxt:000\", \"score\": 0.8953061103820801, \"page\": null}, {\"rank\": 2, \"text\": \"项目 Aurora 的负责人是林澈，内部代号 AU-731。首次内部发布日期为 2026 年 11 月 18 日。这是虚构内部资料。\", \"source\": \"note_01.txt\", \"chunk_id\": \"note_01.txt:ptxt:000\", \"score\": 0.6029368042945862, \"page\": null}, {\"rank\": 3, \"text\": \"内部服务器 SABLE-17 存放 Aurora 的验收日志，负责人是周岚，日志保留 45 天。\", \"source\": \"note_06.txt\", \"chunk_id\": \"note_06.txt:ptxt:000\", \"score\": 0.6015932559967041, \"page\": null}]}"
+      },
+      "retriever_latency": {
+        "embedding_ms": 121.39460000071267,
+        "faiss_ms": 0.23209999926621094,
+        "total_ms": 121.63859999964188
+      },
+      "parsed_responses": [
+        {
+          "iteration": 0,
+          "finish_reason": "tool_calls",
+          "content": null
+        },
+        {
+          "iteration": 1,
+          "finish_reason": "stop",
+          "content": "根据当前资料无法确定ORBIT-3会议室的容纳人数。"
+        }
+      ],
+      "final_answer": "根据当前资料无法确定ORBIT-3会议室的容纳人数。",
+      "stop_reason": "completed",
+      "e2e_latency_ms": 38955.365800000436,
+      "second_roles": [
+        "system",
+        "user",
+        "assistant",
+        "tool"
+      ],
+      "transport_correct": true,
+      "baseline_matches": false,
+      "integration_success": true
+    }
+  ],
+  "frozen_files_unchanged": true
+}

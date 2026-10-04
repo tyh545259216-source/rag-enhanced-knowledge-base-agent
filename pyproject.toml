@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "knowledge-base-agent"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "faiss-cpu>=1.8,<2", "pymupdf>=1.24,<2", "tiktoken>=0.7,<1", "httpx>=0.27,<1", "pyyaml>=6,<7"]
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requires real Ollama nomic-embed-text"]
+
+[tool.setuptools.data-files]
+"licenses/knowledge-base-agent" = ["licenses/rag-from-scratch-MIT.txt", "licenses/ollama-local-rag-demo-MIT.txt", "THIRD_PARTY_NOTICES.md"]
+
+[project.entry-points."nanobot.tools"]
+search_knowledge_base = "knowledge_base_agent.tools.search_knowledge_base:SearchKnowledgeBaseTool"

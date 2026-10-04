@@ -1,0 +1,41 @@
+{
+  "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。",
+  "items": [
+    {
+      "id": "r01",
+      "question": "你好！",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "正常问候",
+      "expected_evidence": []
+    },
+    {
+      "id": "r07",
+      "question": "项目 Aurora 的负责人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "林澈",
+      "expected_evidence": [
+        "note_01.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r23",
+      "question": "ORBIT-3 会议室最多容纳多少人？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "forced-smoke",
+      "question": "请先调用 search_knowledge_base 查询知识库，然后回答：项目 Aurora 的负责人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "林澈",
+      "expected_evidence": [
+        "note_01.txt:ptxt:000"
+      ]
+    }
+  ]
+}

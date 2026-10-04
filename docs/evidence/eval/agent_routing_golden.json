@@ -1,0 +1,229 @@
+{
+  "version": "1.0",
+  "annotation_basis": "根据冻结九段资料预先人工标注；no-answer仍期望检索。24题小规模评估，不是泛化能力证明。",
+  "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。",
+  "items": [
+    {
+      "id": "r01",
+      "question": "你好！",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "正常问候",
+      "expected_evidence": []
+    },
+    {
+      "id": "r02",
+      "question": "请介绍一下你自己。",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "介绍助手身份",
+      "expected_evidence": []
+    },
+    {
+      "id": "r03",
+      "question": "17 加 25 等于多少？",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "42",
+      "expected_evidence": []
+    },
+    {
+      "id": "r04",
+      "question": "把“谢谢你的帮助”翻译成英语。",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "Thank you for your help.",
+      "expected_evidence": []
+    },
+    {
+      "id": "r05",
+      "question": "Python 的 list 和 tuple 有什么区别？",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "列表可变，元组不可变",
+      "expected_evidence": []
+    },
+    {
+      "id": "r06",
+      "question": "什么是光合作用？请简单解释。",
+      "category": "general_no_tool",
+      "expected_tool": null,
+      "expected_answer": "光能将水和二氧化碳转化为有机物，释放氧气",
+      "expected_evidence": []
+    },
+    {
+      "id": "r07",
+      "question": "项目 Aurora 的负责人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "林澈",
+      "expected_evidence": [
+        "note_01.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r08",
+      "question": "机器人 RB-204 的维护负责人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "孟溪",
+      "expected_evidence": [
+        "note_05.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r09",
+      "question": "Aurora 的预算金额和预算审批人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "128000 元，顾宁",
+      "expected_evidence": [
+        "note_03.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r10",
+      "question": "项目 Borealis 的内部代号是什么？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "BO-415",
+      "expected_evidence": [
+        "note_04.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r11",
+      "question": "项目 Cedar 的发布负责人是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "沈禾",
+      "expected_evidence": [
+        "note_07.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r12",
+      "question": "NORTH-6 仓库的管理员是谁？",
+      "category": "private_single_fact",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "何青",
+      "expected_evidence": [
+        "note_08.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r13",
+      "question": "Aurora 的项目负责人和验收负责人分别是谁？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "项目负责人林澈，验收负责人周岚",
+      "expected_evidence": [
+        "note_01.txt:ptxt:000",
+        "note_02.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r14",
+      "question": "Aurora 的验收要求是什么，日志存放在哪里？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "RB-204连续运行72小时并提交日志，日志存放于SABLE-17",
+      "expected_evidence": [
+        "note_02.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r15",
+      "question": "机器人 RB-204 由谁维护，需要连续运行多久才满足验收？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "孟溪，72小时",
+      "expected_evidence": [
+        "note_02.txt:ptxt:000",
+        "note_05.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r16",
+      "question": "Aurora 和 Borealis 的负责人分别是谁？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "林澈，许舟",
+      "expected_evidence": [
+        "note_01.txt:ptxt:000",
+        "note_04.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r17",
+      "question": "Aurora 的预算是多少，日志保留几天？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "128000元，45天",
+      "expected_evidence": [
+        "note_03.txt:ptxt:000",
+        "note_06.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r18",
+      "question": "Borealis 和 Cedar 分别计划在哪一天发布？",
+      "category": "private_multi_evidence",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "Borealis 2027年2月9日，Cedar 2027年4月12日",
+      "expected_evidence": [
+        "note_04.txt:ptxt:000",
+        "note_07.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "r19",
+      "question": "项目 Zephyr 的负责人是谁？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "r20",
+      "question": "项目 Aurora 的负责人手机号码是多少？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "r21",
+      "question": "机器人 RB-204 的电池容量是多少？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "r22",
+      "question": "服务器 SABLE-17 的管理员密码是什么？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "r23",
+      "question": "ORBIT-3 会议室最多容纳多少人？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    },
+    {
+      "id": "r24",
+      "question": "Aurora 的预算审批日期是哪一天？",
+      "category": "private_no_answer",
+      "expected_tool": "search_knowledge_base",
+      "expected_answer": "资料无法确定，不得编造所问属性",
+      "expected_evidence": []
+    }
+  ]
+}

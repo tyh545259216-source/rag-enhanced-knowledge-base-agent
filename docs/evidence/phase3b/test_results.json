@@ -1,0 +1,22 @@
+{
+  "phase1": {
+    "passed": 37
+  },
+  "phase2": {
+    "passed": 11
+  },
+  "phase3b_metrics": {
+    "passed": 3
+  },
+  "total_passed": 51,
+  "real_cases": 24,
+  "real_llm_requests": 39,
+  "http_statuses": [
+    200
+  ],
+  "tool_transport_valid": 15,
+  "frozen_file_count": 474,
+  "frozen_unchanged_after_tests": true,
+  "nanobot_git_clean": true,
+  "nanobot_commit": "66f5f2df15455b34fc22e656bdc1ef3d4f32e328"
+}

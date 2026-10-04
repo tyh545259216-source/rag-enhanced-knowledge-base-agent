@@ -1,0 +1,13 @@
+{
+  "existing_dependency_changes": {},
+  "added_dependencies": {
+    "faiss-cpu": "1.15.1",
+    "knowledge-base-agent": "0.1.0",
+    "numpy": "2.5.3",
+    "pymupdf": "1.28.2"
+  },
+  "frozen_file_count": 33,
+  "frozen_files_unchanged": true,
+  "phase2_tests_passed": 11,
+  "phase1_and_evaluation_regression_tests_passed": 37
+}
