@@ -1,0 +1,186 @@
+{
+  "experiment": "v0.2-ablation-first",
+  "created_at_utc": "2026-10-05T08:40:07.035359+00:00",
+  "checkpoint": "93293f54be1d62446123eba977c5ece2703a4552",
+  "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+  "rubric": {
+    "version": "ablation-rubric-1",
+    "classes": {
+      "correct": "全部必要核心事实完整、正确，且没有错误或unsupported private claim；仅泛化措辞差异可接受。",
+      "partial": "部分必要核心事实正确，但遗漏其余必要事实；不能含事实错误、错误实体归属或unsupported private claim。",
+      "incorrect": "核心事实错误、张冠李戴、unsupported private claim、答非所问或对有答案问题仅拒答；错误附加私有事实也判incorrect。",
+      "correct_abstention": "仅用于private_no_answer：明确无法确定所问属性，没有猜测或虚构私有事实。"
+    },
+    "strict_accuracy": "(correct + correct_abstention) / 20; partial无strict credit；不另调权重。",
+    "grounding": "先匿名判reference_grounded yes/no；再对照实际送达模型的tool evidence独立工程复核provided_evidence_grounded yes/no。公开Grounded指标用后者，两阶段都保存。诚实说明没有访问权限不构造私有事实，但未检索就声称资料不存在/已查过不grounded。通用问题依据通用知识，不要求知识库证据。",
+    "unsupported_private_claims": "统计含至少一个不支持/错误私有断言的case数，不冒充原子claim数量；包含未检索却声称查询/知识库不存在。诚实无法访问不计。",
+    "evidence_completeness": "由真实ToolResult与frozen required chunk IDs计算：全部complete、部分partial、零none；no-answer/general无required IDs为not_applicable，不因返回TopK就complete。",
+    "answer_fact_completeness": "匿名工程判定candidate是否覆盖全部/部分/零必要事实；无私有证据需求和no-answer用not_applicable。它与retrieved evidence completeness分开。",
+    "abstention": "no-answer只有correct_abstention才算成功；先说无法确定又猜具体值/角色不算成功。",
+    "rates": {
+      "tool_call": "至少实际执行一次知识库的cases/20",
+      "unnecessary": "expected_use_tool=false且执行检索的cases/5；同时给per-query率",
+      "missed": "expected_use_tool=true未执行检索的cases/15；B0标strategy-imposed而非router error",
+      "average_calls": "全部真实知识库执行数/20"
+    },
+    "blindness": "judgment input隐藏strategy/category/source-run标签，稳定hash排序，只提供query、gold expected facts/required evidence、candidate。助手已见Phase3A部分B2答案，不能声称真正独立blind；provided-evidence grounding的第二阶段必然不blind。无额外judge模型。",
+    "limitations": [
+      "20-query synthetic controlled benchmark; 5 categories x4; single Qwen3:1.7b and single KB tool",
+      "manual corpus/questions and engineering answer judgments; no statistical significance or production-scale claims",
+      "B1固定调度真实tool后单次生成，无planning LLM；B2通常两次LLM且复用较早运行，E2E不是等LLM调用成本/同一时段性能比较",
+      "B1使用原query、同题A2实际top_k；B2可能自主改写query，效果差异不能全部归因routing",
+      "不新增threshold、Hybrid或Prompt调参；失败不删除、不重复采样挑结果"
+    ]
+  },
+  "rubric_hash": "213831181a1f4636e8174484f4553267310e0515bd44d95d6599e8aaa4ac1be8",
+  "generation_and_context": {
+    "model": "qwen3:1.7b",
+    "provider": "ollama",
+    "endpoint": "http://localhost:11434/v1/chat/completions",
+    "temperature": 0.1,
+    "max_tokens": 8192,
+    "reasoning_effort": null,
+    "context_window_tokens": 200000,
+    "max_iterations": 4,
+    "case_timeout_seconds": 300,
+    "max_tool_result_chars": 12000,
+    "finalize_on_max_iterations": false,
+    "provider_retry_mode": "standard",
+    "formal_repeats": 1,
+    "few_shot": [],
+    "arm": "A2",
+    "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+    "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+  },
+  "A2_config_sha256": "4c3df3f3a34215383c76fbde507851a142d81741f8112799bd090ff9495f61d8",
+  "tool_schema": {
+    "type": "function",
+    "function": {
+      "name": "search_knowledge_base",
+      "description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Knowledge base search query"
+          },
+          "top_k": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "strategies": {
+    "B0": "same frozen A2 system + generation; no tools; AgentRunner direct; private misses strategy-imposed",
+    "B1": "fixed schedule original query -> real ToolRegistry/execute_tool_calls -> assistant strategy-call + role=tool -> AgentRunner final generation with no replanning tools; no planning LLM; not model-generated tool call",
+    "B2": "reuse original A2 first official 20 traces; no model or retrieval rerun"
+  },
+  "b1_arguments": {
+    "v2-a-001": {
+      "query": "我把 Python 变量命名为 Aurora；请解释字符串不可变的含义，不查询内部项目资料。",
+      "top_k": 3
+    },
+    "v2-a-002": {
+      "query": "内部验收卡上 AX-812 用的是哪台设备？",
+      "top_k": 3
+    },
+    "v2-a-003": {
+      "query": "按内部记录分别给出 Aurora 的项目负责人和财务审批负责人。",
+      "top_k": 3
+    },
+    "v2-a-004": {
+      "query": "内部资料记载的 AX-812 项目办公室面积是多少？",
+      "top_k": 3
+    },
+    "v2-a-005": {
+      "query": "预算这个词是什么意思？请以内部 FIN-A12 批准单的具体额度举例。",
+      "top_k": 2
+    },
+    "v2-a-006": {
+      "query": "只从通用软件工程角度解释演示版和正式上线的区别，不涉及 Borealis 的内部排期。",
+      "top_k": 3
+    },
+    "v2-a-007": {
+      "query": "B2-620 的上线工作交给了哪个角色？",
+      "top_k": 3
+    },
+    "v2-a-008": {
+      "query": "请按内部排期区分 BO-620 演示日期和 B2-620 上线日期。",
+      "top_k": 3
+    },
+    "v2-a-009": {
+      "query": "Borealis 验收场地的邮政编码在内部资料中是什么？",
+      "top_k": 5
+    },
+    "v2-a-010": {
+      "query": "请把字符串 Borealis-2 转为小写，只做文字处理。",
+      "top_k": 3
+    },
+    "v2-a-021": {
+      "query": "解释备份和归档的通用区别，不查询服务器记录。",
+      "top_k": 3
+    },
+    "v2-a-022": {
+      "query": "内部 SABLE-18B 的模型归档归哪个角色管理？",
+      "top_k": 3
+    },
+    "v2-a-023": {
+      "query": "按内部卡片比较 SABLE-18 与 SABLE-18B 各自保存什么、保留多久。",
+      "top_k": 3
+    },
+    "v2-a-024": {
+      "query": "内部服务器 SV-180 配了多少 GB 内存？",
+      "top_k": 3
+    },
+    "v2-a-025": {
+      "query": "备份通常在夜间做；请依据内部备份卡确认 SABLE-18B 的具体开始时刻。",
+      "top_k": 3
+    },
+    "v2-a-046": {
+      "query": "用自己的话解释一线支持和二线支持的通用区别，不查内部值班制度。",
+      "top_k": 3
+    },
+    "v2-a-047": {
+      "query": "内部 DUTY-7 的排班起始日是哪天？",
+      "top_k": 1
+    },
+    "v2-a-048": {
+      "query": "按照内部资料，一线和二线各由哪个角色值守、分别多久响应？",
+      "top_k": 3
+    },
+    "v2-a-049": {
+      "query": "内部 DUTY-7 升级协调角色的工位编号是多少？",
+      "top_k": 5
+    },
+    "v2-a-050": {
+      "query": "一线响应一般越快越好；但内部 DUTY-7 超时升级究竟在几分钟触发？",
+      "top_k": 3
+    }
+  },
+  "formal_repeats": 1,
+  "order": [
+    "B0",
+    "B1"
+  ],
+  "context_reset": true,
+  "source_hashes": {
+    "experiments/v0_2/ablation/__init__.py": "f65bd49a7fcbdfdf703128908429be866243619a1c3f602daad9059859b21581",
+    "experiments/v0_2/ablation/config.py": "f147e30b5deffbe674dd8da6d9e76f7c4ad73cb046c1e87afbd880a7ce369856",
+    "experiments/v0_2/ablation/evaluate.py": "bdb07fc304df51677c096660ab9e920a9edd18e960d08c1b80485a7fc155d172",
+    "experiments/v0_2/ablation/reporting.py": "2c036442c2235828f917bcb2c08e11ccb060bdb2c6234cdbbb1ae9c02baca99f",
+    "experiments/v0_2/ablation/runner.py": "abf533ae725bac997228a92a778f8e45981d72fdd2e7e8fff212d46a5cc64d84",
+    "scripts/v0_2/run_ablation.py": "e5fb698df513711beea48c4be51e4619523010a87ce145a2dc8818864e068186",
+    "tests/v0_2/test_ablation.py": "e96b721ce3b939b8e2282529768624f94bf3680535f3ab04057fb94d49b75fb5"
+  },
+  "config_hash": "59f5e8132cb0e7116fbaea3f133a634898434d8c9abfc7334ef9cda87eb7b72a"
+}

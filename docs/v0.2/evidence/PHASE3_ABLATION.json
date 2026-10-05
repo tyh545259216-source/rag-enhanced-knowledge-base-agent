@@ -1,0 +1,1399 @@
+{
+  "experiment": "v0.2-ablation-first",
+  "checkpoint": "93293f54be1d62446123eba977c5ece2703a4552",
+  "dataset_hash": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+  "evaluation_config": {
+    "experiment": "v0.2-ablation-first",
+    "created_at_utc": "2026-10-05T08:40:07.035359+00:00",
+    "checkpoint": "93293f54be1d62446123eba977c5ece2703a4552",
+    "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+    "rubric": {
+      "version": "ablation-rubric-1",
+      "classes": {
+        "correct": "全部必要核心事实完整、正确，且没有错误或unsupported private claim；仅泛化措辞差异可接受。",
+        "partial": "部分必要核心事实正确，但遗漏其余必要事实；不能含事实错误、错误实体归属或unsupported private claim。",
+        "incorrect": "核心事实错误、张冠李戴、unsupported private claim、答非所问或对有答案问题仅拒答；错误附加私有事实也判incorrect。",
+        "correct_abstention": "仅用于private_no_answer：明确无法确定所问属性，没有猜测或虚构私有事实。"
+      },
+      "strict_accuracy": "(correct + correct_abstention) / 20; partial无strict credit；不另调权重。",
+      "grounding": "先匿名判reference_grounded yes/no；再对照实际送达模型的tool evidence独立工程复核provided_evidence_grounded yes/no。公开Grounded指标用后者，两阶段都保存。诚实说明没有访问权限不构造私有事实，但未检索就声称资料不存在/已查过不grounded。通用问题依据通用知识，不要求知识库证据。",
+      "unsupported_private_claims": "统计含至少一个不支持/错误私有断言的case数，不冒充原子claim数量；包含未检索却声称查询/知识库不存在。诚实无法访问不计。",
+      "evidence_completeness": "由真实ToolResult与frozen required chunk IDs计算：全部complete、部分partial、零none；no-answer/general无required IDs为not_applicable，不因返回TopK就complete。",
+      "answer_fact_completeness": "匿名工程判定candidate是否覆盖全部/部分/零必要事实；无私有证据需求和no-answer用not_applicable。它与retrieved evidence completeness分开。",
+      "abstention": "no-answer只有correct_abstention才算成功；先说无法确定又猜具体值/角色不算成功。",
+      "rates": {
+        "tool_call": "至少实际执行一次知识库的cases/20",
+        "unnecessary": "expected_use_tool=false且执行检索的cases/5；同时给per-query率",
+        "missed": "expected_use_tool=true未执行检索的cases/15；B0标strategy-imposed而非router error",
+        "average_calls": "全部真实知识库执行数/20"
+      },
+      "blindness": "judgment input隐藏strategy/category/source-run标签，稳定hash排序，只提供query、gold expected facts/required evidence、candidate。助手已见Phase3A部分B2答案，不能声称真正独立blind；provided-evidence grounding的第二阶段必然不blind。无额外judge模型。",
+      "limitations": [
+        "20-query synthetic controlled benchmark; 5 categories x4; single Qwen3:1.7b and single KB tool",
+        "manual corpus/questions and engineering answer judgments; no statistical significance or production-scale claims",
+        "B1固定调度真实tool后单次生成，无planning LLM；B2通常两次LLM且复用较早运行，E2E不是等LLM调用成本/同一时段性能比较",
+        "B1使用原query、同题A2实际top_k；B2可能自主改写query，效果差异不能全部归因routing",
+        "不新增threshold、Hybrid或Prompt调参；失败不删除、不重复采样挑结果"
+      ]
+    },
+    "rubric_hash": "213831181a1f4636e8174484f4553267310e0515bd44d95d6599e8aaa4ac1be8",
+    "generation_and_context": {
+      "model": "qwen3:1.7b",
+      "provider": "ollama",
+      "endpoint": "http://localhost:11434/v1/chat/completions",
+      "temperature": 0.1,
+      "max_tokens": 8192,
+      "reasoning_effort": null,
+      "context_window_tokens": 200000,
+      "max_iterations": 4,
+      "case_timeout_seconds": 300,
+      "max_tool_result_chars": 12000,
+      "finalize_on_max_iterations": false,
+      "provider_retry_mode": "standard",
+      "formal_repeats": 1,
+      "few_shot": [],
+      "arm": "A2",
+      "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+      "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+    },
+    "A2_config_sha256": "4c3df3f3a34215383c76fbde507851a142d81741f8112799bd090ff9495f61d8",
+    "tool_schema": {
+      "type": "function",
+      "function": {
+        "name": "search_knowledge_base",
+        "description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Knowledge base search query"
+            },
+            "top_k": {
+              "type": "integer",
+              "default": 3,
+              "minimum": 1,
+              "maximum": 10
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "strategies": {
+      "B0": "same frozen A2 system + generation; no tools; AgentRunner direct; private misses strategy-imposed",
+      "B1": "fixed schedule original query -> real ToolRegistry/execute_tool_calls -> assistant strategy-call + role=tool -> AgentRunner final generation with no replanning tools; no planning LLM; not model-generated tool call",
+      "B2": "reuse original A2 first official 20 traces; no model or retrieval rerun"
+    },
+    "b1_arguments": {
+      "v2-a-001": {
+        "query": "我把 Python 变量命名为 Aurora；请解释字符串不可变的含义，不查询内部项目资料。",
+        "top_k": 3
+      },
+      "v2-a-002": {
+        "query": "内部验收卡上 AX-812 用的是哪台设备？",
+        "top_k": 3
+      },
+      "v2-a-003": {
+        "query": "按内部记录分别给出 Aurora 的项目负责人和财务审批负责人。",
+        "top_k": 3
+      },
+      "v2-a-004": {
+        "query": "内部资料记载的 AX-812 项目办公室面积是多少？",
+        "top_k": 3
+      },
+      "v2-a-005": {
+        "query": "预算这个词是什么意思？请以内部 FIN-A12 批准单的具体额度举例。",
+        "top_k": 2
+      },
+      "v2-a-006": {
+        "query": "只从通用软件工程角度解释演示版和正式上线的区别，不涉及 Borealis 的内部排期。",
+        "top_k": 3
+      },
+      "v2-a-007": {
+        "query": "B2-620 的上线工作交给了哪个角色？",
+        "top_k": 3
+      },
+      "v2-a-008": {
+        "query": "请按内部排期区分 BO-620 演示日期和 B2-620 上线日期。",
+        "top_k": 3
+      },
+      "v2-a-009": {
+        "query": "Borealis 验收场地的邮政编码在内部资料中是什么？",
+        "top_k": 5
+      },
+      "v2-a-010": {
+        "query": "请把字符串 Borealis-2 转为小写，只做文字处理。",
+        "top_k": 3
+      },
+      "v2-a-021": {
+        "query": "解释备份和归档的通用区别，不查询服务器记录。",
+        "top_k": 3
+      },
+      "v2-a-022": {
+        "query": "内部 SABLE-18B 的模型归档归哪个角色管理？",
+        "top_k": 3
+      },
+      "v2-a-023": {
+        "query": "按内部卡片比较 SABLE-18 与 SABLE-18B 各自保存什么、保留多久。",
+        "top_k": 3
+      },
+      "v2-a-024": {
+        "query": "内部服务器 SV-180 配了多少 GB 内存？",
+        "top_k": 3
+      },
+      "v2-a-025": {
+        "query": "备份通常在夜间做；请依据内部备份卡确认 SABLE-18B 的具体开始时刻。",
+        "top_k": 3
+      },
+      "v2-a-046": {
+        "query": "用自己的话解释一线支持和二线支持的通用区别，不查内部值班制度。",
+        "top_k": 3
+      },
+      "v2-a-047": {
+        "query": "内部 DUTY-7 的排班起始日是哪天？",
+        "top_k": 1
+      },
+      "v2-a-048": {
+        "query": "按照内部资料，一线和二线各由哪个角色值守、分别多久响应？",
+        "top_k": 3
+      },
+      "v2-a-049": {
+        "query": "内部 DUTY-7 升级协调角色的工位编号是多少？",
+        "top_k": 5
+      },
+      "v2-a-050": {
+        "query": "一线响应一般越快越好；但内部 DUTY-7 超时升级究竟在几分钟触发？",
+        "top_k": 3
+      }
+    },
+    "formal_repeats": 1,
+    "order": [
+      "B0",
+      "B1"
+    ],
+    "context_reset": true,
+    "source_hashes": {
+      "experiments/v0_2/ablation/__init__.py": "f65bd49a7fcbdfdf703128908429be866243619a1c3f602daad9059859b21581",
+      "experiments/v0_2/ablation/config.py": "f147e30b5deffbe674dd8da6d9e76f7c4ad73cb046c1e87afbd880a7ce369856",
+      "experiments/v0_2/ablation/evaluate.py": "bdb07fc304df51677c096660ab9e920a9edd18e960d08c1b80485a7fc155d172",
+      "experiments/v0_2/ablation/reporting.py": "2c036442c2235828f917bcb2c08e11ccb060bdb2c6234cdbbb1ae9c02baca99f",
+      "experiments/v0_2/ablation/runner.py": "abf533ae725bac997228a92a778f8e45981d72fdd2e7e8fff212d46a5cc64d84",
+      "scripts/v0_2/run_ablation.py": "e5fb698df513711beea48c4be51e4619523010a87ce145a2dc8818864e068186",
+      "tests/v0_2/test_ablation.py": "e96b721ce3b939b8e2282529768624f94bf3680535f3ab04057fb94d49b75fb5"
+    },
+    "config_hash": "59f5e8132cb0e7116fbaea3f133a634898434d8c9abfc7334ef9cda87eb7b72a"
+  },
+  "rubric_hash": "213831181a1f4636e8174484f4553267310e0515bd44d95d6599e8aaa4ac1be8",
+  "config_hash": "59f5e8132cb0e7116fbaea3f133a634898434d8c9abfc7334ef9cda87eb7b72a",
+  "strategies": {
+    "B0": {
+      "counts": {
+        "correct": 5,
+        "partial": 1,
+        "incorrect": 12,
+        "correct_abstention": 2
+      },
+      "strict_correct": 7,
+      "total": 20,
+      "strict_accuracy": 0.35,
+      "categories": {
+        "ambiguous_boundary": {
+          "correct": 1,
+          "total": 4
+        },
+        "general_no_tool": {
+          "correct": 4,
+          "total": 4
+        },
+        "private_multi_evidence": {
+          "correct": 0,
+          "total": 4
+        },
+        "private_no_answer": {
+          "correct": 2,
+          "total": 4
+        },
+        "private_single_fact": {
+          "correct": 0,
+          "total": 4
+        }
+      },
+      "tool_usage": {
+        "called_cases": 0,
+        "tool_call_rate": 0.0,
+        "unnecessary": 0,
+        "unnecessary_denominator": 5,
+        "unnecessary_rate": 0.0,
+        "missed": 15,
+        "missed_denominator": 15,
+        "missed_rate": 1.0,
+        "total_calls": 0,
+        "average_calls": 0.0
+      },
+      "grounded": 13,
+      "unsupported_private_claim_cases": 7,
+      "evidence_completeness": {
+        "not_applicable": 9,
+        "none": 11
+      },
+      "no_answer": {
+        "correct_abstention": 2,
+        "total": 4
+      },
+      "multi_evidence": {
+        "complete_evidence": 0,
+        "fully_correct": 0,
+        "total": 4
+      },
+      "latency": {
+        "e2e_ms": {
+          "n": 20,
+          "mean": 31132.75668499973,
+          "median": 26057.43849999999,
+          "p95": 64435.337314998316
+        },
+        "tool_ms": null,
+        "llm1_ms": null,
+        "llm_final_ms": {
+          "n": 20,
+          "mean": 31063.326200000483,
+          "median": 26048.4803499985,
+          "p95": 63272.53241000056
+        }
+      },
+      "model_errors": [],
+      "llm_request_count": 20,
+      "bad_case_ids": [
+        "v2-a-002",
+        "v2-a-003",
+        "v2-a-004",
+        "v2-a-005",
+        "v2-a-007",
+        "v2-a-008",
+        "v2-a-009",
+        "v2-a-022",
+        "v2-a-023",
+        "v2-a-025",
+        "v2-a-047",
+        "v2-a-048",
+        "v2-a-050"
+      ]
+    },
+    "B1": {
+      "counts": {
+        "correct": 12,
+        "partial": 0,
+        "incorrect": 5,
+        "correct_abstention": 3
+      },
+      "strict_correct": 15,
+      "total": 20,
+      "strict_accuracy": 0.75,
+      "categories": {
+        "ambiguous_boundary": {
+          "correct": 3,
+          "total": 4
+        },
+        "general_no_tool": {
+          "correct": 3,
+          "total": 4
+        },
+        "private_multi_evidence": {
+          "correct": 2,
+          "total": 4
+        },
+        "private_no_answer": {
+          "correct": 3,
+          "total": 4
+        },
+        "private_single_fact": {
+          "correct": 4,
+          "total": 4
+        }
+      },
+      "tool_usage": {
+        "called_cases": 20,
+        "tool_call_rate": 1.0,
+        "unnecessary": 5,
+        "unnecessary_denominator": 5,
+        "unnecessary_rate": 1.0,
+        "missed": 0,
+        "missed_denominator": 15,
+        "missed_rate": 0.0,
+        "total_calls": 20,
+        "average_calls": 1.0
+      },
+      "grounded": 16,
+      "unsupported_private_claim_cases": 4,
+      "evidence_completeness": {
+        "not_applicable": 9,
+        "complete": 9,
+        "partial": 2
+      },
+      "no_answer": {
+        "correct_abstention": 3,
+        "total": 4
+      },
+      "multi_evidence": {
+        "complete_evidence": 2,
+        "fully_correct": 2,
+        "total": 4
+      },
+      "latency": {
+        "e2e_ms": {
+          "n": 20,
+          "mean": 50055.6935599996,
+          "median": 46556.65619999854,
+          "p95": 71946.52874499791
+        },
+        "tool_ms": {
+          "n": 20,
+          "mean": 208.28253500021674,
+          "median": 155.06990000176302,
+          "p95": 297.6399300006966
+        },
+        "llm1_ms": null,
+        "llm_final_ms": {
+          "n": 20,
+          "mean": 49786.204655000074,
+          "median": 46393.41805000004,
+          "p95": 71708.31638000056
+        }
+      },
+      "model_errors": [],
+      "llm_request_count": 20,
+      "bad_case_ids": [
+        "v2-a-023",
+        "v2-a-046",
+        "v2-a-048",
+        "v2-a-049",
+        "v2-a-050"
+      ]
+    },
+    "B2": {
+      "counts": {
+        "correct": 11,
+        "partial": 0,
+        "incorrect": 6,
+        "correct_abstention": 3
+      },
+      "strict_correct": 14,
+      "total": 20,
+      "strict_accuracy": 0.7,
+      "categories": {
+        "ambiguous_boundary": {
+          "correct": 2,
+          "total": 4
+        },
+        "general_no_tool": {
+          "correct": 4,
+          "total": 4
+        },
+        "private_multi_evidence": {
+          "correct": 2,
+          "total": 4
+        },
+        "private_no_answer": {
+          "correct": 3,
+          "total": 4
+        },
+        "private_single_fact": {
+          "correct": 3,
+          "total": 4
+        }
+      },
+      "tool_usage": {
+        "called_cases": 15,
+        "tool_call_rate": 0.75,
+        "unnecessary": 0,
+        "unnecessary_denominator": 5,
+        "unnecessary_rate": 0.0,
+        "missed": 0,
+        "missed_denominator": 15,
+        "missed_rate": 0.0,
+        "total_calls": 15,
+        "average_calls": 0.75
+      },
+      "grounded": 14,
+      "unsupported_private_claim_cases": 6,
+      "evidence_completeness": {
+        "not_applicable": 9,
+        "complete": 9,
+        "partial": 1,
+        "none": 1
+      },
+      "no_answer": {
+        "correct_abstention": 3,
+        "total": 4
+      },
+      "multi_evidence": {
+        "complete_evidence": 2,
+        "fully_correct": 2,
+        "total": 4
+      },
+      "latency": {
+        "e2e_ms": {
+          "n": 20,
+          "mean": 71928.19467499976,
+          "median": 76877.44204999944,
+          "p95": 121261.10691500144
+        },
+        "tool_ms": {
+          "n": 15,
+          "mean": 222.78711333322767,
+          "median": 208.8194999996631,
+          "p95": 299.7344600005817
+        },
+        "llm1_ms": {
+          "n": 15,
+          "mean": 33796.572506666176,
+          "median": 32081.068699999378,
+          "p95": 49994.65391999983
+        },
+        "llm_final_ms": {
+          "n": 20,
+          "mean": 46390.82928499984,
+          "median": 43246.89214999944,
+          "p95": 73945.32240999944
+        }
+      },
+      "model_errors": [],
+      "llm_request_count": 35,
+      "bad_case_ids": [
+        "v2-a-002",
+        "v2-a-005",
+        "v2-a-023",
+        "v2-a-048",
+        "v2-a-049",
+        "v2-a-050"
+      ]
+    }
+  },
+  "bad_cases": {
+    "B0_wrong_B1_B2_correct": [
+      "v2-a-003",
+      "v2-a-004",
+      "v2-a-007",
+      "v2-a-008",
+      "v2-a-009",
+      "v2-a-022",
+      "v2-a-025",
+      "v2-a-047"
+    ],
+    "B1_wrong_B2_correct": [
+      "v2-a-046"
+    ],
+    "B2_wrong_B1_correct": [
+      "v2-a-002",
+      "v2-a-005"
+    ],
+    "all_wrong": [
+      "v2-a-023",
+      "v2-a-048",
+      "v2-a-050"
+    ],
+    "B2_routing_correct_answer_wrong": [
+      "v2-a-002",
+      "v2-a-005",
+      "v2-a-023",
+      "v2-a-048",
+      "v2-a-049",
+      "v2-a-050"
+    ]
+  },
+  "judgments": {
+    "B0": {
+      "v2-a-022": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "把有记录的S-33归档角色替换为未经支持的数据管理员及职责描述。"
+      },
+      "v2-a-004": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": true,
+        "reason": "拒绝猜办公室面积；是否实际检索后才声称资料没有，由后续提供证据复核判断。 上下文复核：未执行任何检索，却声称根据现有内部资料记载未找到面积；预注册rubric将未检索的资料不存在断言列为unsupported private claim。",
+        "blind_reference_correctness": "correct_abstention",
+        "context_adjudication": "未执行任何检索，却声称根据现有内部资料记载未找到面积；预注册rubric将未检索的资料不存在断言列为unsupported private claim。"
+      },
+      "v2-a-009": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": true,
+        "reason": "编造Borealis场地在荷兰Amsterdam、邮编1000，并声称官方核实。"
+      },
+      "v2-a-025": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": false,
+        "reason": "坦承无法访问记录，没有提供每天04:00的必要事实；建议的路径是示例而非实测来源。"
+      },
+      "v2-a-047": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": false,
+        "reason": "诚实无法确定排班日期，但遗漏已记录的2028-10-01。"
+      },
+      "v2-a-001": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "解释字符串原对象不变、upper和拼接产生新对象，核心事实正确。"
+      },
+      "v2-a-024": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "明确无法从现有信息确定SV-180内存，不猜容量。"
+      },
+      "v2-a-002": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "未给RX-41并声称知识库没有该设备记录，与gold验收卡矛盾。"
+      },
+      "v2-a-007": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": false,
+        "reason": "没有编造负责人，但未给已记载的B-22。"
+      },
+      "v2-a-006": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "回答通用演示与正式交付的区别，未混入内部排期事实。"
+      },
+      "v2-a-049": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "明确无法确定DUTY-7工位，建议获取文档，不把角色编号当工位。"
+      },
+      "v2-a-046": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "通用一线快速初步处理与二线复杂升级处理的区别正确。"
+      },
+      "v2-a-050": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": false,
+        "reason": "诚实需要内部文档，未提供未响应满20分钟这一已记载答案。"
+      },
+      "v2-a-005": {
+        "correctness": "partial",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "partial",
+        "unsupported_private_claim": false,
+        "reason": "预算概念正确，坦承没有FIN-A12额度；所需186000元实例缺失。"
+      },
+      "v2-a-010": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "正确进行字符串小写，不需要私有信息。"
+      },
+      "v2-a-003": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "编造张伟CTO和李敏CFO作为Aurora负责人，并虚构内部项目管理表来源。"
+      },
+      "v2-a-021": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "核心解释备份支持恢复、归档长期留存正确，不涉及内部服务器数据。"
+      },
+      "v2-a-023": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "编造两服务器日志类型和30/60天默认保留期，与访问审计60天/模型180天不符。"
+      },
+      "v2-a-008": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "缺失两个真实排期日期，并声称当前知识库没有具体数据；gold两卡都有日期。"
+      },
+      "v2-a-048": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": false,
+        "reason": "坦承未检索，未提供D-11/15与D-22/45，不虚构具体角色。"
+      }
+    },
+    "B1": {
+      "v2-a-022": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "S-33、模型归档180天、SV-18B均正确；补充的备份角色与语料一致。"
+      },
+      "v2-a-008": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "分别给出BO-620演示2028-05-12和B2-620上线2028-06-20。"
+      },
+      "v2-a-049": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": true,
+        "reason": "先将角色D-33当作工位编号；后续没有明确物理编号的限定不能消除错误断言。"
+      },
+      "v2-a-010": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "正确输出borealis-2。"
+      },
+      "v2-a-025": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "明确给出每天04:00，与审计备份02:30区分；附加30天/S-44正确。"
+      },
+      "v2-a-006": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "通用软件演示和上线用途说明正确，不猜测内部排期。"
+      },
+      "v2-a-009": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "明确所给搜索结果不足以确认Borealis邮编，没有提供猜测数值。"
+      },
+      "v2-a-048": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "partial",
+        "unsupported_private_claim": true,
+        "reason": "二线D-22/45分钟正确，但一线D-11/15分钟缺失；未编造一线答案。 上下文复核：实际提供的duty_l2候选明确说二线不承担一线的15分钟要求；回答却说一线响应时间未提供。缺少一线角色是retrieval omission，但关于已提供时间的否定断言不受证据支持。",
+        "blind_reference_correctness": "partial",
+        "context_adjudication": "实际提供的duty_l2候选明确说二线不承担一线的15分钟要求；回答却说一线响应时间未提供。缺少一线角色是retrieval omission，但关于已提供时间的否定断言不受证据支持。"
+      },
+      "v2-a-005": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "预算定义与FIN-A12的186000元、Aurora审批A-33正确。"
+      },
+      "v2-a-007": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "上线负责人B-22正确，日期2028-06-20与Borealis区分。"
+      },
+      "v2-a-001": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "字符串重赋值产生新对象，upper示例核心解释正确；没有私有实体事实。"
+      },
+      "v2-a-004": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "检索候选不包含AX-812办公室面积；明确无法确定且不猜数值。"
+      },
+      "v2-a-023": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "partial",
+        "unsupported_private_claim": true,
+        "reason": "将SABLE-18审计备份14天作为所问在线审计保留期，并误称保存模型权重；gold是访问审计60天。"
+      },
+      "v2-a-050": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": true,
+        "reason": "20分钟主数值正确，但把DUTY-7B称为升级流程并声称自动系统触发；内部卡只定义二线响应与协调角色。"
+      },
+      "v2-a-021": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "核心区别备份恢复与归档长期保存正确，没有私有服务器断言。"
+      },
+      "v2-a-046": {
+        "correctness": "incorrect",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "把不需要私有证据的通用问题拒答为资料未提供；没有给一线与二线概念区别。"
+      },
+      "v2-a-047": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "排班起始2028-10-01正确并引用duty_l1。"
+      },
+      "v2-a-024": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "明确现有候选无SV-180内存参数，没有伪造容量。"
+      },
+      "v2-a-003": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "虽措辞犹豫，但明确给出Aurora A-11和A-33及对应真实记录，两项核心事实完整。"
+      },
+      "v2-a-002": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "RX-41与96小时正确，并正确限定不记录的是Aurora而非Aurora-X。"
+      }
+    },
+    "B2": {
+      "v2-a-006": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "通用演示版与正式上线区别覆盖展示和实际交付，不引入私有排期。"
+      },
+      "v2-a-002": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": true,
+        "reason": "RX-41正确，但把不记录Aurora验收要求误读为AX-812验收要求不记录；该卡实际记录96小时。"
+      },
+      "v2-a-024": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "没有虚构SV-180内存容量，明确无法确定并建议非断言式核实。"
+      },
+      "v2-a-001": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "原地索引赋值TypeError与创建新字符串的区别正确。"
+      },
+      "v2-a-010": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "文字处理准确输出borealis-2。"
+      },
+      "v2-a-003": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "Aurora项目A-11、审批A-33完整且正确，明确职责不同。"
+      },
+      "v2-a-005": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": true,
+        "reason": "186000元正确，但将Aurora-X的32000元单笔采购额度推给FIN-A12，跨项目猜测。"
+      },
+      "v2-a-023": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "partial",
+        "unsupported_private_claim": true,
+        "reason": "SABLE-18B模型180天正确，SABLE-18在线审计保留期误答为备份14天。"
+      },
+      "v2-a-007": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "正确回答B2-620上线负责人B-22及上线日期。"
+      },
+      "v2-a-009": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "邮编未出现在提供的候选，明确无法确定而非编造。"
+      },
+      "v2-a-050": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": true,
+        "reason": "虽说20分钟，但将未响应满20分钟改成一线响应未满20分钟/未完成20分钟，颠倒触发条件。"
+      },
+      "v2-a-048": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "none",
+        "unsupported_private_claim": true,
+        "reason": "没有D-11/15及D-22/45，还把RX-41R2维护R-11标成值守角色，检索错误主题后扩写。"
+      },
+      "v2-a-008": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "两项目日期及演示/上线区别完整正确。"
+      },
+      "v2-a-004": {
+        "correctness": "correct_abstention",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "候选没有办公室面积，明确未记载且不猜数值。"
+      },
+      "v2-a-022": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "模型归档S-33、保留180天正确。"
+      },
+      "v2-a-021": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "备份恢复与归档历史保存区别完整，没有私有事实猜测。"
+      },
+      "v2-a-025": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "每天04:00的模型备份正确，补充30天/S-44有记录；其他类型备份未定义的限定可接受。"
+      },
+      "v2-a-049": {
+        "correctness": "incorrect",
+        "reference_grounded": "no",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": true,
+        "reason": "把真实协调角色D-33断言为工位编号，没有工位证据。"
+      },
+      "v2-a-047": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "complete",
+        "unsupported_private_claim": false,
+        "reason": "准确回答排班起始2028-10-01。"
+      },
+      "v2-a-046": {
+        "correctness": "correct",
+        "reference_grounded": "yes",
+        "answer_fact_completeness": "not_applicable",
+        "unsupported_private_claim": false,
+        "reason": "一般一线面向用户初步处理、二线处理更复杂升级问题，核心区别正确。"
+      }
+    }
+  },
+  "provided_evidence_grounding": {
+    "B0": {
+      "v2-a-001": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-002": {
+        "provided_evidence_grounded": "no",
+        "reason": "没有任何证据且断言知识库未记录设备，真实验收卡记录RX-41。"
+      },
+      "v2-a-003": {
+        "provided_evidence_grounded": "no",
+        "reason": "没有证据，编造CTO张伟/CFO李敏和内部项目管理表来源。"
+      },
+      "v2-a-004": {
+        "provided_evidence_grounded": "no",
+        "reason": "没有检索却声称已根据现有内部资料查无面积。"
+      },
+      "v2-a-005": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-006": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-007": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-008": {
+        "provided_evidence_grounded": "no",
+        "reason": "没有检索却声称知识库未提供排期数据；两个真实排期卡未被访问。"
+      },
+      "v2-a-009": {
+        "provided_evidence_grounded": "no",
+        "reason": "无证据编造Amsterdam/邮编1000并声称官方核实。"
+      },
+      "v2-a-010": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-021": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-022": {
+        "provided_evidence_grounded": "no",
+        "reason": "无证据编造模型归档的数据管理员角色与职责。"
+      },
+      "v2-a-023": {
+        "provided_evidence_grounded": "no",
+        "reason": "无证据编造保存内容和30/60天等保留期。"
+      },
+      "v2-a-024": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-025": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-046": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-047": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-048": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-049": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      },
+      "v2-a-050": {
+        "provided_evidence_grounded": "yes",
+        "reason": "诚实无法访问/无法确定，没有声称已经查过或捏造私有事实；未回答有答案问题仍计正确性失败。"
+      }
+    },
+    "B1": {
+      "v2-a-001": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-002": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-003": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-004": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-005": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-006": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-007": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-008": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-009": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-010": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-021": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-022": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-023": {
+        "provided_evidence_grounded": "no",
+        "reason": "实际候选只有SABLE-18B模型、模型备份、SABLE-18审计备份；没有在线审计60天。回答还把SABLE-18称为模型权重存储，14天替代所问60天。"
+      },
+      "v2-a-024": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-025": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-046": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；真实候选无通用定义，回答拒答但未编造私有事实。正确性与grounding分别统计。"
+      },
+      "v2-a-047": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-048": {
+        "provided_evidence_grounded": "no",
+        "reason": "只覆盖二线角色，缺少一线角色；候选已含一线15分钟却说响应时间未提供。"
+      },
+      "v2-a-049": {
+        "provided_evidence_grounded": "no",
+        "reason": "证据提供的是协调角色D-33，不是工位。先给D-33工位再加不确定限定仍不受支持。"
+      },
+      "v2-a-050": {
+        "provided_evidence_grounded": "no",
+        "reason": "证据无DUTY-7B升级流程/系统自动触发定义；不能把二线协议及自动化方式作为已知私有事实。20分钟核心数值正确不抵消错误附加事实。"
+      }
+    },
+    "B2": {
+      "v2-a-001": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-002": {
+        "provided_evidence_grounded": "no",
+        "reason": "工具卡明确给96小时，限定不记录的是Aurora；回答声称AX-812的验收要求不记录，误读实体范围。"
+      },
+      "v2-a-003": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-004": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-005": {
+        "provided_evidence_grounded": "no",
+        "reason": "候选32,000元采购上限属于FIN-AX12/Aurora-X，不能推给FIN-A12。"
+      },
+      "v2-a-006": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-007": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-008": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-009": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-010": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-021": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-022": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-023": {
+        "provided_evidence_grounded": "no",
+        "reason": "在线访问审计60天的必要卡未检出，14天是审计备份，不是在线日志保留期。"
+      },
+      "v2-a-024": {
+        "provided_evidence_grounded": "yes",
+        "reason": "实际返回候选不含所问属性，明确无法确定且未猜值；Top-K只支持候选不足，不证明穷尽全库。"
+      },
+      "v2-a-025": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-046": {
+        "provided_evidence_grounded": "yes",
+        "reason": "通用问题允许依据常识回答，不要求知识库证据；回答未给出私有实体断言。"
+      },
+      "v2-a-047": {
+        "provided_evidence_grounded": "yes",
+        "reason": "所给事实与实际送达模型的ToolResult一致；coverage=complete。"
+      },
+      "v2-a-048": {
+        "provided_evidence_grounded": "no",
+        "reason": "候选全为机器人/项目上线，与两线值守无关，还将R-11维护角色当值守角色。"
+      },
+      "v2-a-049": {
+        "provided_evidence_grounded": "no",
+        "reason": "角色D-33/事件INC-707不支持工位编号，事实类型混淆。"
+      },
+      "v2-a-050": {
+        "provided_evidence_grounded": "no",
+        "reason": "实际证据是未响应满20分钟后升级，回答变成一线响应未满/未完成20分钟，触发条件颠倒。"
+      }
+    }
+  },
+  "limitations": [
+    "20-query synthetic controlled benchmark; 5 categories x4; single Qwen3:1.7b and single KB tool",
+    "manual corpus/questions and engineering answer judgments; no statistical significance or production-scale claims",
+    "B1固定调度真实tool后单次生成，无planning LLM；B2通常两次LLM且复用较早运行，E2E不是等LLM调用成本/同一时段性能比较",
+    "B1使用原query、同题A2实际top_k；B2可能自主改写query，效果差异不能全部归因routing",
+    "不新增threshold、Hybrid或Prompt调参；失败不删除、不重复采样挑结果",
+    "judgment input隐藏strategy/category/source-run标签，稳定hash排序，只提供query、gold expected facts/required evidence、candidate。助手已见Phase3A部分B2答案，不能声称真正独立blind；provided-evidence grounding的第二阶段必然不blind。无额外judge模型。"
+  ],
+  "raw_path_label": "artifacts/v0.2/ablation/phase3b_first_20261005",
+  "raw_manifest": {
+    "B0/attempt.json": "5c3544457a85044c1dd6fbcd972dd80cc7ec4cbf35e161df6c9ad1ecaaca7256",
+    "B0/cases/v2-a-001.json": "ce651e308d1bea4009726aa5df04bab7df64dc9efe9ca63f2c90c8977cb06f39",
+    "B0/cases/v2-a-002.json": "36a0ec731fc5c4fa5c63f5063b7b23a5257e0e0eb4b07f87506cf262c9403749",
+    "B0/cases/v2-a-003.json": "fabd3a2bf579236ca182068fddaffec4efb34b77da4151aae8009e638ff0a06b",
+    "B0/cases/v2-a-004.json": "da59e6e5a479c2ff5d2a0b072cd106a73d1232b1cf09baa211f8775e4f7cf1bd",
+    "B0/cases/v2-a-005.json": "42db07f24a89e55bf902991c036aeaeb723de76233c173f130d45bf40017bed7",
+    "B0/cases/v2-a-006.json": "30a33f733351543c00a112e6ff31b7c67a769fd41982ebbce6a079c1fb02acab",
+    "B0/cases/v2-a-007.json": "345725f59b185d2e17720ef5b6446f2ce68dc7096f9a4d44354b5650dbb3b278",
+    "B0/cases/v2-a-008.json": "1dbd03ea93e15a37ad37da00a4f09790b74ac231a4bc751163f8f4ef3211c047",
+    "B0/cases/v2-a-009.json": "aee65e83c255d0721842cac2f35f229e0383b5d5a99a8d05f7a6f10c7d750188",
+    "B0/cases/v2-a-010.json": "e69b01cb58823cd57ca2e4bccba41f015a39796067962c5c2563e273955a2b49",
+    "B0/cases/v2-a-021.json": "daf11194e9d73fb37f449e16cdbbbc7cf9940d950d92cf663a56da4f506902cf",
+    "B0/cases/v2-a-022.json": "fd8631f4e42aedcd77482849de74c54933f041a5427a730c9f9ebde08ff14cfa",
+    "B0/cases/v2-a-023.json": "5aec4fab578876c3a7c5ba74c1e6dcfd60f4acd631f9ed029ba18a4d38eed294",
+    "B0/cases/v2-a-024.json": "13e2f473eba6aa55eeef131312f653cb8d96be772a6f4a7791724d4fac896f20",
+    "B0/cases/v2-a-025.json": "8bd51e148177186449c623ff6ed11e2222f75def18b91e986e69bd34f8d1e537",
+    "B0/cases/v2-a-046.json": "a08444d61a23d803a42758aa86c585a5bedc6c4203e891f84911afb562c62002",
+    "B0/cases/v2-a-047.json": "912a2a06de9b4fe9b8975659b9563d9877c4b32692107b27137bdf36cbfd5f0c",
+    "B0/cases/v2-a-048.json": "552a171482bf0ecc179c85efe1125bb73d56be7ef768808b6825bd4e301049a2",
+    "B0/cases/v2-a-049.json": "396e9769f653919d7360183925ac9729e301ebb8c6cf26b070fbbaed187d44bf",
+    "B0/cases/v2-a-050.json": "8912ced1a85fbb74374e5ff939ac4de6ff4657e2ad2dac897779d53a3409e2aa",
+    "B1/attempt.json": "0460dfd344c0041944b0733cb62cd117334f3ddb86baa10d7c05efcec5dc4ac5",
+    "B1/cases/v2-a-001.json": "e1ee36d904eef88b008b3ae77260411b9752c5598d90fca0959a2967f092b008",
+    "B1/cases/v2-a-002.json": "6661b821f26fccec479994ae5ed72d2309a467d5b1da3337de0cd4089cae8877",
+    "B1/cases/v2-a-003.json": "4df8a4b1328d35b015841ea03a75de0e1e0779a2628294574d959e6d53c29fb1",
+    "B1/cases/v2-a-004.json": "520675ca6ce785d68ce853300b5c9a625a90e76b2c83206ae5d6c757c3ef8ffe",
+    "B1/cases/v2-a-005.json": "88b4ed767268cfe79e7322542b7996cd6b5fcbac452b546ac3a2d5b22d8fcf73",
+    "B1/cases/v2-a-006.json": "8b4363f0b56ca31ef165590f55f58a49e28cffb96cb1e784e50dc279a4964c27",
+    "B1/cases/v2-a-007.json": "da3f91affb79e49de0d521eee32206c2b4dd4e10e8a065a7adfa4d62c43c4107",
+    "B1/cases/v2-a-008.json": "61aa7e4f95fc1475ae7b1845f6aa9d504cb807d77f0aecadb09933d8e3c18bcc",
+    "B1/cases/v2-a-009.json": "a06d750034ef0448537dfac9806e015ddca3e448dded07d8e607ccd3314a8364",
+    "B1/cases/v2-a-010.json": "4aede7f852da3c9c6698448d1b97012b4fc97ae8a2b5a71a9be845a41046bee1",
+    "B1/cases/v2-a-021.json": "40e05ab38c735f5ff80c9e16dcb45139e8b5a16aa0b7b80a00154b301c21351f",
+    "B1/cases/v2-a-022.json": "8dfb96ef9a0ffdab0b375a441c2822d2d4df41664d0fa01e19e473799f7d1eb4",
+    "B1/cases/v2-a-023.json": "5365e9462fb633bb6ba7a1f76c3b168e798fd41a8752eb44c91594f9aa7180a6",
+    "B1/cases/v2-a-024.json": "2b1582bcf304ffb4319bfda037649f6106dc17de015e23b3a2a7d6e167fd48fa",
+    "B1/cases/v2-a-025.json": "2e3133c5284e50549a281ce7881903614753a96e25962ec59500c31daad3cc40",
+    "B1/cases/v2-a-046.json": "b12216766867784a8f29861dbd03b44af2255ea9f43190f0ac1f9b616c6f2047",
+    "B1/cases/v2-a-047.json": "891926618fe3807c1afcdcdb73b64e0b718172226a533d260867ca94ccf2a408",
+    "B1/cases/v2-a-048.json": "c1a2a75cf6aa240b92a74702bc2fb6b3087b017ea6d2e52b217e476163ab1273",
+    "B1/cases/v2-a-049.json": "4da1a77f23926c3144a8bf281d2b3a8dde194dacc3db29429773a23b5df6342d",
+    "B1/cases/v2-a-050.json": "bd4adcb09b1f1e00940a70ddf4c372fc02a6958ccbfe415c4978dbe18115edad",
+    "B2/cases/v2-a-001.json": "254659ebb9566bf5233f38bdf4dc70418ddc28ac3f28f187421711c8610d8f6c",
+    "B2/cases/v2-a-002.json": "38323e29010ee9779f9b114634d81011dd3c999b920e6500c1552e028c9e7078",
+    "B2/cases/v2-a-003.json": "4ba711de205659972b9da85b54be7397d243f7ed28c7973fc9c63a79a3b3c326",
+    "B2/cases/v2-a-004.json": "288b38117308255804ed9a57072598eb61c8dfdee92769197ae37365f6dca55c",
+    "B2/cases/v2-a-005.json": "022300cc13833817d68d5bc79e7d04fe09ab0c62c22769e9b260ce0ad93df5b7",
+    "B2/cases/v2-a-006.json": "ba9dcc346c22d0f45486d09524942333373d5efc73076963780248be149163d8",
+    "B2/cases/v2-a-007.json": "03c7bc3b2c6219ce5b7ad92efac5bb80b3e8713f91b4ddbb28c6d12f153a2d22",
+    "B2/cases/v2-a-008.json": "f7f372a7c48ffba2b2c2d2edd715462231a6f0cf7c525c8e946ad8bcd631fd1b",
+    "B2/cases/v2-a-009.json": "024017a8c842aec8b0df8e52baa759ee080f3ee39289c4c9d3f08187bff311c3",
+    "B2/cases/v2-a-010.json": "ffe7e997f069968f5ba9efbc5c8a6df6cc354582f96f23ea10fdc7635d613b07",
+    "B2/cases/v2-a-021.json": "4289a9fb8390fc92ed5e55753a03053549c6410b960052e4108304b76628385b",
+    "B2/cases/v2-a-022.json": "15964a9045c47f3e1c6fecfd61a67ed1b9f6ab01b35f394d409e4047cf443de5",
+    "B2/cases/v2-a-023.json": "e1e9928472c1f37cc3d0d1d2c114b329dfff54ad4922ad618d0ec6fde9c5455a",
+    "B2/cases/v2-a-024.json": "3f052c2a8f4c773652f37204a97b38b3718b91561c83348145bc98c1e168b34b",
+    "B2/cases/v2-a-025.json": "e7ddbd5ab02f1a63195ce757b53f1e54c6199fea250118cbbee567cfe000711a",
+    "B2/cases/v2-a-046.json": "49346b7e781f5ca49ac9e4bd010d22683f7c2e199287ffa555cfaa95c9c66800",
+    "B2/cases/v2-a-047.json": "7a80ea7a1fb0a5b07a5cc608868e2d233c53470579cde08a0e2d129d13f53a0d",
+    "B2/cases/v2-a-048.json": "4442ffc024362e0acfb50c31bbcb29225307d6cc64b432a9d0d813213565301d",
+    "B2/cases/v2-a-049.json": "53e0c4d6a11d778866d6cced6be706df25df32d45f34458fb5599488bb010ff3",
+    "B2/cases/v2-a-050.json": "338e9a5774d918cf62dbdc3d36f515ca2a5c4a86e09cf1c3df190db59beaf30d",
+    "blind_judgments.json": "7af037a13fb0812c48dfa5420eed7def828fcb249c945c12b1213f25a6aba59c",
+    "context_adjudications.json": "8f1fa53b71b6e545d7556f5e914fdbc996723833798af8aae299a14011770abf",
+    "grounding_review.json": "d2d3a5f09b5f29c1a16028e4be9b65747a271787fc693ca3694ad85c19bb4db3",
+    "judgment_input.json": "da609200527d1075d8f0719e349fe8d5c40a050b65bb19ea59adfd13e16c1716",
+    "judgment_mapping.json": "22add362e993141fdd99b6b9b2514add70d0a1ec0412d6838547b61731f7a2cf",
+    "judgments.json": "65bd87bd2c898dca8b61ea14672a82b148512455784ec1855be8dd1c98982621",
+    "layered_analysis.json": "34fd57e41a032477a60604c12569f8dbd8c2232e5651c7141ae4598db6d44b3c",
+    "lock.json": "05d31b323914fa8c26ef33d511c4171cbd86c9893c53f80804facba55e5f1b14",
+    "measurement_notes.json": "e6c661baa619e3209699a4a647cf71d0a1042608df6632790b05c4a9c74af0ec",
+    "plugin_rag_config.json": "673027ec3eb76bc7ecca11a31ad535ff2153d173e0ebdc853f82e20fbeccc25a",
+    "protocol_verification.json": "f79e09d34d046b03bc933ed86c392e938d8d6cac5aff7bcbe46e48f3dde068df",
+    "review_provenance.json": "4135ff970f76de4dcc2f3da4da0a5669486d091105df7eb7d36c87b524bd1f04",
+    "validation.json": "f2bf2b380a28bae953ca3f341a58ae47927bedf19b1eff811c2e3a936e68ba33"
+  },
+  "raw_manifest_hash": "a9fcf2a906979beed17f681bdf1c307b1eab2e278e51d84ae63e4af2e78b3314",
+  "B2_original_manifest_hash": "63dc99fbcdbda473e4a06b1f2f0b7857c98f68f24b66ff9c612a2083c1e66076",
+  "judgment_provenance": {
+    "reviewer": "coding assistant engineering review; no additional judge model",
+    "blind_input": {
+      "strategy_hidden": true,
+      "category_hidden": true,
+      "order": "stable sha256",
+      "candidate_count": 60
+    },
+    "blind_judgments_saved_before_mapping_read": true,
+    "blind_judgments_sha256": "7af037a13fb0812c48dfa5420eed7def828fcb249c945c12b1213f25a6aba59c",
+    "method": "匿名reference判断全部60条完成并保存后读取mapping；第二阶段逐条对照实际tool evidence应用冻结context规则；两条上下文复核改判保留before/after，不覆盖匿名初评。",
+    "context_adjudication_count": 2,
+    "limitations": "judgment input隐藏strategy/category/source-run标签，稳定hash排序，只提供query、gold expected facts/required evidence、candidate。助手已见Phase3A部分B2答案，不能声称真正独立blind；provided-evidence grounding的第二阶段必然不blind。无额外judge模型。",
+    "completed_at_utc": "2026-10-05T09:21:20.248668+00:00",
+    "source_file": "review_provenance.json",
+    "source_sha256": "4135ff970f76de4dcc2f3da4da0a5669486d091105df7eb7d36c87b524bd1f04",
+    "final_judgments_sha256": "65bd87bd2c898dca8b61ea14672a82b148512455784ec1855be8dd1c98982621",
+    "grounding_review_sha256": "d2d3a5f09b5f29c1a16028e4be9b65747a271787fc693ca3694ad85c19bb4db3",
+    "context_adjudications_sha256": "8f1fa53b71b6e545d7556f5e914fdbc996723833798af8aae299a14011770abf"
+  },
+  "error_taxonomy": {
+    "scope": "six B2 strict-final errors; non-exclusive labels, do not sum counts",
+    "layers": {
+      "routing": {
+        "count": 0,
+        "ids": [],
+        "note": "B2对20题的是否检索判断均正确，六个最终答案错误都在后续层。"
+      },
+      "query_rewrite": {
+        "count": 1,
+        "ids": [
+          "v2-a-048"
+        ],
+        "note": "同题B1原query返回duty_l2，B2改写为一线 二线 角色 值守 响应时间后零required chunk；配对观察为partial→none，不声称多次采样的因果结论。"
+      },
+      "retrieval_ranking": {
+        "count": 2,
+        "ids": [
+          "v2-a-023",
+          "v2-a-048"
+        ],
+        "note": "023审计主卡未入Top3；048两张值守主卡都未入Top3。"
+      },
+      "evidence_completeness": {
+        "count": 2,
+        "ids": [
+          "v2-a-023",
+          "v2-a-048"
+        ],
+        "note": "分别partial（1/2 required）与none（0/2 required）。"
+      },
+      "entity_or_fact_type_confusion": {
+        "count": 5,
+        "ids": [
+          "v2-a-002",
+          "v2-a-005",
+          "v2-a-023",
+          "v2-a-048",
+          "v2-a-049"
+        ],
+        "note": "002限定范围、005项目政策、023审计与备份、048维护与值守、049角色与工位混淆。"
+      },
+      "generation_or_grounding": {
+        "count": 6,
+        "ids": [
+          "v2-a-002",
+          "v2-a-005",
+          "v2-a-023",
+          "v2-a-048",
+          "v2-a-049",
+          "v2-a-050"
+        ],
+        "note": "错误私有附加断言、误用候选证据或条件改写；050必要证据已送达但未响应满20分钟条件被反转。"
+      }
+    }
+  },
+  "latency_interpretation": {
+    "observation": "Agent Routing消除了5/5 unnecessary retrieval，未漏检索；但本次runtime/local model条件下没有降低E2E latency。B1 final accuracy最高15/20，B2为14/20，不能声称全面优于B1。",
+    "e2e_mean_seconds": {
+      "B0": 31.13275668499973,
+      "B1": 50.0556935599996,
+      "B2": 71.92819467499976
+    },
+    "caveats": [
+      "B1固定策略调度，无planning LLM；B2通常LLM1+Tool+LLM2。",
+      "B2复用较早首次A2，实验运行时间不同，无同一时段性能控制。",
+      "本地Qwen inference为主要耗时；retrieval约0.2s。",
+      "B2 planning均值约33.8s远高于Tool约0.223s；减少retrieval没有转化为更低E2E，不能据此推广普遍性能结论。"
+    ]
+  },
+  "phase3c_audit": {
+    "timestamp": "2026-10-05T22:39:01.025453+08:00",
+    "independent_calculation_matches": true,
+    "metric_calculation_method": "independent standard-library calculations; no import of experiment metric/evaluator functions; no model rerun; no judgment changes",
+    "independent_metrics_sha256": "ead0b7dc5e656a497bf12dbcee74a93a83f1636a13259c356785305cf5aec538",
+    "manual_review_seed": 20261005,
+    "manual_review_sample_ids": {
+      "B0_wrong_B1_B2_correct": "v2-a-009",
+      "B1_wrong_B2_correct": "v2-a-046",
+      "B2_wrong_B1_correct": "v2-a-005",
+      "all_wrong": "v2-a-023",
+      "B2_routing_correct_answer_wrong": "v2-a-002"
+    },
+    "manual_review_findings": {
+      "v2-a-009": "Gold无邮编，B0虚构1000 Amsterdam及官方来源；B1/B2仅依据候选不足拒答。原incorrect/correct_abstention/correct_abstention判定成立。",
+      "v2-a-046": "通用概念无需私有事实；B1在无关Top-K后拒答，B2正常解释，原incorrect/correct成立。",
+      "v2-a-005": "B1正确186000元；B2额外把Aurora-X的32000元采购上限推到FIN-A12；按冻结严格规则错误私有附加断言判incorrect，不能因核心数字正确改分。",
+      "v2-a-023": "Gold是访问审计60天、模型180天。B1/B2缺前者证据并以备份14天替换，B0编造30/60天内容；三组incorrect成立。",
+      "v2-a-002": "B2 route与真实tool transport正确，RX-41主答案也正确；但额外否定AX-812验收要求，与工具96小时记录矛盾，原strict incorrect成立。"
+    },
+    "judgments_changed": false,
+    "models_rerun": false,
+    "test_scope": {
+      "pytest": 191,
+      "plugin_verification": 11,
+      "independent_metric_checks": 3,
+      "total": 205,
+      "pytest_seconds": 10.73
+    },
+    "raw_manifest_files_verified": 75,
+    "frozen_protected_files_unchanged": 186
+  }
+}
