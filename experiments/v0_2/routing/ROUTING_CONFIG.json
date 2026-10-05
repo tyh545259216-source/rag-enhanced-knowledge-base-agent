@@ -1,0 +1,139 @@
+{
+  "experiment_version": "v0.2-routing-1",
+  "selected_arm": "A2",
+  "selected_config": {
+    "model": "qwen3:1.7b",
+    "provider": "ollama",
+    "endpoint": "http://localhost:11434/v1/chat/completions",
+    "temperature": 0.1,
+    "max_tokens": 8192,
+    "reasoning_effort": null,
+    "context_window_tokens": 200000,
+    "max_iterations": 4,
+    "case_timeout_seconds": 300,
+    "max_tool_result_chars": 12000,
+    "finalize_on_max_iterations": false,
+    "provider_retry_mode": "standard",
+    "formal_repeats": 1,
+    "few_shot": [],
+    "arm": "A2",
+    "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+    "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+  },
+  "baseline_config": {
+    "model": "qwen3:1.7b",
+    "provider": "ollama",
+    "endpoint": "http://localhost:11434/v1/chat/completions",
+    "temperature": 0.1,
+    "max_tokens": 8192,
+    "reasoning_effort": null,
+    "context_window_tokens": 200000,
+    "max_iterations": 4,
+    "case_timeout_seconds": 300,
+    "max_tool_result_chars": 12000,
+    "finalize_on_max_iterations": false,
+    "provider_retry_mode": "standard",
+    "formal_repeats": 1,
+    "few_shot": [],
+    "arm": "A0",
+    "tool_description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+    "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。"
+  },
+  "selection_policy": {
+    "max_additional_fp": 1,
+    "max_precision_drop": 0.05,
+    "priority": [
+      "recall",
+      "fewer_false_positives",
+      "shorter_prompt"
+    ],
+    "tie_preference": [
+      "A0",
+      "A1",
+      "A2"
+    ],
+    "scope": "dev only; A3 not planned"
+  },
+  "dev_metrics": {
+    "A0": {
+      "TP": 16,
+      "FP": 0,
+      "FN": 5,
+      "TN": 9,
+      "correct": 25,
+      "total": 30,
+      "accuracy": 0.8333333333333334,
+      "precision": 1.0,
+      "recall": 0.7619047619047619,
+      "f1": 0.8648648648648648
+    },
+    "A1": {
+      "TP": 14,
+      "FP": 0,
+      "FN": 7,
+      "TN": 9,
+      "correct": 23,
+      "total": 30,
+      "accuracy": 0.7666666666666667,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8
+    },
+    "A2": {
+      "TP": 21,
+      "FP": 1,
+      "FN": 0,
+      "TN": 8,
+      "correct": 29,
+      "total": 30,
+      "accuracy": 0.9666666666666667,
+      "precision": 0.9545454545454546,
+      "recall": 1.0,
+      "f1": 0.9767441860465117
+    }
+  },
+  "tool_schema": {
+    "type": "function",
+    "function": {
+      "name": "search_knowledge_base",
+      "description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Knowledge base search query"
+          },
+          "top_k": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "tool_schema_sha256": "c282b2b39c2935aed0289eddad31e8164adba8cf035fd39e7229a63ee38c16b0",
+  "tool_parameters_sha256": "8e43f77b008718fab9fc4af3c2463ce238c06c72fd1c3f04277d0008709336bc",
+  "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+  "few_shot": [],
+  "locked_at_utc": "2026-10-05T05:20:41.283761+00:00",
+  "source_hashes": {
+    "experiments/v0_2/routing/config.py": "78acc509037cc7edf3d91371463ec19dfafde6c1d53b09044b5532def56f36aa",
+    "experiments/v0_2/routing/evaluate.py": "afbcc573edb0c32464b6b9579efc0aa2dc715afd74d04da00f2f748310a276eb",
+    "experiments/v0_2/routing/observe.py": "bc1fa3bb80ed2a177fefc79c37b9e8d67cff4f7ea6cce90a06666ac062f97edc",
+    "experiments/v0_2/routing/reporting.py": "c76656e1f96013b6e87545cab7ff080c2d99db5ca92917a579c255c7039184cf",
+    "experiments/v0_2/routing/runner.py": "4c0ea369f25512c921f2696cc76cc4c5e28afaa0a5baf60dd75f37a1e10ec49d",
+    "experiments/v0_2/routing/__init__.py": "21d5b7533940dd20d8c5c0aaad5bf6ad30fd698a43d4516826458c23a43841ca",
+    "scripts/v0_2/run_routing.py": "0072ce2eb376fb54831d3fe97af53e8a3c1f818c9a8d4ec3bb61ad0eb21550e1",
+    "scripts/v0_2/report_routing.py": "04efb06fd05933ab62598cc69afed36fb2feb967c3510df833404605ee1e59d8",
+    "tests/v0_2/test_routing.py": "16e39a7b614402fe9180cab895d1911c896767e196090f34af6787e62c27776b"
+  },
+  "config_hash": "2a71a7f26d65f79f0eabdad8ed238835f7d601cd8d8773e2a13b2dd46494e655"
+}
