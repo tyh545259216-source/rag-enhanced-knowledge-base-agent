@@ -1,0 +1,14 @@
+{
+  "dataset_version": "v0.2-dataset-1",
+  "corpus_dir": "eval/v0.2/corpus",
+  "chunker": "knowledge_base_agent.vendor.rag_core.chunker.chunk_fixed",
+  "chunk_size": 160,
+  "overlap": 24,
+  "token_counting": "cl100k_base; measurement only, not model tokenizer",
+  "seed": 42,
+  "split_unit": "family_id shared across retrieval/routing",
+  "dev_fraction": 0.6,
+  "fuzzy_warning_threshold": 0.9,
+  "normalization": "NFKC + casefold + remove Unicode punctuation/separators/whitespace; preserve digits",
+  "scope": "dataset preparation only; no embedding/index/agent experiments"
+}

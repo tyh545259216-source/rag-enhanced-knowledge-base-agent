@@ -1,0 +1,978 @@
+{
+  "version": "v0.2-dataset-1",
+  "annotation_basis": "manual fictional corpus annotation; no model outputs observed",
+  "items": [
+    {
+      "id": "v2-r-001",
+      "query": "政策 FIN-A12 的年度额度和签批角色分别是什么？",
+      "category": "exact_keyword",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "aurora_finance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "186000 元；角色 A-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-002",
+      "query": "Aurora 新一年度的值守工作由谁统筹，何时开始轮值？",
+      "category": "semantic_paraphrase",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "aurora_roster.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 A-11；2028 年 3 月 6 日",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-003",
+      "query": "带 X 后缀的 Aurora 项目需要持续跑多久才算验收完成？",
+      "category": "entity_ambiguity",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "aurora_x_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "96 小时",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "aurora_roster.txt:ptxt:000",
+        "aurora_finance.txt:ptxt:000",
+        "aurora_x_finance.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-004",
+      "query": "FIN-AX12 的单笔采购封顶多少，而非 FIN-A12 的年度总预算？",
+      "category": "hard_negative",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "aurora_x_finance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "32000 元",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "aurora_roster.txt:ptxt:000",
+        "aurora_x_acceptance.txt:ptxt:000",
+        "aurora_finance.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-005",
+      "query": "列出 Aurora 的值守统筹人、年度预算，以及 Aurora-X 的采购上限。",
+      "category": "multi_evidence",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "aurora_roster.txt:ptxt:000",
+        "aurora_finance.txt:ptxt:000",
+        "aurora_x_finance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 A-11；186000 元；32000 元",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-006",
+      "query": "Aurora-X 的设备 RX-41 的电池容量是多少安时？",
+      "category": "no_answer",
+      "family_id": "aurora_pair",
+      "split": "test",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：资料未记录电池容量",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "aurora_roster.txt:ptxt:000",
+        "aurora_x_acceptance.txt:ptxt:000",
+        "aurora_finance.txt:ptxt:000",
+        "aurora_x_finance.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：资料未记录电池容量"
+    },
+    {
+      "id": "v2-r-007",
+      "query": "BT-7 的连续运行要求及验收签字人是什么？",
+      "category": "exact_keyword",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "borealis_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "48 小时；角色 B-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-008",
+      "query": "最初的 Borealis 安排在哪一天给内部人员看演示，由谁负责发布？",
+      "category": "semantic_paraphrase",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "borealis_schedule.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 5 月 12 日；角色 B-11",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-009",
+      "query": "Borealis-2 的正式上线日期是哪天？",
+      "category": "entity_ambiguity",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "borealis2_schedule.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 6 月 20 日",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "borealis_schedule.txt:ptxt:000",
+        "borealis_acceptance.txt:ptxt:000",
+        "borealis2_acceptance.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-010",
+      "query": "BT-7B 的报告需要谁签字，不能用 BT-7 的签字人替代？",
+      "category": "hard_negative",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "borealis2_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 B-44",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "borealis_schedule.txt:ptxt:000",
+        "borealis2_schedule.txt:ptxt:000",
+        "borealis_acceptance.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-011",
+      "query": "Borealis 的内部演示时间和 Borealis-2 的验收时长分别是多少？",
+      "category": "multi_evidence",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "borealis_schedule.txt:ptxt:000",
+        "borealis2_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 5 月 12 日；84 小时",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-012",
+      "query": "Borealis-2 的公开销售价格是多少元？",
+      "category": "no_answer",
+      "family_id": "borealis_pair",
+      "split": "test",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：未记录销售价格",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "borealis_schedule.txt:ptxt:000",
+        "borealis2_schedule.txt:ptxt:000",
+        "borealis_acceptance.txt:ptxt:000",
+        "borealis2_acceptance.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：未记录销售价格"
+    },
+    {
+      "id": "v2-r-013",
+      "query": "归档箱 ARC-TF 对应报销的提交期限是多少天？",
+      "category": "exact_keyword",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "travel_deadline.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "返程后 21 天内",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-014",
+      "query": "走普通出差流程时，每晚酒店最多报多少，谁审批？",
+      "category": "semantic_paraphrase",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "travel_standard.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "480 元；角色 T-11",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-015",
+      "query": "TR-10F 相比普通 TR-10，该按哪个每晚住宿上限执行？",
+      "category": "entity_ambiguity",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "travel_field.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "680 元",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "travel_standard.txt:ptxt:000",
+        "travel_deadline.txt:ptxt:000",
+        "travel_training.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-016",
+      "query": "TR-11 的 300 元限制对应哪种补贴，不是酒店报销？",
+      "category": "hard_negative",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "travel_training.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "培训补贴，每日上限",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "travel_standard.txt:ptxt:000",
+        "travel_field.txt:ptxt:000",
+        "travel_deadline.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-017",
+      "query": "现场保障出差的住宿封顶额度、提交期限和票据核验角色分别是什么？",
+      "category": "multi_evidence",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "travel_field.txt:ptxt:000",
+        "travel_deadline.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "680 元每晚；返程后 21 天；角色 T-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-018",
+      "query": "TR-10F 是否允许报销宠物寄养费？",
+      "category": "no_answer",
+      "family_id": "travel_policy",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：政策未记载该费用",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "travel_standard.txt:ptxt:000",
+        "travel_field.txt:ptxt:000",
+        "travel_deadline.txt:ptxt:000",
+        "travel_training.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：政策未记载该费用"
+    },
+    {
+      "id": "v2-r-019",
+      "query": "维修登记 MA-413 对应的巡检时间是什么？",
+      "category": "exact_keyword",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "robot_r3_service.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "每周四 15 点",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-020",
+      "query": "第二版 RX-41 机器人日常保养找谁，什么时候例行检查？",
+      "category": "semantic_paraphrase",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "robot_r2_service.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 R-11；每周二 10 点",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-021",
+      "query": "RX-41R2 的载荷验收按多少千克测试？",
+      "category": "entity_ambiguity",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "robot_r2_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "18 千克",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "robot_r2_service.txt:ptxt:000",
+        "robot_r3_service.txt:ptxt:000",
+        "robot_r3_acceptance.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-022",
+      "query": "RX-41R3 验收要连续运行多久，而不是 R2 的 36 小时？",
+      "category": "hard_negative",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "robot_r3_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "60 小时",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "robot_r2_service.txt:ptxt:000",
+        "robot_r2_acceptance.txt:ptxt:000",
+        "robot_r3_service.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-023",
+      "query": "给出 RX-41R2 的维护角色、验收角色和连续运行时长。",
+      "category": "multi_evidence",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "robot_r2_service.txt:ptxt:000",
+        "robot_r2_acceptance.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 R-11；角色 R-22；36 小时",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-024",
+      "query": "RX-41R3 的最高行驶速度是多少米每秒？",
+      "category": "no_answer",
+      "family_id": "robot_pair",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：没有最高速度",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "robot_r2_service.txt:ptxt:000",
+        "robot_r2_acceptance.txt:ptxt:000",
+        "robot_r3_service.txt:ptxt:000",
+        "robot_r3_acceptance.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：没有最高速度"
+    },
+    {
+      "id": "v2-r-025",
+      "query": "系统 SV-18B 的模型归档保留多少天？",
+      "category": "exact_keyword",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "sable18b_model.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "180 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-026",
+      "query": "不带 B 后缀的 SABLE-18 保存什么记录，多久后到期？",
+      "category": "semantic_paraphrase",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "sable18_audit.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "访问审计记录；60 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-027",
+      "query": "SABLE-18 的备份由谁负责，几点开始？",
+      "category": "entity_ambiguity",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "sable18_backup.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 S-22；02:30",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "sable18_audit.txt:ptxt:000",
+        "sable18b_model.txt:ptxt:000",
+        "sable18b_backup.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-028",
+      "query": "SABLE-18B 的备份保留多久，不是模型归档的 180 天？",
+      "category": "hard_negative",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "sable18b_backup.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "30 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "sable18_audit.txt:ptxt:000",
+        "sable18_backup.txt:ptxt:000",
+        "sable18b_model.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-029",
+      "query": "SABLE-18 的在线记录和备份分别保留多少天，备份几点开始？",
+      "category": "multi_evidence",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "sable18_audit.txt:ptxt:000",
+        "sable18_backup.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "在线 60 天；备份 14 天；02:30",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-030",
+      "query": "SABLE-18B 的磁盘总容量是多少 TB？",
+      "category": "no_answer",
+      "family_id": "server_pair",
+      "split": "test",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：没有磁盘容量",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "sable18_audit.txt:ptxt:000",
+        "sable18_backup.txt:ptxt:000",
+        "sable18b_model.txt:ptxt:000",
+        "sable18b_backup.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：没有磁盘容量"
+    },
+    {
+      "id": "v2-r-031",
+      "query": "RM-003 的工作日开放时段是哪段？",
+      "category": "exact_keyword",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "orbit3_reservation.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "09:00 至 18:00",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-032",
+      "query": "带 A 后缀的 ORBIT 小会议室最多坐几个人，配几台投影？",
+      "category": "semantic_paraphrase",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "orbit3a_capacity.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "26 人；2 台",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-033",
+      "query": "ORBIT-3A 的会议预约由哪个角色受理？",
+      "category": "entity_ambiguity",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "orbit3a_reservation.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 M-44",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "orbit3_reservation.txt:ptxt:000",
+        "orbit3a_capacity.txt:ptxt:000",
+        "orbit3_network.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-034",
+      "query": "ORBIT-3 的网络维护是什么时段，不要给会议开放时段？",
+      "category": "hard_negative",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "orbit3_network.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "每周五 18:30 至 19:30",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "orbit3_reservation.txt:ptxt:000",
+        "orbit3a_capacity.txt:ptxt:000",
+        "orbit3a_reservation.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-035",
+      "query": "给出 ORBIT-3 的预约角色和网络维护角色及维护窗口。",
+      "category": "multi_evidence",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "orbit3_reservation.txt:ptxt:000",
+        "orbit3_network.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 M-11；角色 M-33；周五18:30至19:30",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-036",
+      "query": "ORBIT-3 最多可以容纳多少人？",
+      "category": "no_answer",
+      "family_id": "meeting_pair",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：只有 ORBIT-3A 记录人数",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "orbit3_reservation.txt:ptxt:000",
+        "orbit3a_capacity.txt:ptxt:000",
+        "orbit3_network.txt:ptxt:000",
+        "orbit3a_reservation.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：只有 ORBIT-3A 记录人数"
+    },
+    {
+      "id": "v2-r-037",
+      "query": "版本 CE-R09 的发布日期和发布角色是什么？",
+      "category": "exact_keyword",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "cedar_release.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 9 月 4 日；角色 C-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-038",
+      "query": "Cedar 供内部演示的那份版本何时停止改动，由谁负责？",
+      "category": "semantic_paraphrase",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "cedar_demo.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 7 月 3 日；角色 C-11",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-039",
+      "query": "精简的 Cedar-Lite 正式版本是什么编号？",
+      "category": "entity_ambiguity",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "cedar_lite_release.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "CL-R08",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "cedar_demo.txt:ptxt:000",
+        "cedar_release.txt:ptxt:000",
+        "cedar_lite_freeze.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-040",
+      "query": "Cedar-Lite 的内容冻结日是哪天，而不是正式发布日？",
+      "category": "hard_negative",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "cedar_lite_freeze.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 8 月 2 日",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "cedar_demo.txt:ptxt:000",
+        "cedar_lite_release.txt:ptxt:000",
+        "cedar_release.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-041",
+      "query": "列出 Cedar 演示冻结日期和 Cedar-Lite 内容冻结、正式发布日期。",
+      "category": "multi_evidence",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "cedar_demo.txt:ptxt:000",
+        "cedar_lite_freeze.txt:ptxt:000",
+        "cedar_lite_release.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028年7月3日；8月2日；8月16日",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-042",
+      "query": "Cedar-Lite 的年度授权价格是多少？",
+      "category": "no_answer",
+      "family_id": "release_pair",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：未记录授权价格",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "cedar_demo.txt:ptxt:000",
+        "cedar_lite_release.txt:ptxt:000",
+        "cedar_release.txt:ptxt:000",
+        "cedar_lite_freeze.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：未记录授权价格"
+    },
+    {
+      "id": "v2-r-043",
+      "query": "柜 CAB-21 保存采购单的时限是多少天？",
+      "category": "exact_keyword",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "proc_small_archive.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "90 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-044",
+      "query": "申请普通小额购买时，一笔最多多少元，需要几份不同商家的报价？",
+      "category": "semantic_paraphrase",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "proc_small.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "12000 元；2 家报价",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-045",
+      "query": "PC-21C 的设备购买申请由谁审批？",
+      "category": "entity_ambiguity",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "proc_capital.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 P-22",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "proc_small.txt:ptxt:000",
+        "proc_small_archive.txt:ptxt:000",
+        "proc_capital_archive.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-046",
+      "query": "CAB-21C 的归档角色是谁，不是 PC-21C 的审批角色？",
+      "category": "hard_negative",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "proc_capital_archive.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 P-44",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "proc_small.txt:ptxt:000",
+        "proc_capital.txt:ptxt:000",
+        "proc_small_archive.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-047",
+      "query": "设备资本采购的单笔上限、报价数量和归档保存时长是什么？",
+      "category": "multi_evidence",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "proc_capital.txt:ptxt:000",
+        "proc_capital_archive.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "75000 元；3 家报价；365 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-048",
+      "query": "PC-21C 能否采用外币付款，具体汇率是多少？",
+      "category": "no_answer",
+      "family_id": "procurement_pair",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：没有外币付款与汇率规定",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "proc_small.txt:ptxt:000",
+        "proc_capital.txt:ptxt:000",
+        "proc_small_archive.txt:ptxt:000",
+        "proc_capital_archive.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：没有外币付款与汇率规定"
+    },
+    {
+      "id": "v2-r-049",
+      "query": "备份 BK-032 的保留时间是多少？",
+      "category": "exact_keyword",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "ret_backup.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "28 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-050",
+      "query": "正式运行环境的审计记录由谁管理，留存多久？",
+      "category": "semantic_paraphrase",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "ret_prod.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 L-11；120 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-051",
+      "query": "LOG-31T 的测试审计多久到期？",
+      "category": "entity_ambiguity",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "ret_test.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "7 天",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "ret_prod.txt:ptxt:000",
+        "ret_access.txt:ptxt:000",
+        "ret_backup.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-052",
+      "query": "生产记录的导出签批找哪个角色，不能直接找审计管理角色？",
+      "category": "hard_negative",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "ret_access.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "角色 L-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "ret_prod.txt:ptxt:000",
+        "ret_test.txt:ptxt:000",
+        "ret_backup.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-053",
+      "query": "生产审计保留多久、导出谁批准、批准后可用窗口多久？",
+      "category": "multi_evidence",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [
+        "ret_prod.txt:ptxt:000",
+        "ret_access.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "120 天；角色 L-33；4 小时",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-054",
+      "query": "LOG-31T 允许的单日导出次数上限是多少？",
+      "category": "no_answer",
+      "family_id": "retention_pair",
+      "split": "dev",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：未记录导出次数上限",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "ret_prod.txt:ptxt:000",
+        "ret_test.txt:ptxt:000",
+        "ret_access.txt:ptxt:000",
+        "ret_backup.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：未记录导出次数上限"
+    },
+    {
+      "id": "v2-r-055",
+      "query": "归档号 INC-707 的未响应升级触发时间是多少？",
+      "category": "exact_keyword",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "duty_escalation.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "满 20 分钟",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-056",
+      "query": "正式一线值守从哪天开始，需要在多久内响应？",
+      "category": "semantic_paraphrase",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "duty_l1.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "2028 年 10 月 1 日；15 分钟",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-057",
+      "query": "DUTY-7B 的二线响应时限是多少分钟？",
+      "category": "entity_ambiguity",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "duty_l2.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "45 分钟",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "duty_l1.txt:ptxt:000",
+        "duty_escalation.txt:ptxt:000",
+        "duty_training.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-058",
+      "query": "DUTY-8 桌面演练的响应目标是多少，不能当成真实事件时限？",
+      "category": "hard_negative",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "duty_training.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "5 分钟",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "duty_l1.txt:ptxt:000",
+        "duty_l2.txt:ptxt:000",
+        "duty_escalation.txt:ptxt:000"
+      ]
+    },
+    {
+      "id": "v2-r-059",
+      "query": "DUTY-7 一线响应和未响应升级各需多久，升级由谁协调？",
+      "category": "multi_evidence",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [
+        "duty_l1.txt:ptxt:000",
+        "duty_escalation.txt:ptxt:000"
+      ],
+      "answerable": true,
+      "expected_answer": "15 分钟；满20分钟升级；角色 D-33",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。 列出的每一块均提供不可由另一块替代的必要事实。",
+      "hard_negative_chunk_ids": []
+    },
+    {
+      "id": "v2-r-060",
+      "query": "DUTY-7B 二线每月值班补贴是多少元？",
+      "category": "no_answer",
+      "family_id": "duty_pair",
+      "split": "test",
+      "expected_chunk_ids": [],
+      "answerable": false,
+      "expected_answer": "无法确定：没有补贴金额",
+      "notes": "人工依据独立 V0.2 corpus 标注；不引用 V0.1 或公共事实推断缺失私有属性。",
+      "hard_negative_chunk_ids": [
+        "duty_l1.txt:ptxt:000",
+        "duty_l2.txt:ptxt:000",
+        "duty_escalation.txt:ptxt:000",
+        "duty_training.txt:ptxt:000"
+      ],
+      "no_answer_reason": "无法确定：没有补贴金额"
+    }
+  ]
+}

@@ -1,0 +1,567 @@
+{
+  "version": "v0.2-dataset-1",
+  "documents": [
+    {
+      "source": "aurora_roster.txt",
+      "title": "Aurora 2028 值守名册",
+      "family_id": "aurora_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "aurora_x_acceptance.txt",
+      "title": "Aurora-X 验收卡",
+      "family_id": "aurora_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "aurora_finance.txt",
+      "title": "Aurora 财务批准单",
+      "family_id": "aurora_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "aurora_x_finance.txt",
+      "title": "Aurora-X 财务批准单",
+      "family_id": "aurora_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "borealis_schedule.txt",
+      "title": "Borealis 排期单",
+      "family_id": "borealis_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "borealis2_schedule.txt",
+      "title": "Borealis-2 排期单",
+      "family_id": "borealis_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "borealis_acceptance.txt",
+      "title": "Borealis 验收单",
+      "family_id": "borealis_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "borealis2_acceptance.txt",
+      "title": "Borealis-2 验收单",
+      "family_id": "borealis_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "travel_standard.txt",
+      "title": "差旅标准档",
+      "family_id": "travel_policy",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "travel_field.txt",
+      "title": "差旅现场档",
+      "family_id": "travel_policy",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "travel_deadline.txt",
+      "title": "现场报销时限",
+      "family_id": "travel_policy",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "travel_training.txt",
+      "title": "培训补贴档",
+      "family_id": "travel_policy",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "robot_r2_service.txt",
+      "title": "RX-41R2 维修卡",
+      "family_id": "robot_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "robot_r2_acceptance.txt",
+      "title": "RX-41R2 验收卡",
+      "family_id": "robot_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "robot_r3_service.txt",
+      "title": "RX-41R3 维修卡",
+      "family_id": "robot_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "robot_r3_acceptance.txt",
+      "title": "RX-41R3 验收卡",
+      "family_id": "robot_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "sable18_audit.txt",
+      "title": "SABLE-18 审计卡",
+      "family_id": "server_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "sable18_backup.txt",
+      "title": "SABLE-18 备份卡",
+      "family_id": "server_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "sable18b_model.txt",
+      "title": "SABLE-18B 模型档",
+      "family_id": "server_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "sable18b_backup.txt",
+      "title": "SABLE-18B 备份档",
+      "family_id": "server_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "orbit3_reservation.txt",
+      "title": "ORBIT-3 预约表",
+      "family_id": "meeting_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "orbit3a_capacity.txt",
+      "title": "ORBIT-3A 场地表",
+      "family_id": "meeting_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "orbit3_network.txt",
+      "title": "ORBIT-3 网络维护表",
+      "family_id": "meeting_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "orbit3a_reservation.txt",
+      "title": "ORBIT-3A 预约表",
+      "family_id": "meeting_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "cedar_demo.txt",
+      "title": "Cedar 演示冻结表",
+      "family_id": "release_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "cedar_lite_release.txt",
+      "title": "Cedar-Lite 发布表",
+      "family_id": "release_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "cedar_release.txt",
+      "title": "Cedar 正式发布表",
+      "family_id": "release_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "cedar_lite_freeze.txt",
+      "title": "Cedar-Lite 内容冻结表",
+      "family_id": "release_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "proc_small.txt",
+      "title": "PC-21 小额采购",
+      "family_id": "procurement_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "proc_capital.txt",
+      "title": "PC-21C 设备采购",
+      "family_id": "procurement_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "proc_small_archive.txt",
+      "title": "小额采购归档",
+      "family_id": "procurement_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "proc_capital_archive.txt",
+      "title": "设备采购归档",
+      "family_id": "procurement_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "ret_prod.txt",
+      "title": "LOG-31 生产审计",
+      "family_id": "retention_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "ret_test.txt",
+      "title": "LOG-31T 测试审计",
+      "family_id": "retention_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "ret_access.txt",
+      "title": "生产导出审批",
+      "family_id": "retention_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "ret_backup.txt",
+      "title": "LOG-32 生产备份",
+      "family_id": "retention_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "duty_l1.txt",
+      "title": "DUTY-7 一线值班",
+      "family_id": "duty_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "duty_l2.txt",
+      "title": "DUTY-7B 二线值班",
+      "family_id": "duty_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "duty_escalation.txt",
+      "title": "DUTY-7 升级流程",
+      "family_id": "duty_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    },
+    {
+      "source": "duty_training.txt",
+      "title": "DUTY-8 演练",
+      "family_id": "duty_pair",
+      "fictional": true,
+      "purpose": "Independent V0.2 scenario; not a replacement for V0.1 documents"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "aurora_finance.txt:ptxt:000",
+      "source": "aurora_finance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Aurora 的 2028 年预算为 186000 元，财务审批负责人是角色 A-33，政策编号 FIN-A12。审批角色不担任项目负责人。"
+    },
+    {
+      "chunk_id": "aurora_roster.txt:ptxt:000",
+      "source": "aurora_roster.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Aurora 的 2028 年度值守项目编号为 AU-812，项目负责人是角色 A-11。轮值从 2028 年 3 月 6 日开始，和旧版本发布名册分开管理。"
+    },
+    {
+      "chunk_id": "aurora_x_acceptance.txt:ptxt:000",
+      "source": "aurora_x_acceptance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Aurora-X 项目编号 AX-812，验收负责人为角色 A-22。验收设备是 RX-41，要求连续运行 96 小时。此卡不记录 Aurora 的验收要求。"
+    },
+    {
+      "chunk_id": "aurora_x_finance.txt:ptxt:000",
+      "source": "aurora_x_finance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Aurora-X 的预算为 216000 元，审批负责人是角色 A-44，政策编号 FIN-AX12。单笔采购上限为 32000 元。"
+    },
+    {
+      "chunk_id": "borealis2_acceptance.txt:ptxt:000",
+      "source": "borealis2_acceptance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Borealis-2 的验收设备 BT-7B 必须连跑 84 小时，由角色 B-44 签字。BT-7 的旧报告不能替代本次验收。"
+    },
+    {
+      "chunk_id": "borealis2_schedule.txt:ptxt:000",
+      "source": "borealis2_schedule.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Borealis-2 编号 B2-620，正式上线定于 2028 年 6 月 20 日。上线负责人是角色 B-22，不沿用 Borealis 的演示日期。"
+    },
+    {
+      "chunk_id": "borealis_acceptance.txt:ptxt:000",
+      "source": "borealis_acceptance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Borealis 由角色 B-33 负责验收，设备 BT-7 连跑 48 小时后提交报告。验收签字必须早于内部演示。"
+    },
+    {
+      "chunk_id": "borealis_schedule.txt:ptxt:000",
+      "source": "borealis_schedule.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Borealis 项目编号 BO-620，发布负责人是角色 B-11。内部演示定于 2028 年 5 月 12 日，只有演示排期，不代表正式上线。"
+    },
+    {
+      "chunk_id": "cedar_demo.txt:ptxt:000",
+      "source": "cedar_demo.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Cedar 的内部演示版本在 2028 年 7 月 3 日冻结，演示角色为角色 C-11，版本号 CE-D08。冻结不是正式发布日期。"
+    },
+    {
+      "chunk_id": "cedar_lite_freeze.txt:ptxt:000",
+      "source": "cedar_lite_freeze.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Cedar-Lite 的内容冻结日为 2028 年 8 月 2 日，冻结角色为角色 C-44。冻结至正式发布之间不安排新内容合入。"
+    },
+    {
+      "chunk_id": "cedar_lite_release.txt:ptxt:000",
+      "source": "cedar_lite_release.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Cedar-Lite 的正式发布定于 2028 年 8 月 16 日，发布角色为角色 C-22，版本号 CL-R08，属于精简版。"
+    },
+    {
+      "chunk_id": "cedar_release.txt:ptxt:000",
+      "source": "cedar_release.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "Cedar 正式发布日期为 2028 年 9 月 4 日，发布角色为角色 C-33，版本号 CE-R09。演示冻结版本不代替正式发布。"
+    },
+    {
+      "chunk_id": "duty_escalation.txt:ptxt:000",
+      "source": "duty_escalation.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "DUTY-7 在一线未响应满 20 分钟时升级，升级协调角色是角色 D-33，事件归档号 INC-707。升级不等于二线响应期限。"
+    },
+    {
+      "chunk_id": "duty_l1.txt:ptxt:000",
+      "source": "duty_l1.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "DUTY-7 的一线值班角色为角色 D-11，响应期限 15 分钟。排班起始日 2028 年 10 月 1 日，二线响应另见 DUTY-7B。"
+    },
+    {
+      "chunk_id": "duty_l2.txt:ptxt:000",
+      "source": "duty_l2.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "DUTY-7B 的二线响应期限 45 分钟，二线角色为角色 D-22。二线不承担一线的 15 分钟响应要求。"
+    },
+    {
+      "chunk_id": "duty_training.txt:ptxt:000",
+      "source": "duty_training.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "DUTY-8 为桌面演练，角色为角色 D-44，每月 8 日执行。演练响应目标 5 分钟，不用于真实 DUTY-7 事件。"
+    },
+    {
+      "chunk_id": "orbit3_network.txt:ptxt:000",
+      "source": "orbit3_network.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "ORBIT-3 网络维护窗口为每周五 18:30 至 19:30，维护角色为角色 M-33。网络维护时间不是会议室开放时间。"
+    },
+    {
+      "chunk_id": "orbit3_reservation.txt:ptxt:000",
+      "source": "orbit3_reservation.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "会议室 ORBIT-3 的预约角色为角色 M-11，工作日开放 09:00 至 18:00。内部场地编号 RM-003；本表不记录容纳人数。"
+    },
+    {
+      "chunk_id": "orbit3a_capacity.txt:ptxt:000",
+      "source": "orbit3a_capacity.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "会议室 ORBIT-3A 最多容纳 26 人，场地编号 RM-03A，配有 2 台投影仪。人数不能直接用于 ORBIT-3。"
+    },
+    {
+      "chunk_id": "orbit3a_reservation.txt:ptxt:000",
+      "source": "orbit3a_reservation.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "ORBIT-3A 的预约角色是角色 M-44，工作日开放 08:30 至 17:30。维护申请提前 2 个工作日提交。"
+    },
+    {
+      "chunk_id": "proc_capital.txt:ptxt:000",
+      "source": "proc_capital.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "政策 PC-21C 针对设备资本采购，单笔上限 75000 元，审批角色为角色 P-22，须留 3 家报价。"
+    },
+    {
+      "chunk_id": "proc_capital_archive.txt:ptxt:000",
+      "source": "proc_capital_archive.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "PC-21C 设备采购单保存 365 天，归档柜编号 CAB-21C，角色为角色 P-44。归档角色无权代替采购审批。"
+    },
+    {
+      "chunk_id": "proc_small.txt:ptxt:000",
+      "source": "proc_small.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "政策 PC-21 针对小额采购，单笔上限 12000 元，审批角色为角色 P-11，须留 2 家报价。它不处理设备资本支出。"
+    },
+    {
+      "chunk_id": "proc_small_archive.txt:ptxt:000",
+      "source": "proc_small_archive.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "PC-21 小额采购单保存 90 天，归档柜编号 CAB-21，归档角色为角色 P-33。报价单与审批单一起归档。"
+    },
+    {
+      "chunk_id": "ret_access.txt:ptxt:000",
+      "source": "ret_access.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "LOG-31 生产记录的导出审批角色为角色 L-33，批准后 4 小时内允许导出。审计管理角色不能自行批准导出。"
+    },
+    {
+      "chunk_id": "ret_backup.txt:ptxt:000",
+      "source": "ret_backup.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "LOG-32 的生产备份保留 28 天，备份角色为角色 L-44，备份编号 BK-032。它不是 LOG-31 的在线审计记录。"
+    },
+    {
+      "chunk_id": "ret_prod.txt:ptxt:000",
+      "source": "ret_prod.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "政策 LOG-31 的生产审计记录保留 120 天，审计角色为角色 L-11。每次导出需记录用途，适用对象是生产环境。"
+    },
+    {
+      "chunk_id": "ret_test.txt:ptxt:000",
+      "source": "ret_test.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "LOG-31T 的测试审计记录保留 7 天，管理角色为角色 L-22。测试环境不能直接套用生产审计保留时间。"
+    },
+    {
+      "chunk_id": "robot_r2_acceptance.txt:ptxt:000",
+      "source": "robot_r2_acceptance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "RX-41R2 的验收角色为角色 R-22，载荷试验要求 18 千克，连续运行 36 小时。维护签字不代替验收签字。"
+    },
+    {
+      "chunk_id": "robot_r2_service.txt:ptxt:000",
+      "source": "robot_r2_service.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "机器人 RX-41R2 的维护角色为角色 R-11，每周二 10 点检查。型号后缀 R2 不可省略，维修登记号为 MA-412。"
+    },
+    {
+      "chunk_id": "robot_r3_acceptance.txt:ptxt:000",
+      "source": "robot_r3_acceptance.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "RX-41R3 的载荷试验为 24 千克，验收角色是角色 R-44，连续运行 60 小时。18 千克标准仅属于 RX-41R2。"
+    },
+    {
+      "chunk_id": "robot_r3_service.txt:ptxt:000",
+      "source": "robot_r3_service.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "机器人 RX-41R3 的维护角色是角色 R-33，每周四 15 点检查。维修登记号 MA-413，与 R2 的检查时间不同。"
+    },
+    {
+      "chunk_id": "sable18_audit.txt:ptxt:000",
+      "source": "sable18_audit.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "服务器 SABLE-18 保存的是访问审计记录，保留 60 天，审计角色为角色 S-11。系统编号 SV-180，不保存模型权重。"
+    },
+    {
+      "chunk_id": "sable18_backup.txt:ptxt:000",
+      "source": "sable18_backup.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "SABLE-18 的审计备份于每天 02:30 开始，备份角色为角色 S-22。备份保留 14 天，不是在线审计记录的保留时间。"
+    },
+    {
+      "chunk_id": "sable18b_backup.txt:ptxt:000",
+      "source": "sable18b_backup.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "SABLE-18B 的模型备份于每天 04:00 执行，备份保留 30 天，角色为角色 S-44。不能用 SABLE-18 的备份窗口替代。"
+    },
+    {
+      "chunk_id": "sable18b_model.txt:ptxt:000",
+      "source": "sable18b_model.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "服务器 SABLE-18B 保存模型权重，模型归档保留 180 天，角色为角色 S-33。系统编号 SV-18B，与访问审计无关。"
+    },
+    {
+      "chunk_id": "travel_deadline.txt:ptxt:000",
+      "source": "travel_deadline.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "TR-10F 的现场报销必须在返程后 21 天内提交，归档箱编号 ARC-TF。票据核验角色为角色 T-33，核验不等于审批。"
+    },
+    {
+      "chunk_id": "travel_field.txt:ptxt:000",
+      "source": "travel_field.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "内部政策 TR-10F 用于现场保障差旅，住宿上限每晚 680 元。审批角色是角色 T-22，普通 TR-10 的额度不能套用。"
+    },
+    {
+      "chunk_id": "travel_standard.txt:ptxt:000",
+      "source": "travel_standard.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "内部政策 TR-10 的普通差旅住宿上限为每晚 480 元。普通差旅的审批角色是角色 T-11，报销须在返程后 14 天内提交。"
+    },
+    {
+      "chunk_id": "travel_training.txt:ptxt:000",
+      "source": "travel_training.txt",
+      "page": null,
+      "chunk_index": 0,
+      "text": "TR-11 仅用于培训补贴，每日上限 300 元，审批角色为角色 T-44。它不是住宿政策，也不规定现场报销期限。"
+    }
+  ]
+}

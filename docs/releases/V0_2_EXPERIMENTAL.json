@@ -1,0 +1,659 @@
+{
+  "schema_version": 1,
+  "release_identifier": "v0.2-experimental-evaluation",
+  "release_type": "experimental evaluation release; not production release",
+  "release_timestamp_utc": "2026-10-06T06:12:58.996968+00:00",
+  "release_timestamp_asia_shanghai": "2026-10-06T14:12:58.996968+08:00",
+  "base_v0_1": {
+    "tag": "v0.1-agentic-rag-baseline",
+    "commit": "aa422d826fa484933d9949c16fc79e1a2f22eda1"
+  },
+  "phase_checkpoints": {
+    "phase1_dataset": "0b74d1968893c76b6c29f72af191c7529e74637e",
+    "phase2_retrieval": "86c7325736de5c5a317ce8c59cb1178758dced80",
+    "phase3_routing": "93293f54be1d62446123eba977c5ece2703a4552",
+    "phase3_ablation": "214b5e5a35645768485ca2232a0b85b0b586389b",
+    "phase4_threshold": "a1d4a73e922901bb7e71617dd546774c13f21ef8"
+  },
+  "prepared_from_commit": "a1d4a73e922901bb7e71617dd546774c13f21ef8",
+  "branch": "feat/v0.2-eval-hybrid",
+  "release_commit_provenance": "The commit containing this manifest is the documentation release checkpoint; prepared_from_commit is the preceding Phase4 checkpoint, not this release commit.",
+  "package_version_note": "Python distribution remains 0.1.0; no package/runtime upgrade in V0.2 finalization.",
+  "counts": {
+    "corpus_documents": 40,
+    "actual_chunks": 40,
+    "retrieval": {
+      "total": 60,
+      "dev": 36,
+      "test": 24,
+      "test_answerable": 20,
+      "test_no_answer": 4,
+      "categories": 6,
+      "test_per_category": 4
+    },
+    "routing": {
+      "total": 50,
+      "dev": 30,
+      "test": 20,
+      "categories": 5,
+      "test_per_category": 4
+    },
+    "ablation_test": 20,
+    "split_basis": "family_id topic-grouped 60/40; synthetic tasks share manual templates",
+    "corpus_path": "eval/v0.2/corpus/",
+    "default_corpus": "data/ (9 V0.1 documents; unchanged)"
+  },
+  "runtime_verified_at_preparation": {
+    "python": "3.12.14",
+    "interpreter_path_label": "../nanobot/.venv/Scripts/python.exe",
+    "imports_from_current_repositories": true,
+    "packages": {
+      "knowledge-base-agent": "0.1.0",
+      "nanobot-ai": "0.3.5",
+      "numpy": "2.5.3",
+      "faiss-cpu": "1.15.1",
+      "pymupdf": "1.28.2",
+      "tiktoken": "0.14.0",
+      "httpx": "0.28.1",
+      "pytest": "8.4.2"
+    },
+    "ollama_version": "0.35.1",
+    "models": [
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "size": 274302450
+      },
+      {
+        "name": "qwen3:1.7b",
+        "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+        "size": 1359293444
+      }
+    ],
+    "nanobot_commit": "66f5f2df15455b34fc22e656bdc1ef3d4f32e328"
+  },
+  "historical_phase2_runtime": {
+    "time_utc": "2026-10-05T03:04:44.018251+00:00",
+    "dataset_checkpoint": "0b74d1968893c76b6c29f72af191c7529e74637e",
+    "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+    "python": "3.12.14",
+    "packages": {
+      "numpy": "2.5.3",
+      "faiss-cpu": "1.15.1",
+      "httpx": "0.28.1",
+      "tiktoken": "0.14.0",
+      "knowledge-base-agent": "0.1.0",
+      "nanobot-ai": "0.3.5"
+    },
+    "embedding_model": {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 274302450
+    },
+    "ollama_version": "0.35.1"
+  },
+  "upstream_attribution": {
+    "nanobot": {
+      "url": "https://github.com/HKUDS/nanobot",
+      "commit": "66f5f2df15455b34fc22e656bdc1ef3d4f32e328",
+      "license": "MIT",
+      "role": "external AgentRunner/ToolRegistry runtime; core unmodified"
+    },
+    "rag_from_scratch": {
+      "url": "https://github.com/tajwarchy/rag-from-scratch",
+      "commit": "4c4e039177ce2a7ac475339cff7a1187a6fd68bf",
+      "license": "MIT",
+      "role": "attributed loader/chunker/FAISS adaptation"
+    },
+    "ollama_local_rag_demo": {
+      "url": "https://github.com/fr3kchy/ollama-local-rag-demo",
+      "commit": "2d4a5d30b4a4829a007b8132e11cea71282a83d7",
+      "license": "MIT",
+      "role": "attributed Ollama embedding adaptation"
+    }
+  },
+  "retrieval_config": {
+    "experiment_version": "v0.2-retrieval-1",
+    "tokenizer_version": "nfkc-ascii-id-cjk12-v1",
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "bm25_query_terms": "unique; no query frequency multiplier",
+    "bm25_zero_overlap": "return zero scores; chunk_id ascending tie",
+    "rrf_k": 60,
+    "candidate_pool_size": 20,
+    "rrf_tie": "chunk_id ascending",
+    "embedding_model": "nomic-embed-text",
+    "ollama_url": "http://localhost:11434",
+    "timeout_seconds": 120,
+    "faiss_index_type": "IndexFlatIP",
+    "normalized": true,
+    "top_k_settings": [
+      1,
+      3,
+      5
+    ],
+    "test_latency_repeats": 3,
+    "dev_latency_repeats": 1,
+    "warmup_queries_per_backend_per_split": 1,
+    "query_order": "frozen dataset order; fixed dense,bm25,hybrid order per query",
+    "query_embedding_cache": false,
+    "metric_primary_run": 1,
+    "bad_case_correctness": "complete evidence coverage at K=3; no-answer excluded"
+  },
+  "embedding_dimension": 768,
+  "config_file_sha256": {
+    "experiments/v0_2/retrieval/CONFIG.json": "f1322d1de5aa8d260c6004f874169e37ca1bc6be2e8880bc8319278eb29c0c67",
+    "experiments/v0_2/routing/ROUTING_CONFIG.json": "4c3df3f3a34215383c76fbde507851a142d81741f8112799bd090ff9495f61d8",
+    "experiments/v0_2/ablation/EVAL_CONFIG.json": "15056615f1f043195f2bbbe50018121f3ebab5ebddc704f24e3b7cdb202aa5ec",
+    "experiments/v0_2/no_answer/THRESHOLD_CONFIG.json": "c6ad4cce97b3a7ff29a9f13070b8485ceee31be42e72ec576ef78697b838fb99"
+  },
+  "routing_config_content_sha256": "2a71a7f26d65f79f0eabdad8ed238835f7d601cd8d8773e2a13b2dd46494e655",
+  "routing_selected_arm": "A2",
+  "threshold_config_content_sha256": "f3d30c433a70b3e878f23e61dfd522a7566b830c2f0adac9e2bde64d7c34473e",
+  "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+  "evidence_file_sha256": {
+    "docs/v0.2/evidence/PHASE2_RETRIEVAL.json": "325fe389bdae087186d5745c960fd98db9ff9d50c73fbf71b021fd5bf66c4e04",
+    "docs/v0.2/evidence/PHASE3_ROUTING.json": "80600ea041d4f5950dc1065dd98daeaf43c25db856a4a6ff51f319dd22431669",
+    "docs/v0.2/evidence/PHASE3_ABLATION.json": "75d505add5074c521428970f64c8f4d47d209a9df8cc9907eb70ecc001584ccd",
+    "docs/v0.2/evidence/PHASE4_THRESHOLD.json": "2f194c55dc21ea53d2920e54ed682de7653a585c875cd7541410b6a739c50856"
+  },
+  "formal_results": {
+    "retrieval": {
+      "query_count": 24,
+      "answerable_denominator": 20,
+      "no_answer_excluded": 4,
+      "metrics": {
+        "dense": {
+          "answerable_count": 20,
+          "no_answer_count": 4,
+          "metrics": {
+            "HitRate@1": 0.6,
+            "Recall@1": 0.525,
+            "HitRate@3": 0.9,
+            "Recall@3": 0.8333333333333334,
+            "MRR@3": 0.7333333333333333,
+            "HitRate@5": 0.95,
+            "Recall@5": 0.95,
+            "MRR@5": 0.7458333333333333
+          },
+          "hit_counts": {
+            "HitRate@1": 12.0,
+            "HitRate@3": 18.0,
+            "HitRate@5": 19.0
+          }
+        },
+        "bm25": {
+          "answerable_count": 20,
+          "no_answer_count": 4,
+          "metrics": {
+            "HitRate@1": 0.85,
+            "Recall@1": 0.7666666666666667,
+            "HitRate@3": 0.95,
+            "Recall@3": 0.9,
+            "MRR@3": 0.8916666666666667,
+            "HitRate@5": 1.0,
+            "Recall@5": 1.0,
+            "MRR@5": 0.9041666666666667
+          },
+          "hit_counts": {
+            "HitRate@1": 17.0,
+            "HitRate@3": 19.0,
+            "HitRate@5": 20.0
+          }
+        },
+        "hybrid": {
+          "answerable_count": 20,
+          "no_answer_count": 4,
+          "metrics": {
+            "HitRate@1": 0.75,
+            "Recall@1": 0.6666666666666666,
+            "HitRate@3": 1.0,
+            "Recall@3": 0.975,
+            "MRR@3": 0.875,
+            "HitRate@5": 1.0,
+            "Recall@5": 1.0,
+            "MRR@5": 0.875
+          },
+          "hit_counts": {
+            "HitRate@1": 15.0,
+            "HitRate@3": 20.0,
+            "HitRate@5": 20.0
+          }
+        }
+      },
+      "interpretation": "Hybrid improves Top-K evidence coverage in this benchmark, but does not dominate first-relevant ranking quality."
+    },
+    "routing": {
+      "dev": {
+        "A0": {
+          "TP": 16,
+          "FP": 0,
+          "FN": 5,
+          "TN": 9,
+          "correct": 25,
+          "total": 30,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.7619047619047619,
+          "f1": 0.8648648648648648
+        },
+        "A1": {
+          "TP": 14,
+          "FP": 0,
+          "FN": 7,
+          "TN": 9,
+          "correct": 23,
+          "total": 30,
+          "accuracy": 0.7666666666666667,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "A2": {
+          "TP": 21,
+          "FP": 1,
+          "FN": 0,
+          "TN": 8,
+          "correct": 29,
+          "total": 30,
+          "accuracy": 0.9666666666666667,
+          "precision": 0.9545454545454546,
+          "recall": 1.0,
+          "f1": 0.9767441860465117
+        }
+      },
+      "frozen_test": {
+        "A0": {
+          "TP": 10,
+          "FP": 0,
+          "FN": 5,
+          "TN": 5,
+          "correct": 15,
+          "total": 20,
+          "accuracy": 0.75,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "A2": {
+          "TP": 15,
+          "FP": 0,
+          "FN": 0,
+          "TN": 5,
+          "correct": 20,
+          "total": 20,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "selection": "A2 selected and frozen on dev; no test tuning; A1 negative result retained",
+      "interpretation": "20/20 routing on 20 synthetic queries does not establish final-answer or production reliability."
+    },
+    "ablation": {
+      "B0": {
+        "counts": {
+          "correct": 5,
+          "partial": 1,
+          "incorrect": 12,
+          "correct_abstention": 2
+        },
+        "strict_correct": 7,
+        "total": 20,
+        "strict_accuracy": 0.35,
+        "tool_usage": {
+          "called_cases": 0,
+          "tool_call_rate": 0.0,
+          "unnecessary": 0,
+          "unnecessary_denominator": 5,
+          "unnecessary_rate": 0.0,
+          "missed": 15,
+          "missed_denominator": 15,
+          "missed_rate": 1.0,
+          "total_calls": 0,
+          "average_calls": 0.0
+        },
+        "grounded": 13,
+        "unsupported_private_claim_cases": 7,
+        "no_answer": {
+          "correct_abstention": 2,
+          "total": 4
+        },
+        "multi_evidence": {
+          "complete_evidence": 0,
+          "fully_correct": 0,
+          "total": 4
+        },
+        "latency": {
+          "e2e_ms": {
+            "n": 20,
+            "mean": 31132.75668499973,
+            "median": 26057.43849999999,
+            "p95": 64435.337314998316
+          },
+          "tool_ms": null,
+          "llm1_ms": null,
+          "llm_final_ms": {
+            "n": 20,
+            "mean": 31063.326200000483,
+            "median": 26048.4803499985,
+            "p95": 63272.53241000056
+          }
+        },
+        "llm_request_count": 20
+      },
+      "B1": {
+        "counts": {
+          "correct": 12,
+          "partial": 0,
+          "incorrect": 5,
+          "correct_abstention": 3
+        },
+        "strict_correct": 15,
+        "total": 20,
+        "strict_accuracy": 0.75,
+        "tool_usage": {
+          "called_cases": 20,
+          "tool_call_rate": 1.0,
+          "unnecessary": 5,
+          "unnecessary_denominator": 5,
+          "unnecessary_rate": 1.0,
+          "missed": 0,
+          "missed_denominator": 15,
+          "missed_rate": 0.0,
+          "total_calls": 20,
+          "average_calls": 1.0
+        },
+        "grounded": 16,
+        "unsupported_private_claim_cases": 4,
+        "no_answer": {
+          "correct_abstention": 3,
+          "total": 4
+        },
+        "multi_evidence": {
+          "complete_evidence": 2,
+          "fully_correct": 2,
+          "total": 4
+        },
+        "latency": {
+          "e2e_ms": {
+            "n": 20,
+            "mean": 50055.6935599996,
+            "median": 46556.65619999854,
+            "p95": 71946.52874499791
+          },
+          "tool_ms": {
+            "n": 20,
+            "mean": 208.28253500021674,
+            "median": 155.06990000176302,
+            "p95": 297.6399300006966
+          },
+          "llm1_ms": null,
+          "llm_final_ms": {
+            "n": 20,
+            "mean": 49786.204655000074,
+            "median": 46393.41805000004,
+            "p95": 71708.31638000056
+          }
+        },
+        "llm_request_count": 20
+      },
+      "B2": {
+        "counts": {
+          "correct": 11,
+          "partial": 0,
+          "incorrect": 6,
+          "correct_abstention": 3
+        },
+        "strict_correct": 14,
+        "total": 20,
+        "strict_accuracy": 0.7,
+        "tool_usage": {
+          "called_cases": 15,
+          "tool_call_rate": 0.75,
+          "unnecessary": 0,
+          "unnecessary_denominator": 5,
+          "unnecessary_rate": 0.0,
+          "missed": 0,
+          "missed_denominator": 15,
+          "missed_rate": 0.0,
+          "total_calls": 15,
+          "average_calls": 0.75
+        },
+        "grounded": 14,
+        "unsupported_private_claim_cases": 6,
+        "no_answer": {
+          "correct_abstention": 3,
+          "total": 4
+        },
+        "multi_evidence": {
+          "complete_evidence": 2,
+          "fully_correct": 2,
+          "total": 4
+        },
+        "latency": {
+          "e2e_ms": {
+            "n": 20,
+            "mean": 71928.19467499976,
+            "median": 76877.44204999944,
+            "p95": 121261.10691500144
+          },
+          "tool_ms": {
+            "n": 15,
+            "mean": 222.78711333322767,
+            "median": 208.8194999996631,
+            "p95": 299.7344600005817
+          },
+          "llm1_ms": {
+            "n": 15,
+            "mean": 33796.572506666176,
+            "median": 32081.068699999378,
+            "p95": 49994.65391999983
+          },
+          "llm_final_ms": {
+            "n": 20,
+            "mean": 46390.82928499984,
+            "median": 43246.89214999944,
+            "p95": 73945.32240999944
+          }
+        },
+        "llm_request_count": 35
+      }
+    },
+    "no_answer": {
+      "selected_threshold": 0.85,
+      "positive_class": "no_answer",
+      "dev": {
+        "threshold": 0.85,
+        "positive_class": "no_answer",
+        "TP": 5,
+        "FP": 19,
+        "FN": 1,
+        "TN": 11,
+        "no_answer_precision": 0.20833333333333334,
+        "no_answer_recall": 0.8333333333333334,
+        "no_answer_f1": 0.3333333333333333,
+        "answerable_false_rejection_rate": 0.6333333333333333,
+        "accuracy": 0.4444444444444444,
+        "answerable_count": 30,
+        "no_answer_count": 6,
+        "false_rejection_ids": [
+          "v2-r-013",
+          "v2-r-014",
+          "v2-r-016",
+          "v2-r-017",
+          "v2-r-019",
+          "v2-r-020",
+          "v2-r-031",
+          "v2-r-032",
+          "v2-r-037",
+          "v2-r-038",
+          "v2-r-040",
+          "v2-r-044",
+          "v2-r-045",
+          "v2-r-047",
+          "v2-r-049",
+          "v2-r-050",
+          "v2-r-051",
+          "v2-r-052",
+          "v2-r-053"
+        ],
+        "missed_no_answer_ids": [
+          "v2-r-036"
+        ]
+      },
+      "frozen_test": {
+        "threshold": 0.85,
+        "positive_class": "no_answer",
+        "TP": 1,
+        "FP": 11,
+        "FN": 3,
+        "TN": 9,
+        "no_answer_precision": 0.08333333333333333,
+        "no_answer_recall": 0.25,
+        "no_answer_f1": 0.125,
+        "answerable_false_rejection_rate": 0.55,
+        "accuracy": 0.4166666666666667,
+        "answerable_count": 20,
+        "no_answer_count": 4,
+        "false_rejection_ids": [
+          "v2-r-001",
+          "v2-r-002",
+          "v2-r-003",
+          "v2-r-004",
+          "v2-r-007",
+          "v2-r-008",
+          "v2-r-010",
+          "v2-r-011",
+          "v2-r-025",
+          "v2-r-055",
+          "v2-r-056"
+        ],
+        "missed_no_answer_ids": [
+          "v2-r-006",
+          "v2-r-030",
+          "v2-r-060"
+        ]
+      },
+      "decision": {
+        "label": "C",
+        "reason": "Dev上6/6 no-answer落入answerable范围、11/30 answerable落入no-answer范围；仅dev选定0.85后，test检出1/4无答案却误拒11/20有答案。score overlap严重，fixed threshold在当前benchmark不可靠，不值得接入默认pipeline。",
+        "default_pipeline_changed": false
+      },
+      "highest_test_no_answer_top1": 0.8961218595504761,
+      "default_pipeline_adopted": false
+    }
+  },
+  "latency_interpretation": "B0/B1/B2 mean E2E 31.13/50.06/71.93 seconds; routing avoided retrieval but did not reduce E2E here. B1 has no planning LLM, B2 usually has two LLM requests; retrieval is about 0.2s. Different execution times/call costs preclude general performance claims.",
+  "final_regression": {
+    "timestamp_utc": "2026-10-06T06:12:58.283015+00:00",
+    "pytest": 220,
+    "plugin_verification": 11,
+    "independent_metric_checks": 3,
+    "total": 234,
+    "failures": 0,
+    "pytest_seconds": 33.96,
+    "plugin_seconds": 2.106,
+    "independent_metric_seconds": 0.004,
+    "scope": "final V0.2 regression only; no official benchmark rerun",
+    "commands": [
+      "python -X utf8 -m pytest -q -p no:cacheprovider",
+      "python -X utf8 scripts/verify_plugin.py",
+      "python -X utf8 docs/evidence/phase3b/test_metrics.py -v"
+    ]
+  },
+  "frozen_integrity": {
+    "V0_1_files_verified": 25,
+    "V0_2_dataset_files_verified": 45,
+    "phase2_phase3_phase4_evidence_unchanged": true,
+    "A2_and_experimental_configs_unchanged": true,
+    "old_index_metadata_unchanged": true,
+    "nanobot_clean": true,
+    "V0_1_tag_unchanged": true,
+    "immutable_existing_files_verified": 200
+  },
+  "documentation_privacy_redaction": {
+    "file": "docs/v0.2/PLAN.md",
+    "before_sha256": "235f243899f4007036e83101c4a703662d9620fb0c50fa619c2a170a196bbb8a",
+    "after_sha256": "609726577c86a71d6e680e324731ced314fa27577917ccf64765cff001dd74be",
+    "replacement_counts": {
+      "<old-workspace>": 1,
+      "<workspace>": 13,
+      "<outside-checkout>": 1
+    },
+    "change_scope": "path labels only plus explicit publication-redaction note; no historical facts/results/config modified",
+    "original_copy_ignored": true,
+    "historical_git_blob_sha256": "bb8d9f5915859bb1cbd0124662aa18f5b8df6d6488efec4b7ebb3ef98fc7b14c",
+    "historical_CRLF_preserved": true
+  },
+  "default_pipeline": "unchanged V0.1 Dense Retriever + readonly Tool; default corpus remains 9 V0.1 documents",
+  "not_adopted": [
+    "Hybrid in default Tool",
+    "fixed similarity threshold in default pipeline",
+    "A2 instruction/description in default WebUI",
+    "LLM Evidence Judge",
+    "Reranker",
+    "Multi-stage abstention",
+    "MCP",
+    "LangChain",
+    "LangGraph",
+    "Memory",
+    "GraphRAG",
+    "Multi-Agent",
+    "Redis",
+    "Docker",
+    "new LLM"
+  ],
+  "limitations": [
+    "small manually designed synthetic benchmark; not production-scale",
+    "40 short TXT documents yield 40 chunks; not a long-document chunking evaluation",
+    "retrieval test 24 queries, six categories x4; routing/ablation test 20, five categories x4",
+    "dev/test topic split retains shared manual templates and possible design bias",
+    "single Qwen3:1.7b, single nomic embedding model, single knowledge-base tool",
+    "Agent experiments single sampling; no statistical significance or cross-model/corpus generalization claim",
+    "manual answer/grounding judgments have documented prior exposure; not fully blind",
+    "historical no-answer test high score already public; candidate selected on dev only, not a fresh fully blind study",
+    "latency not controlled for time window, output length, cache or LLM call cost",
+    "model tags can change; recorded digests do not install or guarantee exact future model behavior",
+    "public snapshot does not include raw token traces, generated binary indexes or model files; raw-dependent offline stages stop if prerequisites absent"
+  ],
+  "provenance": {
+    "source": "first official frozen evidence snapshots; no official benchmark rerun during finalization",
+    "raw_artifacts_ignored": true,
+    "audit_output_path_label": "artifacts/v0.2/release/phase5_20261006/",
+    "historical_raw_manifests": {
+      "phase2": {
+        "captured_at_audit_utc": "2026-10-05T03:22:22.562999+00:00",
+        "scope": "Selected original files; audit-time fingerprint, not a previously recorded full manifest.",
+        "files": {
+          "config.json": "f1322d1de5aa8d260c6004f874169e37ca1bc6be2e8880bc8319278eb29c0c67",
+          "lock.json": "f8479b3ebe2cd9788d55c6bf073a4dfb9949fc99b9adeba96786987f0e9ff878",
+          "provenance.json": "41fada1a0e134410ef815b7a290efe2ca16b803e77261fd06f5346f089943534",
+          "test/attempt.json": "58a704bd117b717282bd0460ce34c5ce23f5874269ea43acde8a0224f34a3bd4",
+          "test/dense.json": "e94ed739c975a0f8912ab95af1a82c3a676aa3b86c62ea7e2e0b46c58c10b16c",
+          "test/bm25.json": "e71c7b2cb9d1c2db5a04ffac5960b89e273491e2e0dd1ed2e92cfc2d51419b11",
+          "test/hybrid.json": "b0eb85127d656e37a4f7e18e197adb9a4b49c305576614f4939e33d23755839e",
+          "test/comparison.json": "b7b065593e015a17e68a95f5df79d2103623b6b48be428f1f6492d9bf956266b",
+          "latency_raw.json": "2181dc981c492d50252a459dd2f319167f1fca0ce31d0f39b0d76a83044251e3",
+          "index_stats.json": "dec75ea9b183c8b64ab0e2523886e58a54a9614cbfa09e946f941d334a8aee19",
+          "index/index.faiss": "53bc20ce8fea8ac3ba6408c5e6e8e592027eb515a4e777b94e83a3676d8f016c",
+          "index/metadata.json": "b406ea9f2939db187b22f5aa7d2743bb48f762b1f11111c89d83b594b962c07a",
+          "index/index_info.json": "c2c704b39a6ca632e1c842eb27abe70800692c80e9fb100457bf80ee7b6276a9",
+          "engineering_analysis.json": "302ab91c6c75a0cd106ada94b10ed3b6c1c25f94010f7d02ad20eb62a537cf4e"
+        }
+      },
+      "routing": "63dc99fbcdbda473e4a06b1f2f0b7857c98f68f24b66ff9c612a2083c1e66076",
+      "ablation": "a9fcf2a906979beed17f681bdf1c307b1eab2e278e51d84ae63e4af2e78b3314",
+      "threshold": "d890e1ad764e5ccb17aab9e4b65db7299c1bd4b68ff24b8788c475e26a4a2874"
+    },
+    "documentation_sha256": {
+      "README.md": "2d8dd006d0bc374222ebb5825de138be47cedf87cec9bf23b28539a2d24a5179",
+      "docs/RESUME_NOTES.md": "09a917fcee29bd615cd712b1e986bf0bf9631c2b235256bf78e0e078b4e69864",
+      "docs/v0.2/V0_2_SUMMARY.md": "88674ac73761fff23ceb07b1a4d796c2610a2f4a1896907f4a9575a491f42e1a",
+      "docs/v0.2/PLAN.md": "609726577c86a71d6e680e324731ced314fa27577917ccf64765cff001dd74be"
+    },
+    "hash_scope_note": "No self-referential manifest/release-commit hash. Historical formal evidence is byte-identical; only authorized docs plus path redaction changed."
+  },
+  "git_actions": "new ordinary docs commit only; no merge, push, tag creation, amend or force operation"
+}

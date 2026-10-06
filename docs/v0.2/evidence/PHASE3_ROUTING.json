@@ -1,0 +1,2359 @@
+{
+  "experiment": "v0.2-routing-first-official",
+  "checkpoint": "86c7325736de5c5a317ce8c59cb1178758dced80",
+  "dataset_checkpoint": "0b74d1968893c76b6c29f72af191c7529e74637e",
+  "selected_arm": "A2",
+  "config": {
+    "experiment_version": "v0.2-routing-1",
+    "selected_arm": "A2",
+    "selected_config": {
+      "model": "qwen3:1.7b",
+      "provider": "ollama",
+      "endpoint": "http://localhost:11434/v1/chat/completions",
+      "temperature": 0.1,
+      "max_tokens": 8192,
+      "reasoning_effort": null,
+      "context_window_tokens": 200000,
+      "max_iterations": 4,
+      "case_timeout_seconds": 300,
+      "max_tool_result_chars": 12000,
+      "finalize_on_max_iterations": false,
+      "provider_retry_mode": "standard",
+      "formal_repeats": 1,
+      "few_shot": [],
+      "arm": "A2",
+      "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+      "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+    },
+    "baseline_config": {
+      "model": "qwen3:1.7b",
+      "provider": "ollama",
+      "endpoint": "http://localhost:11434/v1/chat/completions",
+      "temperature": 0.1,
+      "max_tokens": 8192,
+      "reasoning_effort": null,
+      "context_window_tokens": 200000,
+      "max_iterations": 4,
+      "case_timeout_seconds": 300,
+      "max_tool_result_chars": 12000,
+      "finalize_on_max_iterations": false,
+      "provider_retry_mode": "standard",
+      "formal_repeats": 1,
+      "few_shot": [],
+      "arm": "A0",
+      "tool_description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+      "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。"
+    },
+    "selection_policy": {
+      "max_additional_fp": 1,
+      "max_precision_drop": 0.05,
+      "priority": [
+        "recall",
+        "fewer_false_positives",
+        "shorter_prompt"
+      ],
+      "tie_preference": [
+        "A0",
+        "A1",
+        "A2"
+      ],
+      "scope": "dev only; A3 not planned"
+    },
+    "dev_metrics": {
+      "A0": {
+        "TP": 16,
+        "FP": 0,
+        "FN": 5,
+        "TN": 9,
+        "correct": 25,
+        "total": 30,
+        "accuracy": 0.8333333333333334,
+        "precision": 1.0,
+        "recall": 0.7619047619047619,
+        "f1": 0.8648648648648648
+      },
+      "A1": {
+        "TP": 14,
+        "FP": 0,
+        "FN": 7,
+        "TN": 9,
+        "correct": 23,
+        "total": 30,
+        "accuracy": 0.7666666666666667,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "A2": {
+        "TP": 21,
+        "FP": 1,
+        "FN": 0,
+        "TN": 8,
+        "correct": 29,
+        "total": 30,
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9545454545454546,
+        "recall": 1.0,
+        "f1": 0.9767441860465117
+      }
+    },
+    "tool_schema": {
+      "type": "function",
+      "function": {
+        "name": "search_knowledge_base",
+        "description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Knowledge base search query"
+            },
+            "top_k": {
+              "type": "integer",
+              "default": 3,
+              "minimum": 1,
+              "maximum": 10
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "tool_schema_sha256": "c282b2b39c2935aed0289eddad31e8164adba8cf035fd39e7229a63ee38c16b0",
+    "tool_parameters_sha256": "8e43f77b008718fab9fc4af3c2463ce238c06c72fd1c3f04277d0008709336bc",
+    "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+    "few_shot": [],
+    "locked_at_utc": "2026-10-05T05:20:41.283761+00:00",
+    "source_hashes": {
+      "experiments/v0_2/routing/config.py": "78acc509037cc7edf3d91371463ec19dfafde6c1d53b09044b5532def56f36aa",
+      "experiments/v0_2/routing/evaluate.py": "afbcc573edb0c32464b6b9579efc0aa2dc715afd74d04da00f2f748310a276eb",
+      "experiments/v0_2/routing/observe.py": "bc1fa3bb80ed2a177fefc79c37b9e8d67cff4f7ea6cce90a06666ac062f97edc",
+      "experiments/v0_2/routing/reporting.py": "c76656e1f96013b6e87545cab7ff080c2d99db5ca92917a579c255c7039184cf",
+      "experiments/v0_2/routing/runner.py": "4c0ea369f25512c921f2696cc76cc4c5e28afaa0a5baf60dd75f37a1e10ec49d",
+      "experiments/v0_2/routing/__init__.py": "21d5b7533940dd20d8c5c0aaad5bf6ad30fd698a43d4516826458c23a43841ca",
+      "scripts/v0_2/run_routing.py": "0072ce2eb376fb54831d3fe97af53e8a3c1f818c9a8d4ec3bb61ad0eb21550e1",
+      "scripts/v0_2/report_routing.py": "04efb06fd05933ab62598cc69afed36fb2feb967c3510df833404605ee1e59d8",
+      "tests/v0_2/test_routing.py": "16e39a7b614402fe9180cab895d1911c896767e196090f34af6787e62c27776b"
+    },
+    "config_hash": "2a71a7f26d65f79f0eabdad8ed238835f7d601cd8d8773e2a13b2dd46494e655"
+  },
+  "dev": {
+    "A0": {
+      "metrics": {
+        "TP": 16,
+        "FP": 0,
+        "FN": 5,
+        "TN": 9,
+        "correct": 25,
+        "total": 30,
+        "accuracy": 0.8333333333333334,
+        "precision": 1.0,
+        "recall": 0.7619047619047619,
+        "f1": 0.8648648648648648
+      },
+      "categories": {
+        "ambiguous_boundary": {
+          "TP": 2,
+          "FP": 0,
+          "FN": 1,
+          "TN": 3,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "general_no_tool": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 6,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "private_multi_evidence": {
+          "TP": 5,
+          "FP": 0,
+          "FN": 1,
+          "TN": 0,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1": 0.9090909090909091
+        },
+        "private_no_answer": {
+          "TP": 5,
+          "FP": 0,
+          "FN": 1,
+          "TN": 0,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1": 0.9090909090909091
+        },
+        "private_single_fact": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 2,
+          "TN": 0,
+          "correct": 4,
+          "total": 6,
+          "accuracy": 0.6666666666666666,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        }
+      },
+      "bad_case_ids": {
+        "FP": [],
+        "FN": [
+          "v2-a-017",
+          "v2-a-019",
+          "v2-a-033",
+          "v2-a-040",
+          "v2-a-042"
+        ]
+      },
+      "argument_valid_count": 16,
+      "total_calls": 16,
+      "native_structured_calls": 16,
+      "latency": {
+        "no_tool": {
+          "e2e_ms": {
+            "n": 14,
+            "mean": 24612.89987142865,
+            "median": 25459.359250000034,
+            "p95": 37350.55940999991
+          }
+        },
+        "tool": {
+          "e2e_ms": {
+            "n": 16,
+            "mean": 64226.59920000001,
+            "median": 61423.53755000022,
+            "p95": 87513.15702499982
+          },
+          "llm1_ms": {
+            "n": 16,
+            "mean": 21606.295712500072,
+            "median": 19963.641499999994,
+            "p95": 31388.92430000055
+          },
+          "retrieval_tool_ms": {
+            "n": 16,
+            "mean": 174.5548000000099,
+            "median": 130.59814999996888,
+            "p95": 351.76845000000867
+          },
+          "llm2_ms": null
+        }
+      },
+      "model_errors": [],
+      "request_count": 46,
+      "request_http_statuses": [
+        200
+      ],
+      "timing_audit": "A0 dev LLM2 durations existed in live-memory summary after case serialization, but are absent in persisted case JSON. Raw-based report excludes them; original summary preserved.",
+      "intent_review": {
+        "method": "coding-assistant engineering trace inspection; semantic judgment, not string equality; no independent human review or separate model-as-judge",
+        "intent_preserving": 16,
+        "total": 16,
+        "rate": 1.0
+      },
+      "arm_config": {
+        "model": "qwen3:1.7b",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434/v1/chat/completions",
+        "temperature": 0.1,
+        "max_tokens": 8192,
+        "reasoning_effort": null,
+        "context_window_tokens": 200000,
+        "max_iterations": 4,
+        "case_timeout_seconds": 300,
+        "max_tool_result_chars": 12000,
+        "finalize_on_max_iterations": false,
+        "provider_retry_mode": "standard",
+        "formal_repeats": 1,
+        "few_shot": [],
+        "arm": "A0",
+        "tool_description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+        "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。"
+      },
+      "request_audit": {
+        "requests_verified": 46,
+        "role_tool_ids_verified": 16,
+        "model_generation_schema_consistent": true,
+        "gold_labels_not_in_model_input": true,
+        "no_manual_tool_choice": true
+      }
+    },
+    "A1": {
+      "metrics": {
+        "TP": 14,
+        "FP": 0,
+        "FN": 7,
+        "TN": 9,
+        "correct": 23,
+        "total": 30,
+        "accuracy": 0.7666666666666667,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "categories": {
+        "ambiguous_boundary": {
+          "TP": 2,
+          "FP": 0,
+          "FN": 1,
+          "TN": 3,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "general_no_tool": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 6,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "private_multi_evidence": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 3,
+          "TN": 0,
+          "correct": 3,
+          "total": 6,
+          "accuracy": 0.5,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "private_no_answer": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 2,
+          "TN": 0,
+          "correct": 4,
+          "total": 6,
+          "accuracy": 0.6666666666666666,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "private_single_fact": {
+          "TP": 5,
+          "FP": 0,
+          "FN": 1,
+          "TN": 0,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1": 0.9090909090909091
+        }
+      },
+      "bad_case_ids": {
+        "FP": [],
+        "FN": [
+          "v2-a-013",
+          "v2-a-014",
+          "v2-a-028",
+          "v2-a-030",
+          "v2-a-032",
+          "v2-a-033",
+          "v2-a-039"
+        ]
+      },
+      "argument_valid_count": 14,
+      "total_calls": 14,
+      "native_structured_calls": 14,
+      "latency": {
+        "no_tool": {
+          "e2e_ms": {
+            "n": 16,
+            "mean": 26521.671193749968,
+            "median": 22243.3924500001,
+            "p95": 40921.64872500052
+          }
+        },
+        "tool": {
+          "e2e_ms": {
+            "n": 14,
+            "mean": 61132.903907142856,
+            "median": 55365.69950000012,
+            "p95": 90698.00094500024
+          },
+          "llm1_ms": {
+            "n": 14,
+            "mean": 21083.654485714174,
+            "median": 19891.44619999979,
+            "p95": 25612.782759999936
+          },
+          "retrieval_tool_ms": {
+            "n": 14,
+            "mean": 134.12097857151042,
+            "median": 134.1938499999742,
+            "p95": 155.1340500002425
+          },
+          "llm2_ms": {
+            "n": 14,
+            "mean": 39898.14137857138,
+            "median": 33490.87145000021,
+            "p95": 70864.43397999955
+          }
+        }
+      },
+      "model_errors": [],
+      "request_count": 44,
+      "request_http_statuses": [
+        200
+      ],
+      "intent_review": {
+        "method": "coding-assistant engineering trace inspection; semantic judgment, not string equality; no independent human review or separate model-as-judge",
+        "intent_preserving": 14,
+        "total": 14,
+        "rate": 1.0
+      },
+      "arm_config": {
+        "model": "qwen3:1.7b",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434/v1/chat/completions",
+        "temperature": 0.1,
+        "max_tokens": 8192,
+        "reasoning_effort": null,
+        "context_window_tokens": 200000,
+        "max_iterations": 4,
+        "case_timeout_seconds": 300,
+        "max_tool_result_chars": 12000,
+        "finalize_on_max_iterations": false,
+        "provider_retry_mode": "standard",
+        "formal_repeats": 1,
+        "few_shot": [],
+        "arm": "A1",
+        "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+        "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。"
+      },
+      "request_audit": {
+        "requests_verified": 44,
+        "role_tool_ids_verified": 14,
+        "model_generation_schema_consistent": true,
+        "gold_labels_not_in_model_input": true,
+        "no_manual_tool_choice": true
+      }
+    },
+    "A2": {
+      "metrics": {
+        "TP": 21,
+        "FP": 1,
+        "FN": 0,
+        "TN": 8,
+        "correct": 29,
+        "total": 30,
+        "accuracy": 0.9666666666666667,
+        "precision": 0.9545454545454546,
+        "recall": 1.0,
+        "f1": 0.9767441860465117
+      },
+      "categories": {
+        "ambiguous_boundary": {
+          "TP": 3,
+          "FP": 1,
+          "FN": 0,
+          "TN": 2,
+          "correct": 5,
+          "total": 6,
+          "accuracy": 0.8333333333333334,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        },
+        "general_no_tool": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 6,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "private_multi_evidence": {
+          "TP": 6,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "private_no_answer": {
+          "TP": 6,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "private_single_fact": {
+          "TP": 6,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 6,
+          "total": 6,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "bad_case_ids": {
+        "FP": [
+          "v2-a-020"
+        ],
+        "FN": []
+      },
+      "argument_valid_count": 22,
+      "total_calls": 22,
+      "native_structured_calls": 22,
+      "latency": {
+        "no_tool": {
+          "e2e_ms": {
+            "n": 8,
+            "mean": 39680.21741249981,
+            "median": 42891.473949999636,
+            "p95": 62243.01781999983
+          }
+        },
+        "tool": {
+          "e2e_ms": {
+            "n": 22,
+            "mean": 75379.28777272711,
+            "median": 72080.13894999976,
+            "p95": 105866.90011
+          },
+          "llm1_ms": {
+            "n": 22,
+            "mean": 28620.259863636296,
+            "median": 25731.74354999901,
+            "p95": 50154.111259999714
+          },
+          "retrieval_tool_ms": {
+            "n": 22,
+            "mean": 176.01918181799192,
+            "median": 166.77065000021685,
+            "p95": 250.5847749991062
+          },
+          "llm2_ms": {
+            "n": 22,
+            "mean": 46561.96492272701,
+            "median": 44860.14010000008,
+            "p95": 77829.92505999918
+          }
+        }
+      },
+      "model_errors": [],
+      "request_count": 52,
+      "request_http_statuses": [
+        200
+      ],
+      "intent_review": {
+        "method": "coding-assistant engineering trace inspection; semantic judgment, not string equality; no independent human review or separate model-as-judge",
+        "intent_preserving": 21,
+        "total": 22,
+        "rate": 0.9545454545454546
+      },
+      "arm_config": {
+        "model": "qwen3:1.7b",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434/v1/chat/completions",
+        "temperature": 0.1,
+        "max_tokens": 8192,
+        "reasoning_effort": null,
+        "context_window_tokens": 200000,
+        "max_iterations": 4,
+        "case_timeout_seconds": 300,
+        "max_tool_result_chars": 12000,
+        "finalize_on_max_iterations": false,
+        "provider_retry_mode": "standard",
+        "formal_repeats": 1,
+        "few_shot": [],
+        "arm": "A2",
+        "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+        "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+      },
+      "request_audit": {
+        "requests_verified": 52,
+        "role_tool_ids_verified": 22,
+        "model_generation_schema_consistent": true,
+        "gold_labels_not_in_model_input": true,
+        "no_manual_tool_choice": true
+      }
+    }
+  },
+  "test": {
+    "A0": {
+      "metrics": {
+        "TP": 10,
+        "FP": 0,
+        "FN": 5,
+        "TN": 5,
+        "correct": 15,
+        "total": 20,
+        "accuracy": 0.75,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "categories": {
+        "ambiguous_boundary": {
+          "TP": 2,
+          "FP": 0,
+          "FN": 1,
+          "TN": 1,
+          "correct": 3,
+          "total": 4,
+          "accuracy": 0.75,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8
+        },
+        "general_no_tool": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 4,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "private_multi_evidence": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 3,
+          "TN": 0,
+          "correct": 1,
+          "total": 4,
+          "accuracy": 0.25,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "private_no_answer": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "private_single_fact": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 1,
+          "TN": 0,
+          "correct": 3,
+          "total": 4,
+          "accuracy": 0.75,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571
+        }
+      },
+      "bad_case_ids": {
+        "FP": [],
+        "FN": [
+          "v2-a-003",
+          "v2-a-005",
+          "v2-a-007",
+          "v2-a-008",
+          "v2-a-023"
+        ]
+      },
+      "argument_valid_count": 10,
+      "total_calls": 10,
+      "native_structured_calls": 10,
+      "latency": {
+        "no_tool": {
+          "e2e_ms": {
+            "n": 10,
+            "mean": 48923.752310000054,
+            "median": 44761.35450000038,
+            "p95": 73863.64897000074
+          }
+        },
+        "tool": {
+          "e2e_ms": {
+            "n": 10,
+            "mean": 89871.68456000017,
+            "median": 81140.57155000046,
+            "p95": 127140.26839500027
+          },
+          "llm1_ms": {
+            "n": 10,
+            "mean": 33056.34458000004,
+            "median": 29092.156700000487,
+            "p95": 48599.20720500022
+          },
+          "retrieval_tool_ms": {
+            "n": 10,
+            "mean": 634.7674199998437,
+            "median": 238.76909999944473,
+            "p95": 1439.9795350001114
+          },
+          "llm2_ms": {
+            "n": 10,
+            "mean": 56157.54106000004,
+            "median": 50113.04779999955,
+            "p95": 90151.28270500043
+          }
+        }
+      },
+      "model_errors": [],
+      "request_count": 30,
+      "request_http_statuses": [
+        200
+      ],
+      "intent_review": {
+        "method": "coding-assistant engineering trace inspection; semantic judgment, not string equality; no independent human review or separate model-as-judge",
+        "intent_preserving": 9,
+        "total": 10,
+        "rate": 0.9
+      },
+      "arm_config": {
+        "model": "qwen3:1.7b",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434/v1/chat/completions",
+        "temperature": 0.1,
+        "max_tokens": 8192,
+        "reasoning_effort": null,
+        "context_window_tokens": 200000,
+        "max_iterations": 4,
+        "case_timeout_seconds": 300,
+        "max_tool_result_chars": 12000,
+        "finalize_on_max_iterations": false,
+        "provider_retry_mode": "standard",
+        "formal_repeats": 1,
+        "few_shot": [],
+        "arm": "A0",
+        "tool_description": "Search the local internal knowledge base. Return evidence with sources and scores, not a final answer. Nearest neighbors may not answer the question.",
+        "system_instruction": "你可以使用提供的工具完成用户任务。当回答依赖本地私有知识库的信息时，可以调用 search_knowledge_base 获取相关证据。如果工具结果不足以支持答案，请明确说明无法确定。"
+      },
+      "request_audit": {
+        "requests_verified": 30,
+        "role_tool_ids_verified": 10,
+        "model_generation_schema_consistent": true,
+        "gold_labels_not_in_model_input": true,
+        "no_manual_tool_choice": true
+      }
+    },
+    "A2": {
+      "metrics": {
+        "TP": 15,
+        "FP": 0,
+        "FN": 0,
+        "TN": 5,
+        "correct": 20,
+        "total": 20,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "categories": {
+        "ambiguous_boundary": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 0,
+          "TN": 1,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "general_no_tool": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 4,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "private_multi_evidence": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "private_no_answer": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "private_single_fact": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0,
+          "TN": 0,
+          "correct": 4,
+          "total": 4,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "bad_case_ids": {
+        "FP": [],
+        "FN": []
+      },
+      "argument_valid_count": 15,
+      "total_calls": 15,
+      "native_structured_calls": 15,
+      "latency": {
+        "no_tool": {
+          "e2e_ms": {
+            "n": 5,
+            "mean": 39486.8477,
+            "median": 41473.17850000036,
+            "p95": 51172.78318000026
+          }
+        },
+        "tool": {
+          "e2e_ms": {
+            "n": 15,
+            "mean": 82741.97699999968,
+            "median": 79239.0116000006,
+            "p95": 122448.39949000088
+          },
+          "llm1_ms": {
+            "n": 15,
+            "mean": 33796.572506666176,
+            "median": 32081.068699999378,
+            "p95": 49994.65391999983
+          },
+          "retrieval_tool_ms": {
+            "n": 15,
+            "mean": 222.78711333322767,
+            "median": 208.8194999996631,
+            "p95": 299.7344600005817
+          },
+          "llm2_ms": {
+            "n": 15,
+            "mean": 48698.480286666505,
+            "median": 46304.34410000089,
+            "p95": 79045.9644599992
+          }
+        }
+      },
+      "model_errors": [],
+      "request_count": 35,
+      "request_http_statuses": [
+        200
+      ],
+      "intent_review": {
+        "method": "coding-assistant engineering trace inspection; semantic judgment, not string equality; no independent human review or separate model-as-judge",
+        "intent_preserving": 15,
+        "total": 15,
+        "rate": 1.0
+      },
+      "arm_config": {
+        "model": "qwen3:1.7b",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434/v1/chat/completions",
+        "temperature": 0.1,
+        "max_tokens": 8192,
+        "reasoning_effort": null,
+        "context_window_tokens": 200000,
+        "max_iterations": 4,
+        "case_timeout_seconds": 300,
+        "max_tool_result_chars": 12000,
+        "finalize_on_max_iterations": false,
+        "provider_retry_mode": "standard",
+        "formal_repeats": 1,
+        "few_shot": [],
+        "arm": "A2",
+        "tool_description": "Search the local private knowledge base using natural-language questions; exact document or table names are not required. Use it for tasks that depend on private records, including checking whether requested information is documented. Returned passages are candidate evidence, not verified answers; state uncertainty when they do not support an answer.",
+        "system_instruction": "你是可以使用工具的助手。先判断任务是否依赖本地私有资料：内部文档中的具体事实、记录或资料是否包含所问信息，需要先通过 search_knowledge_base 核实；通用概念解释、独立计算和纯写作请求，如果无需私有资料，可直接回答。不要凭常识推断私有事实，也不要因为不知道具体文档或表名而跳过搜索；未执行检索时，不要声称已查询或资料中没有。工具返回候选证据；不足以支持答案时明确说明无法确定。"
+      },
+      "request_audit": {
+        "requests_verified": 35,
+        "role_tool_ids_verified": 15,
+        "model_generation_schema_consistent": true,
+        "gold_labels_not_in_model_input": true,
+        "no_manual_tool_choice": true
+      }
+    }
+  },
+  "manual_review": {
+    "reviewer": "coding assistant, engineering inspection of original question and real arguments; no separate judge model or independent human review",
+    "calls": {
+      "dev/A0": [
+        {
+          "id": "v2-a-012",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 TR-10F 的审批角色需求；简化措辞未改变目标。"
+        },
+        {
+          "id": "v2-a-013",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留普通/现场两种差旅及住宿上限两个事实。"
+        },
+        {
+          "id": "v2-a-014",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 TR-11 与教材运费覆盖问题。"
+        },
+        {
+          "id": "v2-a-015",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留本单位普通差旅报销提交期限。"
+        },
+        {
+          "id": "v2-a-018",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R2/R3 两实体及维护角色、检查时间。"
+        },
+        {
+          "id": "v2-a-027",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RM-03A 投影仪数量。"
+        },
+        {
+          "id": "v2-a-028",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 ORBIT-3/3A 与开放时段比较；OR 字样不是本检索器的过滤操作符。"
+        },
+        {
+          "id": "v2-a-029",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 ORBIT-3 座位数。"
+        },
+        {
+          "id": "v2-a-030",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留内部 RM-003 容量，不替换为一般估算。"
+        },
+        {
+          "id": "v2-a-032",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 正式发布角色。"
+        },
+        {
+          "id": "v2-a-034",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 演示访客容量。"
+        },
+        {
+          "id": "v2-a-037",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 单笔限额与小额采购语境。"
+        },
+        {
+          "id": "v2-a-038",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 审批及归档两个角色。"
+        },
+        {
+          "id": "v2-a-039",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 CAB-21C 实体楼层。"
+        },
+        {
+          "id": "v2-a-043",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留生产在线/备份两种审计及保留天数。"
+        },
+        {
+          "id": "v2-a-044",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 LOG-32 备份加密算法。"
+        }
+      ],
+      "dev/A1": [
+        {
+          "id": "v2-a-012",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 TR-10F 的审批角色需求；简化措辞未改变目标。"
+        },
+        {
+          "id": "v2-a-015",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留本单位普通差旅报销提交期限。"
+        },
+        {
+          "id": "v2-a-017",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R3 与载荷验收目标。"
+        },
+        {
+          "id": "v2-a-018",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R2/R3 两实体及维护角色、检查时间。"
+        },
+        {
+          "id": "v2-a-019",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R2 整机价格，不替换为维护费用。"
+        },
+        {
+          "id": "v2-a-027",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RM-03A 投影仪数量。"
+        },
+        {
+          "id": "v2-a-029",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 ORBIT-3 座位数。"
+        },
+        {
+          "id": "v2-a-034",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 演示访客容量。"
+        },
+        {
+          "id": "v2-a-037",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 单笔限额与小额采购语境。"
+        },
+        {
+          "id": "v2-a-038",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 审批及归档两个角色。"
+        },
+        {
+          "id": "v2-a-040",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留内部设备资本采购上限。"
+        },
+        {
+          "id": "v2-a-042",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 LOG-31T 管理角色。"
+        },
+        {
+          "id": "v2-a-043",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留生产在线/备份两种审计及保留天数。"
+        },
+        {
+          "id": "v2-a-044",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 LOG-32 备份加密算法。"
+        }
+      ],
+      "dev/A2": [
+        {
+          "id": "v2-a-012",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "TR-10F 住宿审批流程的查询比角色问句更宽，但仍检索该审批流程以获取审批角色；未换实体或目标政策。"
+        },
+        {
+          "id": "v2-a-013",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留普通/现场两种差旅及住宿上限两个事实。"
+        },
+        {
+          "id": "v2-a-014",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 TR-11 与教材运费覆盖问题。"
+        },
+        {
+          "id": "v2-a-015",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留本单位普通差旅报销提交期限。"
+        },
+        {
+          "id": "v2-a-017",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R3 与载荷验收目标。"
+        },
+        {
+          "id": "v2-a-018",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R2/R3 两实体及维护角色、检查时间。"
+        },
+        {
+          "id": "v2-a-019",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RX-41R2 整机价格，不替换为维护费用。"
+        },
+        {
+          "id": "v2-a-020",
+          "call_index": 0,
+          "intent_preserved": false,
+          "reason": "通用字段主题未变，但实际私有查库调用丢失用户明确的禁查约束。采用完整任务意图口径判不保留；与 FP 是同一行为，不当作独立第二个路由错误。"
+        },
+        {
+          "id": "v2-a-027",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 RM-03A 投影仪数量。"
+        },
+        {
+          "id": "v2-a-028",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 ORBIT-3/3A 与开放时段比较；OR 字样不是本检索器的过滤操作符。"
+        },
+        {
+          "id": "v2-a-029",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 ORBIT-3 座位数。"
+        },
+        {
+          "id": "v2-a-030",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留内部 RM-003 容量，不替换为一般估算。"
+        },
+        {
+          "id": "v2-a-032",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 正式发布角色。"
+        },
+        {
+          "id": "v2-a-033",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 演示冻结日和正式发布日期两个不同日期。"
+        },
+        {
+          "id": "v2-a-034",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Cedar 演示访客容量。"
+        },
+        {
+          "id": "v2-a-037",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 单笔限额与小额采购语境。"
+        },
+        {
+          "id": "v2-a-038",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 PC-21 审批及归档两个角色。"
+        },
+        {
+          "id": "v2-a-039",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 CAB-21C 实体楼层。"
+        },
+        {
+          "id": "v2-a-040",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留内部设备资本采购上限。"
+        },
+        {
+          "id": "v2-a-042",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 LOG-31T 管理角色。"
+        },
+        {
+          "id": "v2-a-043",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留生产在线/备份两种审计及保留天数。"
+        },
+        {
+          "id": "v2-a-044",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 LOG-32 备份加密算法。"
+        }
+      ],
+      "test/A0": [
+        {
+          "id": "v2-a-002",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 AX-812 与设备目标；省略验收卡措辞属于同实体的合理搜索扩展。"
+        },
+        {
+          "id": "v2-a-004",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 AX-812 与办公室面积，未把缺失事实改成其他属性。"
+        },
+        {
+          "id": "v2-a-009",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Borealis、验收场地、邮政编码。"
+        },
+        {
+          "id": "v2-a-022",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SABLE-18B、模型、管理角色；模型归档语境压缩为模型管理，仍为同实体管理责任需求。"
+        },
+        {
+          "id": "v2-a-024",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SV-180 与内存；省略 GB 单位不改变属性。"
+        },
+        {
+          "id": "v2-a-025",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SABLE-18B、备份、开始时刻。"
+        },
+        {
+          "id": "v2-a-047",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 DUTY-7 与排班起始日。"
+        },
+        {
+          "id": "v2-a-048",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留一线/二线比较、角色及响应时间；原问本就未指定制度编号，不能把证据不全等同语义丢失。"
+        },
+        {
+          "id": "v2-a-049",
+          "call_index": 0,
+          "intent_preserved": false,
+          "reason": "保留 DUTY-7 和工位编号，但删除升级协调角色这一必要人物/职责限定，按既定保守口径判意图不完整；结果仍检索到协调资料不消除此限定损失。"
+        },
+        {
+          "id": "v2-a-050",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 DUTY-7、超时升级、时间，未改成响应期限。"
+        }
+      ],
+      "test/A2": [
+        {
+          "id": "v2-a-002",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 AX-812、内部验收卡及设备目标。"
+        },
+        {
+          "id": "v2-a-003",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Aurora 与项目/财务审批两个职责，比较意图完整。"
+        },
+        {
+          "id": "v2-a-004",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 AX-812 与办公室面积；不预设答案存在。"
+        },
+        {
+          "id": "v2-a-005",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留预算通用定义与 FIN-A12 内部额度两个子任务。"
+        },
+        {
+          "id": "v2-a-007",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "沿用 B2-620、上线、角色需求。"
+        },
+        {
+          "id": "v2-a-008",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 BO-620 演示与 B2-620 上线两个实体及两种日期。"
+        },
+        {
+          "id": "v2-a-009",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 Borealis 验收场地与邮政编码。"
+        },
+        {
+          "id": "v2-a-022",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "沿用 SABLE-18B 模型归档与管理角色。"
+        },
+        {
+          "id": "v2-a-023",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SABLE-18/SABLE-18B 以及存储内容和保留时间，拆成分号连接的两个搜索目标。"
+        },
+        {
+          "id": "v2-a-024",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SV-180 与 GB 内存属性。"
+        },
+        {
+          "id": "v2-a-025",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 SABLE-18B 备份开始时间。"
+        },
+        {
+          "id": "v2-a-047",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "沿用 DUTY-7 排班起始日。"
+        },
+        {
+          "id": "v2-a-048",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留一线/二线、值守角色和响应时间；未新增/遗漏用户中的实体。证据退化单独记录。"
+        },
+        {
+          "id": "v2-a-049",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 DUTY-7、升级协调角色、工位编号三个限定；最终把角色误作工位是生成层失败。"
+        },
+        {
+          "id": "v2-a-050",
+          "call_index": 0,
+          "intent_preserved": true,
+          "reason": "保留 DUTY-7、超时升级与触发时间，不以一线或二线响应时间代替。"
+        }
+      ]
+    },
+    "intent_rubric": "保留实体、事实目标和必要比较/限定；可接受关键词压缩、合理扩大搜索范围。用户明确禁止检索的任务约束也纳入本轮保守口径；该失败可能与 FP 相关，不据字符串相同与否评分。",
+    "bad_cases": {
+      "dev/A0/v2-a-017": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "明确问内部验收目标，却未查库而建议查制造商规格；观察支持私有依赖未识别，无法证明模型内部原因。"
+      },
+      "dev/A0/v2-a-019": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未检索便假设型号信息可能未公开/未收录，转向销售渠道；属于 FN，不把不确定表达当作检索。"
+      },
+      "dev/A0/v2-a-033": {
+        "causes": [
+          "ambiguous_query",
+          "tool_description_too_narrow"
+        ],
+        "reason": "把内部表理解为需用户提供数据库结构；自然语言检索能力未被使用，表述歧义/描述范围只是原因候选。"
+      },
+      "dev/A0/v2-a-040": {
+        "causes": [
+          "system_instruction_weak",
+          "private_fact_not_recognized"
+        ],
+        "reason": "混合常识与本单位政策的问题直接拒答，未处理私有具体上限；通用指令较弱是候选解释。"
+      },
+      "dev/A0/v2-a-042": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "内部管理角色问题直接建议联系管理员，未使用已提供工具；私有事实依赖未识别是观察层解释。"
+      },
+      "dev/A1/v2-a-013": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未调用工具就要求用户自行查资料或直接表示未知；只有描述变化不能稳定触发私有检索。单次实验含采样随机性，不能证明描述造成失败。"
+      },
+      "dev/A1/v2-a-014": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未检索却断言内部政策覆盖教材运费并附加合同条件；golden 标注该事实不存在。既是 routing FN，也是观察到的无证据生成断言；不能只归为 Retrieval 错误。"
+      },
+      "dev/A1/v2-a-028": {
+        "causes": [
+          "ambiguous_query",
+          "model_capability"
+        ],
+        "reason": "以缺少表名/表数据为由停止，未先检索；描述已说明不需精确表名，歧义理解及小模型能力是候选原因。"
+      },
+      "dev/A1/v2-a-030": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未查内部容量，却附带一般会议室20–30人的估算，违背用户已明确排除的估算语境；routing 与 generation/policy 均有问题。"
+      },
+      "dev/A1/v2-a-032": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未调用工具就要求用户自行查资料或直接表示未知；只有描述变化不能稳定触发私有检索。单次实验含采样随机性，不能证明描述造成失败。"
+      },
+      "dev/A1/v2-a-033": {
+        "causes": [
+          "ambiguous_query",
+          "model_capability"
+        ],
+        "reason": "以缺少表名/表数据为由停止，未先检索；描述已说明不需精确表名，歧义理解及小模型能力是候选原因。"
+      },
+      "dev/A1/v2-a-039": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未调用工具就要求用户自行查资料或直接表示未知；只有描述变化不能稳定触发私有检索。单次实验含采样随机性，不能证明描述造成失败。"
+      },
+      "dev/A2/v2-a-020": {
+        "causes": [
+          "general_question_misclassified",
+          "tool_description_too_broad",
+          "model_capability"
+        ],
+        "reason": "用户明确要通用表字段且禁止查本单位设备，仍真实调用 KB。观察确认 FP/约束违背；工具可用性过强或否定约束识别不足只是候选原因，不能证明具体因果。最终答复可给通用字段并不抵消 FP。"
+      },
+      "test/A0/v2-a-003": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未检索就说内部记录可能未在知识库中检索到；私有两职责任务被直接拒答。A2 调用后两份必要资料齐全、正确区分 A-11/A-33。"
+      },
+      "test/A0/v2-a-005": {
+        "causes": [
+          "ambiguous_query",
+          "system_instruction_weak"
+        ],
+        "reason": "只解释通用预算并猜测100万至200万，未查询明确指定的FIN-A12。A2修复路由但仍将FIN-AX12采购上限混入，属生成解释失败。"
+      },
+      "test/A0/v2-a-007": {
+        "causes": [
+          "private_fact_not_recognized",
+          "tool_description_too_narrow"
+        ],
+        "reason": "把B2-620缺少上下文当作要求用户补背景的理由，跳过可用自然语言知识库查询；A2找到B-22。"
+      },
+      "test/A0/v2-a-008": {
+        "causes": [
+          "private_fact_not_recognized",
+          "system_instruction_weak"
+        ],
+        "reason": "未检索却声称排期未在内部知识库提供；A2检索后BO-620与B2-620的两日期均得到支持。"
+      },
+      "test/A0/v2-a-023": {
+        "causes": [
+          "ambiguous_query",
+          "private_fact_not_recognized"
+        ],
+        "reason": "将保存什么解释为存储介质并转向官方文档，未执行内部卡片搜索。A2修复路由，但Top3漏在线审计卡且把备份14天当在线审计保留时间。"
+      }
+    },
+    "paired_test_comparison": {
+      "a0_wrong_a2_right": [
+        "v2-a-003",
+        "v2-a-005",
+        "v2-a-007",
+        "v2-a-008",
+        "v2-a-023"
+      ],
+      "a0_right_a2_wrong": [],
+      "both_wrong": [],
+      "both_right": [
+        "v2-a-001",
+        "v2-a-002",
+        "v2-a-004",
+        "v2-a-006",
+        "v2-a-009",
+        "v2-a-010",
+        "v2-a-021",
+        "v2-a-022",
+        "v2-a-024",
+        "v2-a-025",
+        "v2-a-046",
+        "v2-a-047",
+        "v2-a-048",
+        "v2-a-049",
+        "v2-a-050"
+      ],
+      "scope": "routing only; final answer failures remain separate"
+    },
+    "test_delta_A2_minus_A0": {
+      "TP": 5,
+      "FP": 0,
+      "FN": -5,
+      "TN": 0,
+      "correct": 5,
+      "accuracy": 0.25,
+      "precision": 0.0,
+      "recall": 0.33333333333333337,
+      "f1": 0.19999999999999996
+    },
+    "recovery_provenance": {
+      "observed_at_utc": "2026-10-05T08:01:59.313635+00:00",
+      "interrupted": true,
+      "interruption_scope": "chat/control session interrupted; original Python child continued, not a terminated model run",
+      "original_run_id": "phase3_first_20261005",
+      "original_official_started_at_utc": "2026-10-05T05:21:22.727667+00:00",
+      "original_exec_session_id": 82924,
+      "original_child_exit_code": 0,
+      "active_routing_processes_at_recovery": 0,
+      "process_check": "read-only Win32_Process owner-context query returned no matching Python processes; retained exec session reported exit_code 0",
+      "original_pid": null,
+      "pid_note": "original PID/CPU were not persisted; cannot reconstruct exited-process statistics",
+      "recovery_progress": {
+        "A0": {
+          "completed_ids": [
+            "v2-a-001",
+            "v2-a-002",
+            "v2-a-003",
+            "v2-a-004",
+            "v2-a-005",
+            "v2-a-006",
+            "v2-a-007",
+            "v2-a-008",
+            "v2-a-009",
+            "v2-a-010",
+            "v2-a-021",
+            "v2-a-022",
+            "v2-a-023",
+            "v2-a-024",
+            "v2-a-025",
+            "v2-a-046",
+            "v2-a-047",
+            "v2-a-048",
+            "v2-a-049",
+            "v2-a-050"
+          ],
+          "missing_ids": [],
+          "duplicate_ids": [],
+          "completed_count": 20
+        },
+        "A2": {
+          "completed_ids": [
+            "v2-a-001",
+            "v2-a-002",
+            "v2-a-003",
+            "v2-a-004",
+            "v2-a-005",
+            "v2-a-006",
+            "v2-a-007",
+            "v2-a-008",
+            "v2-a-009",
+            "v2-a-010",
+            "v2-a-021",
+            "v2-a-022",
+            "v2-a-023",
+            "v2-a-024",
+            "v2-a-025",
+            "v2-a-046",
+            "v2-a-047",
+            "v2-a-048",
+            "v2-a-049",
+            "v2-a-050"
+          ],
+          "missing_ids": [],
+          "duplicate_ids": [],
+          "completed_count": 20
+        }
+      },
+      "original_child_continued_to_completion": true,
+      "missing_id_resume": false,
+      "resumed_missing_ids": [],
+      "resumed_at": null,
+      "completed_ids_rerun": [],
+      "completed_results_overwritten": false,
+      "original_start_times_preserved": true,
+      "all_test_json_parse": true,
+      "partial_files": [],
+      "formal_first_result_sha256": {
+        "test/A0/attempt.json": "4586b8d0f6b9907ad50dc879689f5f811ee9811b60a57755d24c3a3857954a20",
+        "test/A0/cases/v2-a-001.json": "8ed92ab70fb3c3f774ea4aab337efdd6ca941c86bab36d89cef256e740c05b35",
+        "test/A0/cases/v2-a-002.json": "01e00ca847cbb7e30e432df6b44e153c5005d7789c01a49154e05b5cfe825c67",
+        "test/A0/cases/v2-a-003.json": "c5099495fc3c919baa02104ca4a9f98260f807d4871f98fdb02f42b5ec5a4a61",
+        "test/A0/cases/v2-a-004.json": "946f1b504a2880e450f2dfafea017017b9891e5fec63504ccd6a453d7d07b2d5",
+        "test/A0/cases/v2-a-005.json": "566cd50e9fd7b17ce40e781eaf2088193a61cba5e3134b5ab7f19d3c23f7d622",
+        "test/A0/cases/v2-a-006.json": "82eed6691847b83b5e33299a8e8ac0a3a75120e9f8aea05c3933aa080af15a59",
+        "test/A0/cases/v2-a-007.json": "745296e236bfba5eb0947b83f5c84b38d790a255baeef86ba008efccc00c7b36",
+        "test/A0/cases/v2-a-008.json": "e0f2c117f6b77650cc9986fb3dc7efc7b8354bc5e464407e5abfd3369afaeb8a",
+        "test/A0/cases/v2-a-009.json": "8ef3e1af8d5d4699bac64161a5e1d3b9473626ea15ebbe6d8ada52bae43b224e",
+        "test/A0/cases/v2-a-010.json": "53abb525490f149c18b7fa5ecf2cab52f2c944b6455fd823aa5d367bc2d26cbd",
+        "test/A0/cases/v2-a-021.json": "30def65d63aa4438a636f8178da2fc77ce89183c8eb687d0607b37ca37cd59c5",
+        "test/A0/cases/v2-a-022.json": "f37ba1f64f204f72e7f75a64c512f087d6b111a146364140169816cca7ef796a",
+        "test/A0/cases/v2-a-023.json": "56b86c474032ec77bd918898a1fbca9132f6d819c4ebe59df49e607d308ed168",
+        "test/A0/cases/v2-a-024.json": "dd0a64ab849c67b69c9c99b68de2ce218cd7396b815358b71346c0033bf8a3f1",
+        "test/A0/cases/v2-a-025.json": "53b37f2e74e2a20c3d9f9ed6fbd79d6bcb9a6a63c3f7c9e230b509131ee60c68",
+        "test/A0/cases/v2-a-046.json": "df1ea5819779dd5cad2d2eb09c6df1b98cf505fdb724f2807c39ba5ee2beb1ae",
+        "test/A0/cases/v2-a-047.json": "9502f284781c304eafb68b277f53f8c63a0536cc3a94911b14ab1233ae3c95ea",
+        "test/A0/cases/v2-a-048.json": "f904cff03629399016e06eb3281c6c75d1e2f3aefdc2876a18397a2151608b94",
+        "test/A0/cases/v2-a-049.json": "791e86f297350cf15ea41d3be0b32b45b53dd6949d6706d5a109b6d559642144",
+        "test/A0/cases/v2-a-050.json": "ba717ef6df0f41f6cf3a03644538e652619e490b657122ce5266efac6c18da64",
+        "test/A0/summary.json": "82d8ec28154e73423a146a7bf7d37967a92a8960373cde3dccb55e5907447d77",
+        "test/A2/attempt.json": "e3e698bd254a4b5e8cbede9ca28a173c6b7353b0adf6ccd9e40e85a8c5d0ebbe",
+        "test/A2/cases/v2-a-001.json": "6a288490a9c71e00d40b031c63eda72c6386e1f3538ec843daa6e7bd437f25fc",
+        "test/A2/cases/v2-a-002.json": "bed9b2d9cdbbf283b2d608e736450ecc46c44c0d4d62fbbff55ce4aad53e0fb9",
+        "test/A2/cases/v2-a-003.json": "df530abf7756d7a6e37eab09a4089b33208ce31be0353170600464b40e7ff186",
+        "test/A2/cases/v2-a-004.json": "9181084822c8ef8d527b96bbde1484e2d1641e50a2e5d184ec6684262ba10d5e",
+        "test/A2/cases/v2-a-005.json": "32bc6881f145ad13abeed8434e4f59726bcccc9fac653ef8bcb604063f97ff33",
+        "test/A2/cases/v2-a-006.json": "eb04b99d2f2dc04c0d0683c5c14a8ee16751bd652e04af664d1cf73dff5cc722",
+        "test/A2/cases/v2-a-007.json": "8631dc83f6c589af47b30315bae81af7c6d077a353281d3ddfae0074bde7c523",
+        "test/A2/cases/v2-a-008.json": "e1a463f9b4b3f6db593de25e5b4bf1d5ef6234fbf8eba4466822d7f8efeb185b",
+        "test/A2/cases/v2-a-009.json": "5080f3703114b61b7f615415b807d58aa4188d08e899e03a0c8d9cd38725d1b7",
+        "test/A2/cases/v2-a-010.json": "be33f83fd9e73ff823860bf3f5a603aba37f8f534e69797f29fd7294bf95bb94",
+        "test/A2/cases/v2-a-021.json": "4169eee7e807b0b775d4ac642128797da750b0758ccf38d8dfa5c93e5902b048",
+        "test/A2/cases/v2-a-022.json": "dbcd772a764c8e25da8025a165feb5299f0a4d2e27570c55eea80206483dc480",
+        "test/A2/cases/v2-a-023.json": "704c525c090026e048da88ec05fce469a2508d49e132ff83b72a263644861456",
+        "test/A2/cases/v2-a-024.json": "8a7ba171956b5ca2632db9f129bec3c6b4b133a5c64edfeb0c01e2c2ebba550d",
+        "test/A2/cases/v2-a-025.json": "f8f86c320c1a59fed819d48546149625cfcd437a68a1cf8a5ec40c2614321d99",
+        "test/A2/cases/v2-a-046.json": "711076d54a098314594adf6fad7430b1ff7cfe88bf246455f0bf72b145c8a8f1",
+        "test/A2/cases/v2-a-047.json": "44db32f53afe30bbf123632fdf6c6cf6f07ad4ecf19fa552642198675616c6ad",
+        "test/A2/cases/v2-a-048.json": "b9a3b13bc7e37caf0145db8adcb8de12a65ebb58ae1959834110c28c0f7cbaa4",
+        "test/A2/cases/v2-a-049.json": "8d8c311fc2c394b1ce155aba24e59bdb82dddec015bf74be38b657803d3a36b9",
+        "test/A2/cases/v2-a-050.json": "69278a4b78a043459263f00e0646c5f0957e18243083a8b54abe56b40fb2f75c",
+        "test/A2/summary.json": "b3ed050fc169211936659e518fa509034d52f2d7e9d926025a9eb1296f80b110",
+        "test/official_attempt.json": "4b3e7e373cbf68fa06fd756a1590686047590bd40f0205812065a63e817c9ad6"
+      },
+      "time_evidence": {
+        "A0": {
+          "started_at_utc": "2026-10-05T05:21:25.689088+00:00",
+          "summary_last_write_utc": "2026-10-05T05:44:34.582927+00:00"
+        },
+        "A2": {
+          "started_at_utc": "2026-10-05T05:44:36.875297+00:00",
+          "summary_last_write_utc": "2026-10-05T06:08:36.314636+00:00"
+        }
+      }
+    },
+    "test_evidence_coverage": [
+      {
+        "arm": "A0",
+        "id": "v2-a-002",
+        "required_ids": [
+          "aurora_x_acceptance.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "aurora_x_acceptance.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "aurora_x_acceptance.txt:ptxt:000",
+          "aurora_roster.txt:ptxt:000",
+          "robot_r2_service.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A0",
+        "id": "v2-a-022",
+        "required_ids": [
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "sable18b_backup.txt:ptxt:000",
+          "sable18b_model.txt:ptxt:000",
+          "sable18_backup.txt:ptxt:000",
+          "sable18_audit.txt:ptxt:000",
+          "borealis_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A0",
+        "id": "v2-a-025",
+        "required_ids": [
+          "sable18b_backup.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "sable18b_backup.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "sable18b_backup.txt:ptxt:000",
+          "sable18b_model.txt:ptxt:000",
+          "sable18_backup.txt:ptxt:000",
+          "sable18_audit.txt:ptxt:000",
+          "borealis_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A0",
+        "id": "v2-a-047",
+        "required_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_training.txt:ptxt:000",
+          "duty_escalation.txt:ptxt:000",
+          "duty_l2.txt:ptxt:000",
+          "ret_test.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A0",
+        "id": "v2-a-048",
+        "required_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_l2.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "duty_l2.txt:ptxt:000"
+        ],
+        "missing_required_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "retrieved_ids": [
+          "borealis2_schedule.txt:ptxt:000",
+          "robot_r2_service.txt:ptxt:000",
+          "duty_l2.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A0",
+        "id": "v2-a-050",
+        "required_ids": [
+          "duty_escalation.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "duty_escalation.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_escalation.txt:ptxt:000",
+          "duty_training.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-002",
+        "required_ids": [
+          "aurora_x_acceptance.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "aurora_x_acceptance.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "aurora_x_acceptance.txt:ptxt:000",
+          "aurora_roster.txt:ptxt:000",
+          "robot_r2_service.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-003",
+        "required_ids": [
+          "aurora_roster.txt:ptxt:000",
+          "aurora_finance.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "aurora_finance.txt:ptxt:000",
+          "aurora_roster.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "aurora_finance.txt:ptxt:000",
+          "aurora_roster.txt:ptxt:000",
+          "aurora_x_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-005",
+        "required_ids": [
+          "aurora_finance.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "aurora_finance.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "aurora_finance.txt:ptxt:000",
+          "aurora_x_finance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-007",
+        "required_ids": [
+          "borealis2_schedule.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "borealis2_schedule.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "borealis2_schedule.txt:ptxt:000",
+          "borealis_schedule.txt:ptxt:000",
+          "borealis2_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-008",
+        "required_ids": [
+          "borealis_schedule.txt:ptxt:000",
+          "borealis2_schedule.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "borealis2_schedule.txt:ptxt:000",
+          "borealis_schedule.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "borealis_schedule.txt:ptxt:000",
+          "borealis2_schedule.txt:ptxt:000",
+          "borealis2_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-022",
+        "required_ids": [
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "sable18b_backup.txt:ptxt:000",
+          "sable18b_model.txt:ptxt:000",
+          "sable18_backup.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-023",
+        "required_ids": [
+          "sable18_audit.txt:ptxt:000",
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "sable18b_model.txt:ptxt:000"
+        ],
+        "missing_required_ids": [
+          "sable18_audit.txt:ptxt:000"
+        ],
+        "retrieved_ids": [
+          "sable18b_model.txt:ptxt:000",
+          "sable18b_backup.txt:ptxt:000",
+          "sable18_backup.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-025",
+        "required_ids": [
+          "sable18b_backup.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "sable18b_backup.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "sable18b_backup.txt:ptxt:000",
+          "sable18b_model.txt:ptxt:000",
+          "sable18_backup.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-047",
+        "required_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "duty_l1.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-048",
+        "required_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_l2.txt:ptxt:000"
+        ],
+        "found_required_ids": [],
+        "missing_required_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_l2.txt:ptxt:000"
+        ],
+        "retrieved_ids": [
+          "robot_r2_service.txt:ptxt:000",
+          "borealis2_schedule.txt:ptxt:000",
+          "robot_r2_acceptance.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      },
+      {
+        "arm": "A2",
+        "id": "v2-a-050",
+        "required_ids": [
+          "duty_escalation.txt:ptxt:000"
+        ],
+        "found_required_ids": [
+          "duty_escalation.txt:ptxt:000"
+        ],
+        "missing_required_ids": [],
+        "retrieved_ids": [
+          "duty_l1.txt:ptxt:000",
+          "duty_escalation.txt:ptxt:000",
+          "duty_training.txt:ptxt:000"
+        ],
+        "judgment_basis": "frozen required-chunk labels compared with first actual tool output; no new retrieval requests"
+      }
+    ],
+    "remaining_answer_observations": [
+      {
+        "id": "v2-a-002",
+        "arm": "A2",
+        "layer": "generation/evidence interpretation",
+        "observation": "主答案 RX-41 正确，但追加“验收要求不记录在该卡中”与该卡明确96小时矛盾；原卡说不记录Aurora（非Aurora-X）的验收要求。"
+      },
+      {
+        "id": "v2-a-005",
+        "arm": "A2",
+        "layer": "generation/entity evidence interpretation",
+        "observation": "186000预算正确，但将 Aurora-X / FIN-AX12 的32000采购上限推给 FIN-A12；query意图完整、证据存在，属于跨实体推测。"
+      },
+      {
+        "id": "v2-a-023",
+        "arm": "A2",
+        "layer": "retrieval coverage + generation",
+        "observation": "Top3只有SABLE-18B模型、SABLE-18B备份、SABLE-18备份，漏sable18_audit；在线审计应60天，回答误为14天。"
+      },
+      {
+        "id": "v2-a-048",
+        "arm": "A2",
+        "layer": "retrieval coverage + generation",
+        "observation": "Top3无一线/二线必要chunk；模型未给出期望D-11/15分钟与D-22/45分钟，并把无关机器人维护角色作为补充。A0同题Top3含二线卡，A2零必要证据；意图保留不保证证据保留。"
+      },
+      {
+        "id": "v2-a-049",
+        "arm": "A0 and A2",
+        "layer": "generation/no-answer hallucination",
+        "observation": "两者均错误把角色D-33说成工位编号；工具返回无工位事实。A0还把一线15分钟附给升级协调角色。"
+      },
+      {
+        "id": "v2-a-050",
+        "arm": "A2",
+        "layer": "generation/condition interpretation",
+        "observation": "20分钟数值正确，但部分句子变成“一线响应未满20分钟”，未清楚表达未响应持续满20分钟，存在触发条件措辞错误。"
+      },
+      {
+        "id": "v2-a-001",
+        "arm": "A0",
+        "layer": "general answer generation",
+        "observation": "无工具路由正确，但声称对变量重新赋字符串会报错，这是普通Python知识回答错误。"
+      }
+    ],
+    "limitations": [
+      "Controlled synthetic corpus：40短文档/40 chunks；test仅20题、每类4题；Qwen3:1.7b单模型、单只读知识库Tool，不能证明生产可靠性或推广到其他场景。",
+      "A2仅按dev预注册规则选择；dev增加1个FP（v2-a-020）；正式test A0 15/20 vs A2 20/20，仅本次小样本观测，不宣称统计显著性。",
+      "正式test每方案一次、temperature=0.1，未额外设seed；无跨机器确定性保证，顺序运行和设备/cache负载可能影响耗时。",
+      "本次控制会话中断，原Python子进程继续完成A0/A2，退出码0。恢复读取时各20/20，无missing-ID resume，无已完成题重跑或覆盖；原started_at和latency保留。",
+      "工具参数合法和语义意图判读不等于证据完整或答案正确；工程判读由本轮coding assistant逐条完成，无独立人工复核，也无额外judge模型。",
+      "A2 test路由20/20仍存在跨实体推测、审计/备份混淆、检索漏必要证据以及无答案工位幻觉；v2-a-049不能因Tool成功就计作正确答案。",
+      "A0 dev逐题JSON缺LLM2耗时，仅原内存summary有值；报告排除不可逐题复核数据，原始文件不补写、不重跑。",
+      "未启用Hybrid、threshold、reranker、few-shot或新模型；A2为实验配置，未修改默认插件描述、WebUI或nanobot core。"
+    ],
+    "interpretation_notes": "路由正确与Retrieval coverage、证据解释、拒答是不同层。A0漏路由5题由A2修复；test无回退和双方路由皆错，但dev A2误调用保留。A2 test仍有v2-a-005跨实体推测、023漏审计证据/14天误用、048无正确证据、049将D-33角色当工位编号的幻觉。A0/A2都出现049答案错误，不能因为两者路由TP就略去。只保留观测与工程原因候选，不根据test重新调参。",
+    "validation": {
+      "pytest": {
+        "passed": 164,
+        "failed": 0,
+        "duration_seconds": 13.77,
+        "breakdown": {
+          "original": 37,
+          "dataset": 40,
+          "retrieval": 52,
+          "routing": 35
+        },
+        "command": "python -X utf8 -m pytest -q -p no:cacheprovider"
+      },
+      "plugin_verification": {
+        "passed": 11,
+        "failed": 0,
+        "command": "python -X utf8 scripts/verify_plugin.py"
+      },
+      "independent_metric_checks": {
+        "passed": 3,
+        "failed": 0,
+        "command": "python -X utf8 docs/evidence/phase3b/test_metrics.py -v"
+      },
+      "total": 178,
+      "python_version": "3.12.14",
+      "v1_frozen_hashes": {
+        "verified": 25,
+        "unchanged": true
+      },
+      "v2_dataset_hashes": {
+        "verified": 45,
+        "unchanged": true
+      },
+      "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+      "phase2_evidence_and_raw_unchanged": true,
+      "original_index_metadata_unchanged": true,
+      "historical_evidence_unchanged": true,
+      "all_original_tracked_files_unchanged": true,
+      "nanobot_core_git_clean": true,
+      "v1_tag_target": "aa422d826fa484933d9949c16fc79e1a2f22eda1",
+      "A2_config_file_sha256": "4c3df3f3a34215383c76fbde507851a142d81741f8112799bd090ff9495f61d8",
+      "A2_config_content_sha256": "2a71a7f26d65f79f0eabdad8ed238835f7d601cd8d8773e2a13b2dd46494e655",
+      "routing_source_hashes_unchanged": true,
+      "first_official_results_immutable": true,
+      "formal_http_requests": 65,
+      "formal_http_statuses": [
+        200
+      ],
+      "formal_role_tool_id_and_content_pairs_verified": 25,
+      "no_formal_A1_test": true
+    }
+  },
+  "limitations": [
+    "Controlled synthetic corpus：40短文档/40 chunks；test仅20题、每类4题；Qwen3:1.7b单模型、单只读知识库Tool，不能证明生产可靠性或推广到其他场景。",
+    "A2仅按dev预注册规则选择；dev增加1个FP（v2-a-020）；正式test A0 15/20 vs A2 20/20，仅本次小样本观测，不宣称统计显著性。",
+    "正式test每方案一次、temperature=0.1，未额外设seed；无跨机器确定性保证，顺序运行和设备/cache负载可能影响耗时。",
+    "本次控制会话中断，原Python子进程继续完成A0/A2，退出码0。恢复读取时各20/20，无missing-ID resume，无已完成题重跑或覆盖；原started_at和latency保留。",
+    "工具参数合法和语义意图判读不等于证据完整或答案正确；工程判读由本轮coding assistant逐条完成，无独立人工复核，也无额外judge模型。",
+    "A2 test路由20/20仍存在跨实体推测、审计/备份混淆、检索漏必要证据以及无答案工位幻觉；v2-a-049不能因Tool成功就计作正确答案。",
+    "A0 dev逐题JSON缺LLM2耗时，仅原内存summary有值；报告排除不可逐题复核数据，原始文件不补写、不重跑。",
+    "未启用Hybrid、threshold、reranker、few-shot或新模型；A2为实验配置，未修改默认插件描述、WebUI或nanobot core。"
+  ],
+  "validation": {
+    "pytest": {
+      "passed": 164,
+      "failed": 0,
+      "duration_seconds": 13.77,
+      "breakdown": {
+        "original": 37,
+        "dataset": 40,
+        "retrieval": 52,
+        "routing": 35
+      },
+      "command": "python -X utf8 -m pytest -q -p no:cacheprovider"
+    },
+    "plugin_verification": {
+      "passed": 11,
+      "failed": 0,
+      "command": "python -X utf8 scripts/verify_plugin.py"
+    },
+    "independent_metric_checks": {
+      "passed": 3,
+      "failed": 0,
+      "command": "python -X utf8 docs/evidence/phase3b/test_metrics.py -v"
+    },
+    "total": 178,
+    "python_version": "3.12.14",
+    "v1_frozen_hashes": {
+      "verified": 25,
+      "unchanged": true
+    },
+    "v2_dataset_hashes": {
+      "verified": 45,
+      "unchanged": true
+    },
+    "dataset_manifest_sha256": "078b30d94d2c4664a30aece15b3c255c9351345edc40a02dca15213b9fae9d18",
+    "phase2_evidence_and_raw_unchanged": true,
+    "original_index_metadata_unchanged": true,
+    "historical_evidence_unchanged": true,
+    "all_original_tracked_files_unchanged": true,
+    "nanobot_core_git_clean": true,
+    "v1_tag_target": "aa422d826fa484933d9949c16fc79e1a2f22eda1",
+    "A2_config_file_sha256": "4c3df3f3a34215383c76fbde507851a142d81741f8112799bd090ff9495f61d8",
+    "A2_config_content_sha256": "2a71a7f26d65f79f0eabdad8ed238835f7d601cd8d8773e2a13b2dd46494e655",
+    "routing_source_hashes_unchanged": true,
+    "first_official_results_immutable": true,
+    "formal_http_requests": 65,
+    "formal_http_statuses": [
+      200
+    ],
+    "formal_role_tool_id_and_content_pairs_verified": 25,
+    "no_formal_A1_test": true
+  },
+  "raw_path_label": "artifacts/v0.2/routing/phase3_first_20261005",
+  "raw_manifest_sha256": "63dc99fbcdbda473e4a06b1f2f0b7857c98f68f24b66ff9c612a2083c1e66076",
+  "raw_manifest": {
+    "baseline_dev_analysis.json": "06e06089d1ca57c285d875cf8eb6dde0f495a793b223f22e15994b84f918af51",
+    "candidates/A1.json": "f398183a3253f5cd1661aabaac7bb74ad3135bd0150cad7a4ebff18a42350695",
+    "candidates/A2.json": "5cce796cc38fa1f017a21362e845e8559359845b1236173c995879161a0081a4",
+    "dev/A0/attempt.json": "1c87158e43cf32fb0603976a65467c684322e8407e5e5b2237e69597497f40cb",
+    "dev/A0/cases/v2-a-011.json": "c9c6a8f377220091ecf684aafb345880ef9fe39c78e597cf3be7faf8aa4c5901",
+    "dev/A0/cases/v2-a-012.json": "1cdcbb14177ff3c1541436d185957ab3c089ece36550644331e4a7ec8bff5b5f",
+    "dev/A0/cases/v2-a-013.json": "e05ec8ea4a601fea67851d37f1cb3fb0097b1632cbb585bca7d26c09c33fa1ca",
+    "dev/A0/cases/v2-a-014.json": "3d3ee57ba13a6ad05de71e4f8c6d1b04bf86e4f8daf229345659994da33058b6",
+    "dev/A0/cases/v2-a-015.json": "7a123854cb8b3e4110ce2a43dcfd95685b60501d0150af4091e49a95fe050c81",
+    "dev/A0/cases/v2-a-016.json": "72fa544799c9a690ae48bd86553c9f77190c612c42303868a4644ef4eccb515c",
+    "dev/A0/cases/v2-a-017.json": "4863d2041a7a9e556fd7ca6e7d3585d4b6d3c913f35f0496e893e33bf4b37100",
+    "dev/A0/cases/v2-a-018.json": "5bb4a5df42457f8214822c63283b0049ab8b32066ba74f40118da47fa31f43f7",
+    "dev/A0/cases/v2-a-019.json": "30f6b74a1f9828e98cc8d16565e0fe30460c22de3726573d2ed69308e3956c1d",
+    "dev/A0/cases/v2-a-020.json": "53a0e09bd6ba7ae0bce2d128b489e4103120a405800c6ccdfe587afa52f73e3c",
+    "dev/A0/cases/v2-a-026.json": "3f3e638d437af282887e1a5c0b09548a6ec7559178f6074dfde5cd614a1e302f",
+    "dev/A0/cases/v2-a-027.json": "a7cfb5d5b5e4162c1035c75e8660aa7340284d8f889cc2cccc06937163244e48",
+    "dev/A0/cases/v2-a-028.json": "688ee40fa5e37529ebc22e6ef9cdf202d3ecd3b996d62e770ca5b2462d456e50",
+    "dev/A0/cases/v2-a-029.json": "e6b42f1365a5781aefbbe28f9811fcb5375cd3cc30859cae75c4ec4391d9e708",
+    "dev/A0/cases/v2-a-030.json": "203a3759e726f7102328885c6e05fc44b2bdf0dc6f7626c54c52178e268661db",
+    "dev/A0/cases/v2-a-031.json": "5b6b49d203962cd21923609ffaf741a61342e215779752eb00338eda5b39a7b5",
+    "dev/A0/cases/v2-a-032.json": "f42fd56ab6afb153bba207cf82ffc578e7b5318d020eae636d062db051bb1d75",
+    "dev/A0/cases/v2-a-033.json": "02b02b7232a5e3a5ba27212d8a58aa08219feffa244dce7f0474cedbcaacbc7a",
+    "dev/A0/cases/v2-a-034.json": "f00736a1380f4ebd7d6c755a180ee252f4a9f18991e6d0b416e54cdc87d2e271",
+    "dev/A0/cases/v2-a-035.json": "622bf1b6539d428d078111f60b123a08838bd7639ba65fd79c285e5cd28d9a85",
+    "dev/A0/cases/v2-a-036.json": "cf931c6827e02547d1e3f3f0bd16331409844576fa95e8d6f2613a89e74640f3",
+    "dev/A0/cases/v2-a-037.json": "db8d992dce64b5d1594e82f1bb5f879fa9e219f25a5535e32180d24fb4b437f7",
+    "dev/A0/cases/v2-a-038.json": "1dce84853921a268e4978881bf36aa37a869ed8dbdea1226d859358b501765e8",
+    "dev/A0/cases/v2-a-039.json": "a72ffa67b7e52521528f5f24cb218e935e297a367703924337b3c523b13bc3aa",
+    "dev/A0/cases/v2-a-040.json": "18be5a002172ba39def7f0532143010a4883d4461b0ae404bc36357f262abec2",
+    "dev/A0/cases/v2-a-041.json": "9a0d8ab98601eeccc31f18ec30bc09eb4157a5fb061dc17879c006595e558932",
+    "dev/A0/cases/v2-a-042.json": "0ee85876bc67344a57d2ded81b41ea57e0d4923aefaf055cb48e1523693edf7d",
+    "dev/A0/cases/v2-a-043.json": "926c49219b8cd621d2e2f92e49bd079068c744ffa4dee21a2b9076dcaf97ea8a",
+    "dev/A0/cases/v2-a-044.json": "364c2a22da49eb390b1ec7ad36257978ce37e5275b9ccfca01661f3f8c9aa3ab",
+    "dev/A0/cases/v2-a-045.json": "a9f1ce545e7f1f3cef7178db1dcdaea3c2e02d36a89066d6eaf0e8dd68b6939b",
+    "dev/A0/summary.json": "de8efaf1c7d29c5189cb6a62bec5d3b7b82963b54ca14dbd74750e7443ba1fbf",
+    "dev/A1/attempt.json": "82272dc8f78ddf3cf7d1a83803ec6c41a617f4a311e64a160a81cfe0ae7e5a0b",
+    "dev/A1/cases/v2-a-011.json": "fa8304d54334d18516e1e9ae847095558336dcfa547e66bee60482d9b8545574",
+    "dev/A1/cases/v2-a-012.json": "54e737dcdd0c53532bd8649c937fd3c0dfd661f07df7f75d0de911329596d881",
+    "dev/A1/cases/v2-a-013.json": "8f2fd0735eb8ff1d18b865b49193f32f0447b6cda19aa5820949add6e635c103",
+    "dev/A1/cases/v2-a-014.json": "c0481d16bd022fdaf5bbd186956a0d12d1aabfe9aae15397e859e75ce584ac84",
+    "dev/A1/cases/v2-a-015.json": "97ae63a75f24b88978c5e3fc3c9c131ae56ab121043dc6ed42f88f1c42ef1d51",
+    "dev/A1/cases/v2-a-016.json": "9c13f2c6cdb96c67d274f6b02b359a2e24982f78cbbe0925979fd66ef5080b39",
+    "dev/A1/cases/v2-a-017.json": "6f520aef230c3802792d20e52da8fb57e38dc418a4ced11ae393162cd0717666",
+    "dev/A1/cases/v2-a-018.json": "d13d70f9f4613e831fb901606c52bb31adea40a4162cf4af0186ef55de3d3bf8",
+    "dev/A1/cases/v2-a-019.json": "663bd9a22da9f96778c9b583e2fd87a76a3f459af8e612e07ec4e45d1678c2f4",
+    "dev/A1/cases/v2-a-020.json": "47fccf84ab6a9cbb7815b958f860e79689372b4d12e0e062e0c883cca526329a",
+    "dev/A1/cases/v2-a-026.json": "e5b3739f21a080c443bbd939f129448df7506fe2a81996629645dbfcbb462d92",
+    "dev/A1/cases/v2-a-027.json": "e8d5b397a276f42243b5c914d3a15b329847f9564cda563be136a40e99027c95",
+    "dev/A1/cases/v2-a-028.json": "6164300768d0562e550aca7e137ee9099c2a7d0ddcadca64223e80b0b811455b",
+    "dev/A1/cases/v2-a-029.json": "9e47925ef3a05f1e886667f559f98d1ac6bb738bf0309a7f47cd7923602b6494",
+    "dev/A1/cases/v2-a-030.json": "c8fb1ad4fa0c92001395e3aa3845c6b7c4c8f3ce63ab3bf5248f566d8bf49627",
+    "dev/A1/cases/v2-a-031.json": "ba58932dfef7d4aacd3647d13447b1cda5f9914126be48f4358898dacdc00015",
+    "dev/A1/cases/v2-a-032.json": "d0c2057d2cb439c7256fac5504f546522d68220e78d2a0e1b5ff8d14e0df06cc",
+    "dev/A1/cases/v2-a-033.json": "ae9f40854411cc218b819375beb3329a1394ac08f3e2a5ac8a42b0fee9b69eb2",
+    "dev/A1/cases/v2-a-034.json": "7f78f0f338c1140c60d1957b519829f163547d8fc7f544a59748b444177f8e35",
+    "dev/A1/cases/v2-a-035.json": "ddf565ca94b008055bfddea8bb526f1962a1362251054d63b09910d8566b28c2",
+    "dev/A1/cases/v2-a-036.json": "b22183c84f2e801054e05895172aacb2797f1121184a47e84030b967a81e0597",
+    "dev/A1/cases/v2-a-037.json": "4e3a1d9d6eed26cf6525dade43b0ef431461b74e74c365545d03ddb7eaceb2bd",
+    "dev/A1/cases/v2-a-038.json": "6c05ab35ee000afe99a26dfaa37f16cbdfa3006ac7a1c98fcfa7e00b0bb7712f",
+    "dev/A1/cases/v2-a-039.json": "99d4339535497a05002fdd295a9a86c2c5a072df7949344726fabdb7b35acd0c",
+    "dev/A1/cases/v2-a-040.json": "b6564c85e81e000510f923b614602aa14465bb14d8b5220970eadb27e88f970b",
+    "dev/A1/cases/v2-a-041.json": "6694fed0d13aabcf97c576c2b10ba902cdbdb87f6336a0b630b2bb9bd7549905",
+    "dev/A1/cases/v2-a-042.json": "86bb643497c6500a399b7f634c3ccfd16632eb2535e558c7b82848f0fda04b73",
+    "dev/A1/cases/v2-a-043.json": "ec43e00ed32204bbe917a82585f61425f34cb53ca700a828247bafb0cc313de4",
+    "dev/A1/cases/v2-a-044.json": "6eb292cea7efd9e2fc11b0e27c026a38671d33da606131a63af2ad15dba03967",
+    "dev/A1/cases/v2-a-045.json": "51d28832d6775195a3f4d901de38d94af58012b9cb10a491092fc4c6bd86f85b",
+    "dev/A1/summary.json": "b2e6179b2ab6c646274a8a598cde29f7f1f74c31aad4a0a9685ea8df6d14170d",
+    "dev/A2/attempt.json": "50f4b44a0086a4046a3bfb396c60d0e1ab5769fe4adc1dcd9494b0f41e714b5e",
+    "dev/A2/cases/v2-a-011.json": "54a8465038ee6120ea92f90eaf4e5bd490f8304cd53b41b7f970db6b8f7f417c",
+    "dev/A2/cases/v2-a-012.json": "e4185bf93d6b1173909ecab9f778233b9ac3f1763acb50b4099fb7d16b4dd6c0",
+    "dev/A2/cases/v2-a-013.json": "dbd132e0194a4c1efd919642dc5c4acb392febf4bd3cdb85eea4d19b19ec2661",
+    "dev/A2/cases/v2-a-014.json": "22b27e9e6286fe7d40746d4cece45ff0ef08cd4a8a561f20e31c4a0eb50dec2c",
+    "dev/A2/cases/v2-a-015.json": "28bcfe227d3c249892bbfeddb2b5f4f4e59f3b4b031195f25b89a8639e2c8fc2",
+    "dev/A2/cases/v2-a-016.json": "c80e997224087ddf93e43979f4256f6e3805d25489a2f8bd00b468b00e53e657",
+    "dev/A2/cases/v2-a-017.json": "c6e76a613d527677f6f3630c901c74a235146b4fd50614ca68963f1ac7ccf46d",
+    "dev/A2/cases/v2-a-018.json": "07d47783270ca1a285dcddba8aaff6bf41bd98fa035e7b6db5a20f6482c809bd",
+    "dev/A2/cases/v2-a-019.json": "7a35ae9f6e6d5d9f92cbeccf71e621cd0a1f1a8e995f90a4f253a8ca42ae0454",
+    "dev/A2/cases/v2-a-020.json": "a5a83bdb2eda3d136a3066f22fa98f470c95182a558960c7e340c2e42da74823",
+    "dev/A2/cases/v2-a-026.json": "457085e37e8d7539fe5536e4140468bbddaa39d1b9f6f502631d84e2ce9556c6",
+    "dev/A2/cases/v2-a-027.json": "6f05a4f10f8a8f875e9800bd1c8cbf4ccd61059b3d2931063a570336b273da9c",
+    "dev/A2/cases/v2-a-028.json": "5b8ae24e5657964ac45463aac729985101ef4d0a67b185a7234da02c8c91ee90",
+    "dev/A2/cases/v2-a-029.json": "3d7e046a4481e57346a5505c2097679100a11769bc7cb2abb82f85e90e0331c8",
+    "dev/A2/cases/v2-a-030.json": "153dc37ec10675061734b2b8154aa4cd41d443a1d8f8c4887d9cf6fe7e744866",
+    "dev/A2/cases/v2-a-031.json": "c969c4bfe250f710db978e89d68ce6446ad5157da45995d45b7a6c26f6340535",
+    "dev/A2/cases/v2-a-032.json": "0f03261a9a139c75abcc817d1d36880882123aef5572bd28efd118534a0a561d",
+    "dev/A2/cases/v2-a-033.json": "dd3e72af6a0a55c0065566ea977a89709fc042b7b96ab2ec9132a0f56964c71b",
+    "dev/A2/cases/v2-a-034.json": "8951e568849d570a2349a583cf861249d6c42bda7897757e2da752ab98ea5084",
+    "dev/A2/cases/v2-a-035.json": "c5ff28900156fed725b78dbaf976f653e5e4584b0d41715462d091044ec11a17",
+    "dev/A2/cases/v2-a-036.json": "0dcc44403b5185b0e18a7e294d7f9835bbfefd4bb31ce57727fde54d986e7ae2",
+    "dev/A2/cases/v2-a-037.json": "344a97fc139eda5f7414b61624a350344aab1109981a95fcdf98003d6c24593c",
+    "dev/A2/cases/v2-a-038.json": "fe216fc3707a208d996762c46fef5b28dcf5c9c1fe26f636afa1af95c810889a",
+    "dev/A2/cases/v2-a-039.json": "f4563859e9b7fb380494ec7eb86d550a17571a0ef14b646b0722cd4a28d370f3",
+    "dev/A2/cases/v2-a-040.json": "b1ef09919bf1fda6ec2c4dfe69fcc33a00d11827042e8eef6eaca9d848485e03",
+    "dev/A2/cases/v2-a-041.json": "cfdebbd4f25fcb00227d80348484f19fe0ed2c569268f728e15d561df4cdc525",
+    "dev/A2/cases/v2-a-042.json": "bea095f9be775bab44e49bade5c0905d749a5237a577138a7a8d6c0660240d93",
+    "dev/A2/cases/v2-a-043.json": "ad69b335f48638f20fc54d2886e4c1df4adbd7dc8ac3b0ade380c36ba088f143",
+    "dev/A2/cases/v2-a-044.json": "a12c30508ad9388cfcf604fdfe3571fcd9c9503b6e699b97d4e0da9432fc232a",
+    "dev/A2/cases/v2-a-045.json": "c68d812d96ead59d9a323fb960d60073ae05137d4806db21b3885b3a1a2e70cf",
+    "dev/A2/summary.json": "161ee4de1949a36836d36fbe3249d28115aa3a9916c6631efe5c9b4c4f178ef3",
+    "dev_A0_A1_intent_review.json": "ea651c9ba0f3bde666f7c0bf2640d398ebc078cfdc7a4eaf5a06578876f7faa6",
+    "development_engineering_review.json": "7560486fd2693a2ab07df71a4796bc61e165fb3baeb88ed6698ad19e52ece8dd",
+    "engineering_review.json": "3edcbaa80647bebc36a1d34d770d1823440307a10d55e68c45e6487c4857237a",
+    "integrity_before.json": "43a6f93bdc6b2c8717ef7a93b5ce9d73d3402b317d26ec21e85739d50a31a30f",
+    "plugin_rag_config.json": "673027ec3eb76bc7ecca11a31ad535ff2153d173e0ebdc853f82e20fbeccc25a",
+    "preregistration.json": "9b7d1f4fa1c94c817ff426e45f78a9b18bfad63c04aa5ae6f9d2b10f472806f8",
+    "protection.json": "95e8ba0e49d97d46da7191151f791af21e8ca12d4d9c5c0c30963e7ef09fd6f7",
+    "recovery_provenance.json": "d88309cc4ce4a7f327088b38e9a61efc161e053f1396795a889f963431c9b2f7",
+    "routing_lock.json": "75331fb12ad1005ca712483829944aaa71d860f04d9c49d30326aa7000801b0c",
+    "test/A0/attempt.json": "4586b8d0f6b9907ad50dc879689f5f811ee9811b60a57755d24c3a3857954a20",
+    "test/A0/cases/v2-a-001.json": "8ed92ab70fb3c3f774ea4aab337efdd6ca941c86bab36d89cef256e740c05b35",
+    "test/A0/cases/v2-a-002.json": "01e00ca847cbb7e30e432df6b44e153c5005d7789c01a49154e05b5cfe825c67",
+    "test/A0/cases/v2-a-003.json": "c5099495fc3c919baa02104ca4a9f98260f807d4871f98fdb02f42b5ec5a4a61",
+    "test/A0/cases/v2-a-004.json": "946f1b504a2880e450f2dfafea017017b9891e5fec63504ccd6a453d7d07b2d5",
+    "test/A0/cases/v2-a-005.json": "566cd50e9fd7b17ce40e781eaf2088193a61cba5e3134b5ab7f19d3c23f7d622",
+    "test/A0/cases/v2-a-006.json": "82eed6691847b83b5e33299a8e8ac0a3a75120e9f8aea05c3933aa080af15a59",
+    "test/A0/cases/v2-a-007.json": "745296e236bfba5eb0947b83f5c84b38d790a255baeef86ba008efccc00c7b36",
+    "test/A0/cases/v2-a-008.json": "e0f2c117f6b77650cc9986fb3dc7efc7b8354bc5e464407e5abfd3369afaeb8a",
+    "test/A0/cases/v2-a-009.json": "8ef3e1af8d5d4699bac64161a5e1d3b9473626ea15ebbe6d8ada52bae43b224e",
+    "test/A0/cases/v2-a-010.json": "53abb525490f149c18b7fa5ecf2cab52f2c944b6455fd823aa5d367bc2d26cbd",
+    "test/A0/cases/v2-a-021.json": "30def65d63aa4438a636f8178da2fc77ce89183c8eb687d0607b37ca37cd59c5",
+    "test/A0/cases/v2-a-022.json": "f37ba1f64f204f72e7f75a64c512f087d6b111a146364140169816cca7ef796a",
+    "test/A0/cases/v2-a-023.json": "56b86c474032ec77bd918898a1fbca9132f6d819c4ebe59df49e607d308ed168",
+    "test/A0/cases/v2-a-024.json": "dd0a64ab849c67b69c9c99b68de2ce218cd7396b815358b71346c0033bf8a3f1",
+    "test/A0/cases/v2-a-025.json": "53b37f2e74e2a20c3d9f9ed6fbd79d6bcb9a6a63c3f7c9e230b509131ee60c68",
+    "test/A0/cases/v2-a-046.json": "df1ea5819779dd5cad2d2eb09c6df1b98cf505fdb724f2807c39ba5ee2beb1ae",
+    "test/A0/cases/v2-a-047.json": "9502f284781c304eafb68b277f53f8c63a0536cc3a94911b14ab1233ae3c95ea",
+    "test/A0/cases/v2-a-048.json": "f904cff03629399016e06eb3281c6c75d1e2f3aefdc2876a18397a2151608b94",
+    "test/A0/cases/v2-a-049.json": "791e86f297350cf15ea41d3be0b32b45b53dd6949d6706d5a109b6d559642144",
+    "test/A0/cases/v2-a-050.json": "ba717ef6df0f41f6cf3a03644538e652619e490b657122ce5266efac6c18da64",
+    "test/A0/summary.json": "82d8ec28154e73423a146a7bf7d37967a92a8960373cde3dccb55e5907447d77",
+    "test/A2/attempt.json": "e3e698bd254a4b5e8cbede9ca28a173c6b7353b0adf6ccd9e40e85a8c5d0ebbe",
+    "test/A2/cases/v2-a-001.json": "6a288490a9c71e00d40b031c63eda72c6386e1f3538ec843daa6e7bd437f25fc",
+    "test/A2/cases/v2-a-002.json": "bed9b2d9cdbbf283b2d608e736450ecc46c44c0d4d62fbbff55ce4aad53e0fb9",
+    "test/A2/cases/v2-a-003.json": "df530abf7756d7a6e37eab09a4089b33208ce31be0353170600464b40e7ff186",
+    "test/A2/cases/v2-a-004.json": "9181084822c8ef8d527b96bbde1484e2d1641e50a2e5d184ec6684262ba10d5e",
+    "test/A2/cases/v2-a-005.json": "32bc6881f145ad13abeed8434e4f59726bcccc9fac653ef8bcb604063f97ff33",
+    "test/A2/cases/v2-a-006.json": "eb04b99d2f2dc04c0d0683c5c14a8ee16751bd652e04af664d1cf73dff5cc722",
+    "test/A2/cases/v2-a-007.json": "8631dc83f6c589af47b30315bae81af7c6d077a353281d3ddfae0074bde7c523",
+    "test/A2/cases/v2-a-008.json": "e1a463f9b4b3f6db593de25e5b4bf1d5ef6234fbf8eba4466822d7f8efeb185b",
+    "test/A2/cases/v2-a-009.json": "5080f3703114b61b7f615415b807d58aa4188d08e899e03a0c8d9cd38725d1b7",
+    "test/A2/cases/v2-a-010.json": "be33f83fd9e73ff823860bf3f5a603aba37f8f534e69797f29fd7294bf95bb94",
+    "test/A2/cases/v2-a-021.json": "4169eee7e807b0b775d4ac642128797da750b0758ccf38d8dfa5c93e5902b048",
+    "test/A2/cases/v2-a-022.json": "dbcd772a764c8e25da8025a165feb5299f0a4d2e27570c55eea80206483dc480",
+    "test/A2/cases/v2-a-023.json": "704c525c090026e048da88ec05fce469a2508d49e132ff83b72a263644861456",
+    "test/A2/cases/v2-a-024.json": "8a7ba171956b5ca2632db9f129bec3c6b4b133a5c64edfeb0c01e2c2ebba550d",
+    "test/A2/cases/v2-a-025.json": "f8f86c320c1a59fed819d48546149625cfcd437a68a1cf8a5ec40c2614321d99",
+    "test/A2/cases/v2-a-046.json": "711076d54a098314594adf6fad7430b1ff7cfe88bf246455f0bf72b145c8a8f1",
+    "test/A2/cases/v2-a-047.json": "44db32f53afe30bbf123632fdf6c6cf6f07ad4ecf19fa552642198675616c6ad",
+    "test/A2/cases/v2-a-048.json": "b9a3b13bc7e37caf0145db8adcb8de12a65ebb58ae1959834110c28c0f7cbaa4",
+    "test/A2/cases/v2-a-049.json": "8d8c311fc2c394b1ce155aba24e59bdb82dddec015bf74be38b657803d3a36b9",
+    "test/A2/cases/v2-a-050.json": "69278a4b78a043459263f00e0646c5f0957e18243083a8b54abe56b40fb2f75c",
+    "test/A2/summary.json": "b3ed050fc169211936659e518fa509034d52f2d7e9d926025a9eb1296f80b110",
+    "test/official_attempt.json": "4b3e7e373cbf68fa06fd756a1590686047590bd40f0205812065a63e817c9ad6"
+  }
+}
