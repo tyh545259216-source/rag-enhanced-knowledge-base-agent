@@ -323,25 +323,27 @@ HTTP 观测必须局限实验进程并 finally 恢复 hook；若流式观测涉�
 
 ### 10.1 Phase 0.5 Editable Install / Runtime Provenance
 
+发布脱敏说明（Phase 5）：本节仅将旧/当前 workspace 和仓库之外的本机绝对目录换为通用占位符；迁移事实、时间、版本、命令参数、测试结果与 hash 结论保持原样。原始路径记录保留在本地 ignored 审计材料和历史 commit，不作为安装脚本配置。
+
 本节更新为实际环境验证记录；Phase 0 的其他分析与历史 baseline 不变。Phase 0.5 未实现 V0.2 功能，未运行 Agent benchmark。
 
-**原因与修复前路径**：目录迁移后，nanobot 运行环境中的 knowledge-base-agent 0.1.0 的 `direct_url.json` 和 `.pth` 仍指向 `D:/harness项目/knowledge-base-agent`，该目录已不存在。从仓库目录之外导入得到 `ModuleNotFoundError: No module named 'knowledge_base_agent'`；entry point 元数据存在，但加载失败。因此当时不是成功加载当前源码，也不是已证实加载旧 checkout；风险是残留路径导致导入失败，若旧目录重新出现则可能误加载。
+**原因与修复前路径**：目录迁移后，nanobot 运行环境中的 knowledge-base-agent 0.1.0 的 `direct_url.json` 和 `.pth` 仍指向 `<old-workspace>/knowledge-base-agent`，该目录已不存在。从仓库目录之外导入得到 `ModuleNotFoundError: No module named 'knowledge_base_agent'`；entry point 元数据存在，但加载失败。因此当时不是成功加载当前源码，也不是已证实加载旧 checkout；风险是残留路径导致导入失败，若旧目录重新出现则可能误加载。
 
-**实际使用的 Python**：`D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe`，Python 3.12.14。没有切换 Python、重建 venv、更新依赖或修改 Provider/OAuth/Ollama/网络。
+**实际使用的 Python**：`<workspace>/nanobot/.venv/Scripts/python.exe`，Python 3.12.14。没有切换 Python、重建 venv、更新依赖或修改 Provider/OAuth/Ollama/网络。
 
 **已执行的最小修复**：
 
 ```powershell
-& 'D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check -e 'D:/实习项目/项目一/knowledge-base-agent'
+& '<workspace>/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check -e '<workspace>/knowledge-base-agent'
 ```
 
 knowledge-base-agent 仍为 0.1.0；安装前后的 97 个已有 distribution 版本完全一致，没有新增常驻 distribution。pip 的隔离构建依赖仅用于构建 editable wheel，没有升级该运行环境的已有依赖。
 
-**修复后的真实 import**：从 `D:/实习项目`（仓库之外）运行，得到：
+**修复后的真实 import**：从 `<outside-checkout>`（仓库之外）运行，得到：
 
-- `knowledge_base_agent.__file__ = D:/实习项目/项目一/knowledge-base-agent/src/knowledge_base_agent/__init__.py`。
+- `knowledge_base_agent.__file__ = <workspace>/knowledge-base-agent/src/knowledge_base_agent/__init__.py`。
 - 包 `__path__` 指向同一当前仓库的 `src/knowledge_base_agent`。
-- editable `direct_url` 解码后为 `file:///D:/实习项目/项目一/knowledge-base-agent`，editable=true。
+- editable `direct_url` 解码后为 `file:///<workspace>/knowledge-base-agent`，editable=true。
 - `__editable__.knowledge_base_agent-0.1.0.pth` 指向当前仓库 `src`。
 - distribution 名为 `knowledge-base-agent`，package 为 `knowledge_base_agent`。
 - entry point：`nanobot.tools / search_knowledge_base`，由该 distribution 提供，值为 `knowledge_base_agent.tools.search_knowledge_base:SearchKnowledgeBaseTool`。
@@ -351,17 +353,17 @@ knowledge-base-agent 仍为 0.1.0；安装前后的 97 个已有 distribution �
 **额外授权后的修复**：用户随后明确授权修复 nanobot editable 路径并补齐当前项目已声明/验证的测试依赖。在同一个 nanobot Python 环境执行：
 
 ```powershell
-& 'D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check -e 'D:/实习项目/项目一/nanobot'
-& 'D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check 'pytest==8.4.2' 'pluggy==1.6.0' 'iniconfig==2.3.0'
+& '<workspace>/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check -e '<workspace>/nanobot'
+& '<workspace>/nanobot/.venv/Scripts/python.exe' -m pip install --no-deps --disable-pip-version-check 'pytest==8.4.2' 'pluggy==1.6.0' 'iniconfig==2.3.0'
 ```
 
 nanobot 仍为 0.3.5；没有安装其整套 dev extras。pytest 8.4.2 满足 knowledge-base-agent 的 `pytest>=8,<9`，三个新增版本与该项目原测试环境一致。原有 97 个 distribution 版本均未变化；只新增上述三个测试包。没有修改源码、Provider 配置、OAuth 或网络。
 
 **修复后的实际 runtime provenance**：从项目目录之外运行，无临时 PYTHONPATH，得到：
 
-- `sys.executable = D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe`，Python 3.12.14。
-- `nanobot.__file__ = D:/实习项目/项目一/nanobot/nanobot/__init__.py`。
-- `knowledge_base_agent.__file__ = D:/实习项目/项目一/knowledge-base-agent/src/knowledge_base_agent/__init__.py`。
+- `sys.executable = <workspace>/nanobot/.venv/Scripts/python.exe`，Python 3.12.14。
+- `nanobot.__file__ = <workspace>/nanobot/nanobot/__init__.py`。
+- `knowledge_base_agent.__file__ = <workspace>/knowledge-base-agent/src/knowledge_base_agent/__init__.py`。
 - 两个 distribution 的 direct_url 解码后均指向上述当前仓库，editable=true。
 - `search_knowledge_base` entry point 由 knowledge-base-agent 0.1.0 提供，真实加载的类文件为当前仓库 `src/knowledge_base_agent/tools/search_knowledge_base.py`。
 
@@ -372,8 +374,8 @@ nanobot 仍为 0.3.5；没有安装其整套 dev extras。pytest 8.4.2 满足 kn
 同一个 nanobot Python 环境实际执行：
 
 ```powershell
-& 'D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe' -m pytest -q -p no:cacheprovider
-& 'D:/实习项目/项目一/nanobot/.venv/Scripts/python.exe' scripts/verify_plugin.py
+& '<workspace>/nanobot/.venv/Scripts/python.exe' -m pytest -q -p no:cacheprovider
+& '<workspace>/nanobot/.venv/Scripts/python.exe' scripts/verify_plugin.py
 ```
 
 - 当前全部项目 pytest：37 passed，耗时 5.19 秒；包括 35 unit 和 2 个真实 Ollama embedding integration。
